@@ -1,0 +1,366 @@
+{
+  "productSpecs": [
+    {
+      "productName": "20-GE",
+      "customerName": "999-9999",
+      "id": 140,
+      "min": 0.1,
+      "max": 0.4
+    },
+    {
+      "productName": "20-GE",
+      "customerName": "999-9999",
+      "id": 150,
+      "min": 0,
+      "max": 0.1
+    },
+    {
+      "productName": "20-GE",
+      "customerName": "999-9999",
+      "id": 160,
+      "min": 0,
+      "max": 0
+    },
+
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 10,
+      "min": 2.4,
+      "max": 0
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 20,
+      "min": 67,
+      "max": 87
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 30,
+      "min": 0.2,
+      "max": 5
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 40,
+      "min": 93,
+      "max": 103
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 50,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 60,
+      "min": 0,
+      "max": 0.1
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 70,
+      "min": 0,
+      "max": 0.3
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 80,
+      "min": 1.8,
+      "max": 5
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 90,
+      "min": 16,
+      "max": 21
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 100,
+      "min": 28,
+      "max": 40
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 110,
+      "min": 25,
+      "max": 35
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 120,
+      "min": 2.5,
+      "max": 7
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 130,
+      "min": 1.5,
+      "max": 3
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 140,
+      "min": 0,
+      "max": 0.8
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 150,
+      "min": 0,
+      "max": 0.1
+    },
+    {
+      "productName": "21-ASP7",
+      "customerName": "999-9999",
+      "id": 160,
+      "min": 0,
+      "max": 0
+    },
+
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 10,
+      "min": 3.5,
+      "max": 0
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 20,
+      "min": 46,
+      "max": 66
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 30,
+      "min": 0.8,
+      "max": 6
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 40,
+      "min": 88,
+      "max": 100
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 50,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 60,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 70,
+      "min": 0,
+      "max": 0
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 80,
+      "min": 0,
+      "max": 0.3
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 90,
+      "min": 0.3,
+      "max": 1
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 100,
+      "min": 1,
+      "max": 4
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 110,
+      "min": 10,
+      "max": 16
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 120,
+      "min": 45,
+      "max": 56
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 130,
+      "min": 25,
+      "max": 35
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 140,
+      "min": 4,
+      "max": 11
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 150,
+      "min": 0.5,
+      "max": 1.5
+    },
+    {
+      "productName": "35-713",
+      "customerName": "999-9999",
+      "id": 160,
+      "min": 0,
+      "max": 0
+    }
+  ],
+
+  "properties": [
+    {
+      "kbn": "A",
+      "id": 10,
+      "nm": "総脂肪酸 Resin content",
+      "enum": 0,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 20,
+      "nm": "抗折力X (Transverse rupture strength X)",
+      "enum": 0,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 30,
+      "nm": "抗折力R (Transverse rupture strength R)",
+      "enum": 0,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 40,
+      "nm": "粘着点 sticky point",
+      "enum": 0,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 50,
+      "nm": "m14",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 60,
+      "nm": "m18.5",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 70,
+      "nm": "m26",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 80,
+      "nm": "m36",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 90,
+      "nm": "m50",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 100,
+      "nm": "m70",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 110,
+      "nm": "m100",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 120,
+      "nm": "m140",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 130,
+      "nm": "m200",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 140,
+      "nm": "m280",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 150,
+      "nm": "mRAN",
+      "enum": 1,
+      "eyobi": null
+    },
+    {
+      "kbn": "A",
+      "id": 160,
+      "nm": "AFS.FN",
+      "enum": 0,
+      "eyobi": null
+    }
+  ]
+}

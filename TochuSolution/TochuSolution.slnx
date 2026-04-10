@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="IMIP.Tochu.Application/IMIP.Tochu.Application.csproj" />
+  <Project Path="IMIP.Tochu.Domain/IMIP.Tochu.Domain.csproj" />
+  <Project Path="IMIP.Tochu.Infrastructure/IMIP.Tochu.Infrastructure.csproj" />
+  <Project Path="IMIP.Tochu.Shared/IMIP.Tochu.Shared.csproj" />
+</Solution>
