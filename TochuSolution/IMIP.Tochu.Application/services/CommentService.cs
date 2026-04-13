@@ -14,8 +14,10 @@ namespace IMIP.Tochu.Application.Services
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
-        public CommentService(ICommentRepository commentRepository) {
+        private readonly IUnitOfWork _unitOfWork;
+        public CommentService(ICommentRepository commentRepository, IUnitOfWork unitOfWork) {
             _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CommentModel> AddComment(CommentModel comment)
@@ -27,7 +29,7 @@ namespace IMIP.Tochu.Application.Services
                 IsActive = true,
             };
             _commentRepository.Add(newComment);
-            await _commentRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return newComment.Mapping();
         }
 
@@ -37,7 +39,7 @@ namespace IMIP.Tochu.Application.Services
             if (comment == null)
                 return false;
             _commentRepository.Delete(comment);
-            await _commentRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return true;
         }
 
@@ -64,7 +66,7 @@ namespace IMIP.Tochu.Application.Services
             var commentEntity = await _commentRepository.GetByIdAsync(comment.Id);
             commentEntity.Content = comment.Content;
             _commentRepository.Update(commentEntity);
-            await _commentRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return commentEntity.Mapping();
         }
     }

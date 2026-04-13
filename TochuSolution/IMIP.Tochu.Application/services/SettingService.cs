@@ -1,12 +1,7 @@
-﻿using IMIP.Tochu.Common.Helpers;
-using IMIP.Tochu.Application.Interfaces;
+﻿using IMIP.Tochu.Application.Interfaces;
 using IMIP.Tochu.Application.Models;
 using IMIP.Tochu.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IMIP.Tochu.Shared.Helpers;
 
 namespace IMIP.Tochu.Application.Services
 {

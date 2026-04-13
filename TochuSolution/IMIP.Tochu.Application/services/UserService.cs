@@ -13,9 +13,11 @@ namespace IMIP.Tochu.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;   
-        public UserService(IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<UserModel> UpdateField(Guid id, string field, object value)
         {
@@ -25,7 +27,7 @@ namespace IMIP.Tochu.Application.Services
             if (prop == null) return null;
             prop.SetValue(user, value);
             _userRepository.Update(user);
-            await _userRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return new UserModel()
             {
                 Id = user.Id,
@@ -82,7 +84,7 @@ namespace IMIP.Tochu.Application.Services
             userEntity.Name = user.Name;
             userEntity.Email = user.Email;
             _userRepository.Update(userEntity);
-            await _userRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return new UserModel()
             {
                 Id = userEntity.Id,
@@ -109,7 +111,7 @@ namespace IMIP.Tochu.Application.Services
                 userEntity.PasswordHash = user.PasswordHash;
             }
             _userRepository.Add(userEntity);
-            await _userRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return new UserModel()
             {
                 Id = userEntity.Id,

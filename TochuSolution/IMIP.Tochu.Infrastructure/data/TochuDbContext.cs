@@ -25,6 +25,7 @@ namespace IMIP.Tochu.Infrastructure.Data
 
             // 🔥 Load automatic configuration
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TochuDBContext).Assembly);
+            // await DbSeeder.SeedAsync(this);
 
         }
     }

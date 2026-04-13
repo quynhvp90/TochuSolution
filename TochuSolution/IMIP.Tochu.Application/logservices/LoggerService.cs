@@ -1,9 +1,9 @@
-﻿using IMIP.Tochu.Common;
-using IMIP.Tochu.Application.Interfaces;
+﻿using IMIP.Tochu.Application.Interfaces;
 using IMIP.Tochu.Application.Mappers;
 using IMIP.Tochu.Application.Models;
 using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Domain.Interfaces;
+using IMIP.Tochu.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

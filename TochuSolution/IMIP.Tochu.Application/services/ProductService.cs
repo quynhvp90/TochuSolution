@@ -1,17 +1,12 @@
-﻿using IMIP.Tochu.Common.Helpers;
-using IMIP.Tochu.Application.Interfaces;
+﻿using IMIP.Tochu.Application.Interfaces;
 using IMIP.Tochu.Application.Mappers;
 using IMIP.Tochu.Application.Models;
 using IMIP.Tochu.Application.Models.Paging;
 using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+using IMIP.Tochu.Shared.Enums;
+using IMIP.Tochu.Shared.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMIP.Tochu.Application.Services
 {
@@ -102,7 +97,7 @@ namespace IMIP.Tochu.Application.Services
             {
                 products = products.Where(a => a.ProductName.StartsWith(search.ProductName));
             }
-            if (search.PerformanceTable.HasValue && search.PerformanceTable != Common.Enums.PerformanceTable.All)
+            if (search.PerformanceTable.HasValue && search.PerformanceTable != PerformanceTable.All)
             {
                 products = products.Where(a => a.PerformanceTable == search.PerformanceTable.Value);
             }
@@ -162,7 +157,7 @@ namespace IMIP.Tochu.Application.Services
             {
                 productEntity.UpdateMapping(product);
                 _productRepository.Update(productEntity);
-                await _productRepository.SaveChangesAsync();
+                await _unitOfWork.CommitAsync();
             }
         }
 
@@ -174,7 +169,7 @@ namespace IMIP.Tochu.Application.Services
             if (prop == null) return null;
             prop.SetValue(product, value);
             _productRepository.Update(product);
-            await _productRepository.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
             return product.Mapping();
         }
     }

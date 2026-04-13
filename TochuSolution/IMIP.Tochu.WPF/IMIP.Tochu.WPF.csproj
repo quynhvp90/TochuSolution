@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Infragistics.WPF" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Calendar" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Charts" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Dashboards" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.DataGrids" Version="25.2.45" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IMIP.Tochu.UI\IMIP.Tochu.UI.csproj" />
+  </ItemGroup>
+
+</Project>

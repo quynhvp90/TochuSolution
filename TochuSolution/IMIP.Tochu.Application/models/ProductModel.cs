@@ -1,10 +1,4 @@
-﻿using IMIP.Tochu.Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IMIP.Tochu.Shared.Enums;
 
 namespace IMIP.Tochu.Application.Models
 {

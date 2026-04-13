@@ -1,6 +1,6 @@
-﻿using IMIP.Tochu.Common.Helpers;
-using IMIP.Tochu.Application.Models;
+﻿using IMIP.Tochu.Application.Models;
 using IMIP.Tochu.Domain.Entities;
+using IMIP.Tochu.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
