@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using IMIP.Tochu.UI.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,10 @@ namespace IMIP.Tochu.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainViewModel mainView)
         {
             InitializeComponent();
+            DataContext = mainView;
         }
     }
 }
