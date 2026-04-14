@@ -39,7 +39,7 @@ namespace IMIP.Tochu.Infrastructure.Configurations
             builder.Property(e => e.PackagingName).HasMaxLength(200);
             builder.Property(e => e.PerformanceM).HasMaxLength(50);
             builder.Property(e => e.ForCustomers).HasMaxLength(200);
-            builder.Property(e => e.Comment).HasMaxLength(1000);
+            builder.Property(e => e.Comment).IsRequired(false).HasMaxLength(1000);
 
             // Decimal fields (EF Core 8 chuẩn)
             builder.Property(e => e.ResinContent).HasPrecision(18, 2);

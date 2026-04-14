@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="xunit.extensibility.core" Version="2.9.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IMIP.Tochu.Application\IMIP.Tochu.Application.csproj" />
+    <ProjectReference Include="..\IMIP.Tochu.Core\IMIP.Tochu.Core.csproj" />
   </ItemGroup>
 
 </Project>

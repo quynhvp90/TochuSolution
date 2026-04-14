@@ -107,7 +107,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -115,7 +114,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -123,7 +121,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ForCustomers")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -143,12 +140,10 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PackagingCD")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PackagingName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -156,7 +151,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PerformanceM")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -173,7 +167,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -194,7 +187,6 @@ namespace IMIP.Tochu.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Unit")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

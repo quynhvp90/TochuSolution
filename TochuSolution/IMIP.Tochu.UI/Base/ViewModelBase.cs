@@ -1,21 +1,21 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
+﻿
 namespace IMIP.Tochu.UI.Base
 {
-    public abstract partial class ViewModelBase : ObservableObject
+    public abstract class ViewModelBase : NotifyBase
     {
-        [ObservableProperty]
         private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
-        [ObservableProperty]
         private string? _errorMessage;
+        public string? ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
 
         protected void ClearError() => ErrorMessage = null;
     }

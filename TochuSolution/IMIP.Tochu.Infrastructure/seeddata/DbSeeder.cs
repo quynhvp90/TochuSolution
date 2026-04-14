@@ -219,7 +219,9 @@ namespace IMIP.Tochu.Infrastructure.Data
                 _sampleComments.Select((c, i) => new Comment
                 {
                     Id = Guid.NewGuid(),
-                    Content = c,
+                    Content = c ?? "123",
+                    IsActive = true,
+                    UpdatedAt = DateTime.Now,
                     CreatedAt = DateTime.Now.AddDays(-i)
                 })
             );

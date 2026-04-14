@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IMIP.Tochu.Domain\IMIP.Tochu.Domain.csproj" />
+    <ProjectReference Include="..\IMIP.Tochu.Infrastructure\IMIP.Tochu.Infrastructure.csproj" />
+    <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
     <ProjectReference Include="..\IMIP.Tochu.UI\IMIP.Tochu.UI.csproj" />
   </ItemGroup>
 
