@@ -3,6 +3,7 @@ using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
 using IMIP.Tochu.UI.ViewModels;
 using IMIP.Tochu.WPF.Helpers;
+using Infragistics.Controls.Charts;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
@@ -36,8 +37,10 @@ namespace IMIP.Tochu.WPF
             nav.NavigateTo<MainViewModel>();
 
             // Start MainWindow
-            var mainVM = _serviceProvider.GetRequiredService<MainViewModel>();
-            var window = new MainWindow(mainVM, nav);
+            var mainVM = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+            var window = new MainWindow(
+                mainVM    
+            );
             window.Show();
         }
         private void ConfigureServices(IServiceCollection services)
@@ -51,7 +54,9 @@ namespace IMIP.Tochu.WPF
                 type => (ViewModelBase)sp.GetRequiredService(type));
 
             // --- ViewModels ---
-            services.AddSingleton<MainViewModel>();   // Singleton
+            services.AddSingleton<MainWindowViewModel>();   // Singleton
+            services.AddTransient<MainViewModel>(); // Transient
+            services.AddTransient<SearchViewModel>(); // Transient
             services.AddTransient<SearchViewModel>(); // Transient
             services.AddTransient<MasterViewModel>(); // Transient
         }

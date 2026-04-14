@@ -12,21 +12,21 @@ namespace IMIP.Tochu.UI.Navigation
             _factory = factory;
         }
 
-        private ViewModelBase? _currentPage;
-        public ViewModelBase? CurrentPage
+        private ViewModelBase? _currentView;
+        public ViewModelBase? CurrentView
         {
-            get => _currentPage;
+            get => _currentView;
             private set
             {
-                if (_currentPage == value) return;
-                _currentPage = value;
-                CurrentPageChanged?.Invoke();
+                if (_currentView == value) return;
+                _currentView = value;
+                CurrentViewChanged?.Invoke();
             }
         }
 
         public bool CanGoBack => _history.Count > 1;
 
-        public event Action? CurrentPageChanged;
+        public event Action? CurrentViewChanged;
         public event EventHandler<ViewModelBase>? WindowRequested;
 
         public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
@@ -37,7 +37,7 @@ namespace IMIP.Tochu.UI.Navigation
         {
             var vm = Resolve<TViewModel>(configure);
             _history.Push(vm);
-            CurrentPage = vm;
+            CurrentView = vm;
 
             if (vm is IAsyncLoad loader)
                 _ = loader.LoadAsync();
@@ -57,9 +57,9 @@ namespace IMIP.Tochu.UI.Navigation
         {
             if (!CanGoBack) return;
             _history.Pop();
-            CurrentPage = _history.Peek();
+            CurrentView = _history.Peek();
 
-            if (CurrentPage is IAsyncLoad loader)
+            if (CurrentView is IAsyncLoad loader)
                 _ = loader.LoadAsync();
         }
 

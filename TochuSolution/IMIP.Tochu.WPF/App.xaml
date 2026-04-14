@@ -2,10 +2,19 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:IMIP.Tochu.WPF"
+             xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
              xmlns:vm="clr-namespace:IMIP.Tochu.UI.ViewModels;assembly=IMIP.Tochu.UI">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <view:Main/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:SearchViewModel}">
-            <local:MainWindow/>
-         </DataTemplate>
+            <view:SearchView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:MasterViewModel}">
+            <view:Master/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

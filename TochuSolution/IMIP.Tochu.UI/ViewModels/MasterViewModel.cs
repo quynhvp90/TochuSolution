@@ -1,17 +1,27 @@
 ﻿using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.UI.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace IMIP.Tochu.UI.ViewModels
 {
-    public partial class MasterViewModel : ViewModelBase
+    public class MasterViewModel : ViewModelBase
     {
-        // Được set từ NavigateTo/OpenWindow trước khi hiển thị
-        public Guid? EditId { get; set; }
+        private readonly INavigationService _nav;
 
-        // TODO: thêm fields khi thiết kế form
+        public string MasterName { get; set; }
+
+        public ICommand GoBackCommand { get; }
+
+        public MasterViewModel(INavigationService nav)
+        {
+            _nav = nav;
+
+            GoBackCommand = new RelayCommand(() => _nav.GoBack());
+        }
     }
 }

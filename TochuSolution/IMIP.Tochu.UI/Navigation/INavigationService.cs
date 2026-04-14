@@ -10,7 +10,7 @@ namespace IMIP.Tochu.UI.Navigation
 {
     public interface INavigationService
     {
-        ViewModelBase? CurrentPage { get; }
+        ViewModelBase? CurrentView { get; }
         bool CanGoBack { get; }
 
         void NavigateTo<TViewModel>() where TViewModel : ViewModelBase;
@@ -23,7 +23,7 @@ namespace IMIP.Tochu.UI.Navigation
 
         void GoBack();
 
-        event Action? CurrentPageChanged;
+        event Action? CurrentViewChanged;
         event EventHandler<ViewModelBase>? WindowRequested;
     }
 }
