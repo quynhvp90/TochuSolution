@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Infrastructure;
+﻿using IMIP.Tochu.Core;
+using IMIP.Tochu.Infrastructure;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
 using IMIP.Tochu.UI.ViewModels;
@@ -25,9 +26,7 @@ namespace IMIP.Tochu.WPF
             base.OnStartup(e);
 
             var services = new ServiceCollection();
-            var container = new UnityContainer();
-            container.RegisterInfrastructure();
-            await DependencyInjection.InitializeDatabase();
+            await InfrastructureDependencyInjection.InitializeDatabase();
             ConfigureServices(services);
            
             _serviceProvider = services.BuildServiceProvider();
@@ -46,6 +45,8 @@ namespace IMIP.Tochu.WPF
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            services.AddInfrastructureDI();
+            services.AddCoreDI();
             // --- Navigation ---
             services.AddSingleton<INavigationService, NavigationService>();
 

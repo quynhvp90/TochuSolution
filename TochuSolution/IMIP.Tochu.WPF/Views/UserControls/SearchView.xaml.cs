@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.UI.ViewModels;
+﻿using IMIP.Tochu.Core.Interfaces;
+using IMIP.Tochu.UI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

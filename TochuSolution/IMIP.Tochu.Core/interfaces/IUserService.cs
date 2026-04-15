@@ -9,10 +9,10 @@ namespace IMIP.Tochu.Core.Interfaces
 {
     public interface IUserService
     {
-        Task<List<UserModel>> GetUsers();
-        Task<(List<UserModel> Actives, List<UserModel> Inactives)> GetUsersAsync();
-        Task<UserModel> UpdateField(Guid id, string field, object value);
-        Task<UserModel> Create(UserModel user);
-        Task<UserModel> Update(UserModel user);
+        Task<List<UserModel>> GetUsersAsync();
+        Task<List<UserModel>> GetUsersAsync(string keyword);
+        Task<UserModel> UpdateFieldAsync(Guid id, string field, object value);
+        Task<UserModel> CreateAsync(UserModel user);
+        Task<UserModel> UpdateAsync(UserModel user);
     }
 }

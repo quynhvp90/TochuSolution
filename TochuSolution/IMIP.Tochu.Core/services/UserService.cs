@@ -2,6 +2,7 @@
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace IMIP.Tochu.Core.Services
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<UserModel> UpdateField(Guid id, string field, object value)
+        public async Task<UserModel> UpdateFieldAsync(Guid id, string field, object value)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return null;
@@ -39,7 +40,7 @@ namespace IMIP.Tochu.Core.Services
             };
         }
 
-        public async Task<List<UserModel>> GetUsers()
+        public async Task<List<UserModel>> GetUsersAsync()
         {
             var users = await _userRepository.GetAllAsync();
             return users.Select(u => new UserModel
@@ -53,31 +54,7 @@ namespace IMIP.Tochu.Core.Services
             }).ToList();
         }
 
-        public async Task<(List<UserModel> Actives, List<UserModel> Inactives)> GetUsersAsync()
-        {
-            var users = await _userRepository.GetAllAsync();
-            var activeUsers = users.Where(u => u.IsActive).Select(u => new UserModel
-            {
-                Id = u.Id,
-                CreatedAt = u.CreatedAt,
-                UpdatedAt = u.UpdatedAt,
-                Name = u.Name,
-                Email = u.Email,
-                IsActive = u.IsActive
-            }).ToList();
-            var inactiveUsers = users.Where(u => !u.IsActive).Select(u => new UserModel
-            {
-                Id = u.Id,
-                CreatedAt = u.CreatedAt,
-                UpdatedAt = u.UpdatedAt,
-                Name = u.Name,
-                Email = u.Email,
-                IsActive = u.IsActive
-            }).ToList();
-            return (activeUsers, inactiveUsers);
-        }
-
-        public async Task<UserModel> Update(UserModel user)
+        public async Task<UserModel> UpdateAsync(UserModel user)
         {
             var userEntity = await _userRepository.GetByIdAsync(user.Id);
             if (userEntity == null) return null;
@@ -96,7 +73,7 @@ namespace IMIP.Tochu.Core.Services
             };
         }
 
-        public async Task<UserModel> Create(UserModel user)
+        public async Task<UserModel> CreateAsync(UserModel user)
         {
             var userEntity = new User()
             {
@@ -121,6 +98,23 @@ namespace IMIP.Tochu.Core.Services
                 Email = userEntity.Email,
                 IsActive = userEntity.IsActive
             };
+        }
+
+        public async Task<List<UserModel>> GetUsersAsync(string keyword)
+        {
+            var users = _userRepository.Query();
+            users = users.Where(u => u.Name.Contains(keyword) || u.Email.Contains(keyword));
+            users = users.OrderByDescending(u => u.CreatedAt);
+            var userList = await users.ToListAsync();
+            return userList.Select(u => new UserModel
+            {
+                Id = u.Id,
+                CreatedAt = u.CreatedAt,
+                UpdatedAt = u.UpdatedAt,
+                Name = u.Name,
+                Email = u.Email,
+                IsActive = u.IsActive
+            }).ToList();
         }
     }
 }

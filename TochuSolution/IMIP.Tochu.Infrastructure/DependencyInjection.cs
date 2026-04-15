@@ -4,56 +4,43 @@ using IMIP.Tochu.Infrastructure.Repositories;
 using IMIP.Tochu.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using Unity;
 using Unity.Lifetime;
 
 namespace IMIP.Tochu.Infrastructure
 {
-    public static class DependencyInjection
+    public static class InfrastructureDependencyInjection
     {
-        public static IUnityContainer RegisterInfrastructure(this IUnityContainer container)
+        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services)
         {
+            var connectionString = ConfigurationManager
+                .ConnectionStrings["DefaultConnection"]
+                .ConnectionString;
 
-            // ── DbContext ───────────────────────────────
-            container.RegisterFactory<TochuDBContext>(c =>
-            {
-                var connectionString = ConfigurationManager
-                    .ConnectionStrings["DefaultConnection"]
-                    .ConnectionString;
+            // 🔥 DbContext (Scoped là chuẩn)
+            services.AddDbContext<TochuDBContext>(options =>
+                options.UseSqlServer(connectionString));
 
-                var optionsBuilder = new DbContextOptionsBuilder<TochuDBContext>();
-                optionsBuilder.UseSqlServer(connectionString);
+            // 🔥 DbContext Factory (tương đương RegisterFactory)
+            services.AddPooledDbContextFactory<TochuDBContext>(options =>
+                options.UseSqlServer(connectionString));
 
-                return new TochuDBContext(optionsBuilder.Options);
+            // 🔥 UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            }, new HierarchicalLifetimeManager());
+            // 🔥 Repositories (Scoped)
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ISICodemstRepository, SICodemstRepository>();
+            services.AddScoped<ISISeinoumstRepository, SISeinoumstRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
 
-            container.RegisterFactory<IDbContextFactory<TochuDBContext>>(c =>
-            {
-                var connectionString = ConfigurationManager
-                    .ConnectionStrings["DefaultConnection"]
-                    .ConnectionString;
+            // 🔥 Logging
+            services.AddTransient<ILogRepository, LogRepository>();
 
-                var optionsBuilder = new DbContextOptionsBuilder<TochuDBContext>();
-                optionsBuilder.UseSqlServer(connectionString);
-
-                return new PooledDbContextFactory<TochuDBContext>(optionsBuilder.Options);
-            });
-            // ── UnitOfWork ─────────────────────────────
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
-
-            // ── Repositories ───────────────────────────
-            container.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<IProductRepository, ProductRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<ISICodemstRepository, SICodemstRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<ISISeinoumstRepository, SISeinoumstRepository>(new HierarchicalLifetimeManager());
-            container.RegisterType<ICommentRepository, CommentRepository>(new HierarchicalLifetimeManager());
-
-            // Logging
-            container.RegisterType<ILogRepository, LogRepository>(new TransientLifetimeManager());
-
-            return container;
+            return services;
         }
         public static async Task InitializeDatabase()
         {

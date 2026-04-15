@@ -5,16 +5,12 @@
              xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
              xmlns:vm="clr-namespace:IMIP.Tochu.UI.ViewModels;assembly=IMIP.Tochu.UI">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type vm:MainViewModel}">
-            <view:Main/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
 
-        <DataTemplate DataType="{x:Type vm:SearchViewModel}">
-            <view:SearchView/>
-        </DataTemplate>
+                <ResourceDictionary Source="Resources/UCResources.xaml"/>
 
-        <DataTemplate DataType="{x:Type vm:MasterViewModel}">
-            <view:Master/>
-        </DataTemplate>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

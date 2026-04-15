@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.UI.Base;
+﻿using IMIP.Tochu.Core.Models;
+using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,34 @@ namespace IMIP.Tochu.UI.ViewModels
     {
         private readonly INavigationService _nav;
 
-        public string MasterName { get; set; }
+        private string _masterName = string.Empty;
+        public string MasterName
+        {
+            get => _masterName;
+            set => SetProperty(ref _masterName, value);
+        }
+        private Guid _userId = Guid.Empty;
+        public Guid UserId
+        {
+            get => _userId;
+            set => SetProperty(ref _userId, value);
+        }
+
+        private UserModel _user { get; set; }
+        public UserModel User
+        {
+            get => _user;
+            set  {
+                _user = value;
+                OnPropertyChanged();
+            }
+        }
+        public void SetUser(UserModel user)
+        {
+            User = user;
+            MasterName = user.Name;
+            UserId = user.Id;
+        }
 
         public ICommand GoBackCommand { get; }
 
