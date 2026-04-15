@@ -8,7 +8,7 @@
         x:Class="IMIP.Tochu.WPF.MainWindow"
         xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
         xmlns:vm="clr-namespace:IMIP.Tochu.UI.ViewModels;assembly=IMIP.Tochu.UI" 
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800">
 
    

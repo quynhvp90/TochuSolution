@@ -39,7 +39,7 @@ namespace IMIP.Tochu.UI.ViewModels
             GoBackCommand = new RelayCommand(() => _nav.GoBack());
             LoadUser = new RelayCommand(async () => await GetUsers());
             EditCommand = new RelayCommand<UserModel>(OnEdit);
-            _ = GetUsers();
+            GetUsers();
         }
         private void StartSearch()
         {
