@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMIP.Tochu.UI.ViewModels.Shared
+namespace IMIP.Tochu.WPF.ViewModels.Shared
 {
     internal class DialogViewModel
     {

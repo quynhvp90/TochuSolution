@@ -1,8 +1,9 @@
 ﻿using IMIP.Tochu.Core;
 using IMIP.Tochu.Infrastructure;
+using IMIP.Tochu.UI;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
-using IMIP.Tochu.UI.ViewModels;
+using IMIP.Tochu.WPF.ViewModels;
 using IMIP.Tochu.WPF.Helpers;
 using Infragistics.Controls.Charts;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,19 +48,9 @@ namespace IMIP.Tochu.WPF
             services.AddLogging();
             services.AddInfrastructureDI();
             services.AddCoreDI();
-            // --- Navigation ---
-            services.AddSingleton<INavigationService, NavigationService>();
-
-            // Factory để NavigationService resolve ViewModel từ DI
-            services.AddSingleton<Func<Type, ViewModelBase>>(sp =>
-                type => (ViewModelBase)sp.GetRequiredService(type));
-
+            
             // --- ViewModels ---
-            services.AddSingleton<MainWindowViewModel>();   // Singleton
-            services.AddTransient<MainViewModel>(); // Transient
-            services.AddTransient<SearchViewModel>(); // Transient
-            services.AddTransient<SearchViewModel>(); // Transient
-            services.AddTransient<MasterViewModel>(); // Transient
+            services.RegisterViewModels();
         }
 
         protected override void OnExit(ExitEventArgs e)

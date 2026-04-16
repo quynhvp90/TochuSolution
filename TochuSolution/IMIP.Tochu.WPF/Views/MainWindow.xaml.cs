@@ -1,6 +1,6 @@
 ﻿using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
-using IMIP.Tochu.UI.ViewModels;
+using IMIP.Tochu.WPF.ViewModels;
 using System.Windows;
 
 namespace IMIP.Tochu.WPF

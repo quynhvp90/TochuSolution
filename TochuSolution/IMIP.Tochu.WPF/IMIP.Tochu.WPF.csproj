@@ -14,6 +14,10 @@
     <PackageReference Include="Infragistics.WPF.Charts" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.Dashboards" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.DataGrids" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Editors" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Themes.IG" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Themes.Metro" Version="25.2.45" />
+    <PackageReference Include="Infragistics.WPF.Themes.Office2013" Version="25.2.45" />
   </ItemGroup>
 
   <ItemGroup>

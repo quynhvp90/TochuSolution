@@ -7,9 +7,9 @@
         xmlns:ig="http://schemas.infragistics.com/xaml" 
         x:Class="IMIP.Tochu.WPF.MainWindow"
         xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
-        xmlns:vm="clr-namespace:IMIP.Tochu.UI.ViewModels;assembly=IMIP.Tochu.UI" 
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels;assembly=IMIP.Tochu.WPF" 
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" SizeToContent="Manual"
+        Title="MainWindow" Height="500" Width="800">
 
    
 

@@ -3,11 +3,12 @@ using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.UI.Navigation;
+using IMIP.Tochu.WPF.Views.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace IMIP.Tochu.UI.ViewModels
+namespace IMIP.Tochu.WPF.ViewModels
 {
     public class SearchViewModel : ViewModelBase
     {
@@ -35,7 +36,8 @@ namespace IMIP.Tochu.UI.ViewModels
         {
             _nav = nav;
             _userService = userService;
-
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
             GoBackCommand = new RelayCommand(() => _nav.GoBack());
             LoadUser = new RelayCommand(async () => await GetUsers());
             EditCommand = new RelayCommand<UserModel>(OnEdit);
@@ -53,13 +55,15 @@ namespace IMIP.Tochu.UI.ViewModels
         {
             if (user is null) return;
 
-            MessageBox.Show(
-                $"User: {user.Name}\nEmail: {user.Email}",
-                "Edit User",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            //MessageBox.Show(
+            //    $"User: {user.Name}\nEmail: {user.Email}",
+            //    "Edit User",
+            //    MessageBoxButton.OK,
+            //    MessageBoxImage.Information);
 
-            _nav.NavigateTo<MasterViewModel>(vm => vm.SetUser(user));
+            _nav.OpenWindow<Registration, RegistrationViewModel>(null, win => { 
+                win.InitUI();
+            });
         }
         private async Task GetUsers()
         {

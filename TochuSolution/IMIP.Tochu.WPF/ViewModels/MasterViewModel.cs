@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
-namespace IMIP.Tochu.UI.ViewModels
+namespace IMIP.Tochu.WPF.ViewModels
 {
     public class MasterViewModel : ViewModelBase
     {
@@ -48,7 +49,7 @@ namespace IMIP.Tochu.UI.ViewModels
         public MasterViewModel(INavigationService nav)
         {
             _nav = nav;
-
+            Application.Current.MainWindow.WindowState = WindowState.Maximized;
             GoBackCommand = new RelayCommand(() => _nav.GoBack());
         }
     }

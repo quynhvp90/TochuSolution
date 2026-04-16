@@ -1,15 +1,18 @@
 ﻿using IMIP.Tochu.UI.Base;
+using System.Windows;
 
 namespace IMIP.Tochu.UI.Navigation
 {
     public class NavigationService : INavigationService
     {
         private readonly Func<Type, ViewModelBase> _factory;
+        private readonly Func<Type, Window> _factoryWindow;
         private readonly Stack<ViewModelBase> _history = new();
 
-        public NavigationService(Func<Type, ViewModelBase> factory)
+        public NavigationService(Func<Type, ViewModelBase> factory, Func<Type, Window> factoryWindow)
         {
             _factory = factory;
+            _factoryWindow = factoryWindow;
         }
 
         private ViewModelBase? _currentView;
@@ -43,15 +46,7 @@ namespace IMIP.Tochu.UI.Navigation
                 _ = loader.LoadAsync();
         }
 
-        public void OpenWindow<TViewModel>() where TViewModel : ViewModelBase
-            => OpenWindow<TViewModel>(null!);
-
-        public void OpenWindow<TViewModel>(Action<TViewModel>? configure)
-            where TViewModel : ViewModelBase
-        {
-            var vm = Resolve<TViewModel>(configure);
-            WindowRequested?.Invoke(this, vm);
-        }
+        
 
         public void GoBack()
         {
@@ -69,6 +64,41 @@ namespace IMIP.Tochu.UI.Navigation
             var vm = (TViewModel)_factory(typeof(TViewModel));
             configure?.Invoke(vm);
             return vm;
+        }
+        private TWindow ResolveWindow<TWindow>(Action<TWindow>? configure)
+            where TWindow : Window
+        {
+            var window = (TWindow)_factoryWindow(typeof(TWindow));
+            configure?.Invoke(window);
+            return window;
+        }
+
+        public void OpenWindow<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
+            where TWindow : Window
+            where TViewModel : ViewModelBase
+        {
+            var vm = Resolve<TViewModel>(configureVm);
+            if (vm is IAsyncLoad loader)
+                _ = loader.LoadAsync();
+            var window = ResolveWindow<TWindow>(configureWindow);
+            configureWindow?.Invoke(window);
+            window.DataContext = vm;
+            window.Owner = Application.Current.MainWindow;
+            window.Show();
+        }
+
+        public bool? OpenDialog<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
+            where TWindow : Window
+            where TViewModel : ViewModelBase
+        {
+            var vm = Resolve<TViewModel>(configureVm);
+            if (vm is IAsyncLoad loader)
+                _ = loader.LoadAsync();
+            var window = ResolveWindow<TWindow>(configureWindow);
+            configureWindow?.Invoke(window);
+            window.DataContext = vm;
+            window.Owner = Application.Current.MainWindow;
+            return window.ShowDialog();
         }
     }
 }

@@ -1,19 +1,23 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
-    xmlns:vm="clr-namespace:IMIP.Tochu.UI.ViewModels;assembly=IMIP.Tochu.UI">
+    xmlns:uc="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
+    xmlns:windows="clr-namespace:IMIP.Tochu.WPF.Views.Windows"
+    xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels">
 
     <DataTemplate DataType="{x:Type vm:MainViewModel}">
-        <view:Main/>
+        <uc:Main/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
-        <view:SearchView/>
+        <uc:SearchView/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:MasterViewModel}">
-        <view:Master/>
+        <uc:Master/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:RegistrationViewModel}">
+        <windows:Registration/>
     </DataTemplate>
 
 </ResourceDictionary>

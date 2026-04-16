@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace IMIP.Tochu.UI.Navigation
 {
@@ -17,8 +18,17 @@ namespace IMIP.Tochu.UI.Navigation
         void NavigateTo<TViewModel>(Action<TViewModel> configure)
             where TViewModel : ViewModelBase;
 
-        void OpenWindow<TViewModel>() where TViewModel : ViewModelBase;
-        void OpenWindow<TViewModel>(Action<TViewModel> configure)
+        // OPEN WINDOW
+        void OpenWindow<TWindow, TViewModel>(
+            Action<TViewModel>? configureVm = null,
+            Action<TWindow>? configureWindow = null)
+            where TWindow : Window
+            where TViewModel : ViewModelBase;
+
+        bool? OpenDialog<TWindow, TViewModel>(
+            Action<TViewModel>? configureVm = null,
+            Action<TWindow>? configureWindow = null)
+            where TWindow : Window
             where TViewModel : ViewModelBase;
 
         void GoBack();

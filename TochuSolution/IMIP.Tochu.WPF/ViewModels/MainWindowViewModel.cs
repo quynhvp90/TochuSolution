@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMIP.Tochu.UI.ViewModels
+namespace IMIP.Tochu.WPF.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
