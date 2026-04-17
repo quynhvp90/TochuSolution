@@ -9,6 +9,7 @@ namespace IMIP.Tochu.Core
     {
         public static IServiceCollection AddCoreDI(this IServiceCollection services)
         {
+            services.AddSingleton<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ISettingService, SettingService>();

@@ -1,6 +1,7 @@
 ﻿using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Shared;
 using IMIP.Tochu.Shared.Enums;
+using IMIP.Tochu.Shared.helpers;
 using Newtonsoft.Json;
 using static IMIP.Tochu.Infrastructure.SeedData.MasterData;
 
@@ -82,7 +83,7 @@ namespace IMIP.Tochu.Infrastructure.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "admin",
-                    PasswordHash = "admin", // TODO: hash
+                    PasswordHash = PasswordHelper.HashPassword("admin"),
                     Email = "admin@gmail.com",
                     CreatedAt = DateTime.Now
                 },
@@ -90,7 +91,7 @@ namespace IMIP.Tochu.Infrastructure.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "user1",
-                    PasswordHash = "user",
+                    PasswordHash = PasswordHelper.HashPassword("user1"),
                     Email = "user1@gmail.com",
                     CreatedAt = DateTime.Now
                 },
@@ -98,7 +99,7 @@ namespace IMIP.Tochu.Infrastructure.Data
                 {
                     Id = Guid.NewGuid(),
                     Name = "user2",
-                    PasswordHash = "user",
+                    PasswordHash = PasswordHelper.HashPassword("user2"),
                     Email = "user2@gmail.com",
                     CreatedAt = DateTime.Now
                 }

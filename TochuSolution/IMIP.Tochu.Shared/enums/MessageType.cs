@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMIP.Tochu.WPF.ViewModels.Shared
+namespace IMIP.Tochu.Shared.enums
 {
-    internal class DialogViewModel
+    public enum MessageType
     {
+        Info,
+        Success,
+        Error,
+        Confirm
     }
 }

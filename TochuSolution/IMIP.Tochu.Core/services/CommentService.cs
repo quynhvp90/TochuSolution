@@ -3,11 +3,6 @@ using IMIP.Tochu.Core.Mappers;
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IMIP.Tochu.Core.Services
 {

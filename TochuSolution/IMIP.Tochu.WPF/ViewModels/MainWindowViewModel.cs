@@ -1,19 +1,13 @@
-﻿using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBaseWPF
     {
-        private readonly INavigationService _navigation;
 
-        private ViewModelBase _currentView;
-        public ViewModelBase CurrentView
+        private ViewModelBaseWPF _currentView;
+        public ViewModelBaseWPF CurrentView
         {
             get => _currentView;
             set
@@ -23,13 +17,8 @@ namespace IMIP.Tochu.WPF.ViewModels
             }
         }
 
-        public MainWindowViewModel(INavigationService navigation)
+        public MainWindowViewModel(INavigationService navigation) : base(navigation)
         {
-            _navigation = navigation;
-            //MainVM = new MainViewModel(this);
-            //SearchVM = new SearchViewModel(this);
-            //MasterVM = new MasterViewModel(this);
-
             if (_navigation is NavigationService nav)
             {
                 nav.CurrentViewChanged += () =>

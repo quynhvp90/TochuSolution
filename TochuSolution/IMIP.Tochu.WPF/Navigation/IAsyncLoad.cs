@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMIP.Tochu.UI.Navigation
+namespace IMIP.Tochu.WPF.Navigation
 {
     public interface IAsyncLoad
     {

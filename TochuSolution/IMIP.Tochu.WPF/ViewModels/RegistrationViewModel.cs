@@ -1,20 +1,13 @@
-﻿using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class RegistrationViewModel : ViewModelBase
+    public class RegistrationViewModel : ViewModelBaseWPF
     {
-        private readonly INavigationService _nav;
 
-        public RegistrationViewModel(INavigationService nav)
+        public RegistrationViewModel(INavigationService nav) : base(nav)
         {
-            _nav = nav;
         }
     }
 }

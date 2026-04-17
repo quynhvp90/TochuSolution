@@ -1,14 +1,9 @@
-﻿using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
+﻿using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using IMIP.Tochu.WPF.Views.UserControls;
 using IMIP.Tochu.WPF.Views.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace IMIP.Tochu.WPF
@@ -21,7 +16,7 @@ namespace IMIP.Tochu.WPF
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Factory để NavigationService resolve ViewModel từ DI
-            services.AddSingleton<Func<Type, ViewModelBase>>(sp => type => (ViewModelBase)sp.GetRequiredService(type));
+            services.AddSingleton<Func<Type, ViewModelBaseWPF>>(sp => type => (ViewModelBaseWPF)sp.GetRequiredService(type));
             services.AddSingleton<Func<Type, Window>>(sp => type => (Window)sp.GetRequiredService(type));
 
             // ViewModels
@@ -31,6 +26,7 @@ namespace IMIP.Tochu.WPF
             services.AddTransient<SearchViewModel>(); // Transient
             services.AddTransient<MasterViewModel>(); // Transient
             services.AddTransient<RegistrationViewModel>(); // Transient
+            services.AddTransient<LoginViewModel>(); // Transient
 
             // Windows
             services.AddTransient<Registration>();
@@ -38,6 +34,7 @@ namespace IMIP.Tochu.WPF
             services.AddTransient<Main>();
             services.AddTransient<SearchView>();
             services.AddTransient<Master>();
+            services.AddTransient<LoginWindow>();
             return services;
         }
     }

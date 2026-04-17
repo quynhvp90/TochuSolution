@@ -1,4 +1,5 @@
 ﻿using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,33 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace IMIP.Tochu.UI.Navigation
+namespace IMIP.Tochu.WPF.Navigation
 {
     public interface INavigationService
     {
-        ViewModelBase? CurrentView { get; }
+        ViewModelBaseWPF? CurrentView { get; }
         bool CanGoBack { get; }
 
-        void NavigateTo<TViewModel>() where TViewModel : ViewModelBase;
+        void NavigateTo<TViewModel>() where TViewModel : ViewModelBaseWPF;
         void NavigateTo<TViewModel>(Action<TViewModel> configure)
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelBaseWPF;
 
         // OPEN WINDOW
         void OpenWindow<TWindow, TViewModel>(
             Action<TViewModel>? configureVm = null,
             Action<TWindow>? configureWindow = null)
             where TWindow : Window
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelBaseWPF;
 
         bool? OpenDialog<TWindow, TViewModel>(
             Action<TViewModel>? configureVm = null,
             Action<TWindow>? configureWindow = null)
             where TWindow : Window
-            where TViewModel : ViewModelBase;
+            where TViewModel : ViewModelBaseWPF;
 
         void GoBack();
 
         event Action? CurrentViewChanged;
-        event EventHandler<ViewModelBase>? WindowRequested;
+        event EventHandler<ViewModelBaseWPF>? WindowRequested;
     }
 }

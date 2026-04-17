@@ -11,7 +11,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" SizeToContent="Manual"
         Title="MainWindow" Height="500" Width="800">
 
-   
+
 
     <Grid>
         <ContentControl Content="{Binding CurrentView}" />

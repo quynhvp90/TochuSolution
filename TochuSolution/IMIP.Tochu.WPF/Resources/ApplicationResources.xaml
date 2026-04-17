@@ -4,6 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/ButtonStyles.xaml"/>
         <ResourceDictionary Source="/Resources/UCResources.xaml"/>
+        <ResourceDictionary Source="/Resources/BorderStyles.xaml"/>
+        <ResourceDictionary Source="/Resources/TextBoxStyles.xaml"/>
         
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,23 +1,21 @@
 ﻿using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
+using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using System.Windows;
 using System.Windows.Input;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBaseWPF
     {
-        private readonly INavigationService _nav;
 
         public string UserName { get; set; }
 
         public ICommand GoSearchCommand { get; }
         public ICommand GoMasterCommand { get; }
 
-        public MainViewModel(INavigationService nav)
+        public MainViewModel(INavigationService nav) : base(nav)
         {
-            _nav = nav;
-
             UserName = "Default User";
             if (Application.Current != null && Application.Current.MainWindow != null)
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
@@ -27,11 +25,11 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         public void GoToSearch()
         {
-            _nav.NavigateTo<SearchViewModel>();
+            _navigation.NavigateTo<SearchViewModel>();
         }
         public void GoToMaster()
         {
-            _nav.NavigateTo<MasterViewModel>();
+            _navigation.NavigateTo<MasterViewModel>();
         }
     }
 }

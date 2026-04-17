@@ -1,22 +1,23 @@
 ﻿using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using System.Windows;
 
-namespace IMIP.Tochu.UI.Navigation
+namespace IMIP.Tochu.WPF.Navigation
 {
     public class NavigationService : INavigationService
     {
-        private readonly Func<Type, ViewModelBase> _factory;
+        private readonly Func<Type, ViewModelBaseWPF> _factory;
         private readonly Func<Type, Window> _factoryWindow;
-        private readonly Stack<ViewModelBase> _history = new();
+        private readonly Stack<ViewModelBaseWPF> _history = new();
 
-        public NavigationService(Func<Type, ViewModelBase> factory, Func<Type, Window> factoryWindow)
+        public NavigationService(Func<Type, ViewModelBaseWPF> factory, Func<Type, Window> factoryWindow)
         {
             _factory = factory;
             _factoryWindow = factoryWindow;
         }
 
-        private ViewModelBase? _currentView;
-        public ViewModelBase? CurrentView
+        private ViewModelBaseWPF? _currentView;
+        public ViewModelBaseWPF? CurrentView
         {
             get => _currentView;
             private set
@@ -30,13 +31,13 @@ namespace IMIP.Tochu.UI.Navigation
         public bool CanGoBack => _history.Count > 1;
 
         public event Action? CurrentViewChanged;
-        public event EventHandler<ViewModelBase>? WindowRequested;
+        public event EventHandler<ViewModelBaseWPF>? WindowRequested;
 
-        public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
+        public void NavigateTo<TViewModel>() where TViewModel : ViewModelBaseWPF
             => NavigateTo<TViewModel>(null!);
 
         public void NavigateTo<TViewModel>(Action<TViewModel>? configure)
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelBaseWPF
         {
             var vm = Resolve<TViewModel>(configure);
             _history.Push(vm);
@@ -59,7 +60,7 @@ namespace IMIP.Tochu.UI.Navigation
         }
 
         private TViewModel Resolve<TViewModel>(Action<TViewModel>? configure)
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelBaseWPF
         {
             var vm = (TViewModel)_factory(typeof(TViewModel));
             configure?.Invoke(vm);
@@ -75,7 +76,7 @@ namespace IMIP.Tochu.UI.Navigation
 
         public void OpenWindow<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
             where TWindow : Window
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelBaseWPF
         {
             var vm = Resolve<TViewModel>(configureVm);
             if (vm is IAsyncLoad loader)
@@ -83,13 +84,12 @@ namespace IMIP.Tochu.UI.Navigation
             var window = ResolveWindow<TWindow>(configureWindow);
             configureWindow?.Invoke(window);
             window.DataContext = vm;
-            window.Owner = Application.Current.MainWindow;
             window.Show();
         }
 
         public bool? OpenDialog<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
             where TWindow : Window
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelBaseWPF
         {
             var vm = Resolve<TViewModel>(configureVm);
             if (vm is IAsyncLoad loader)

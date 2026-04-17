@@ -1,8 +1,8 @@
 ﻿using IMIP.Tochu.Core.Interfaces;
 using IMIP.Tochu.Core.Models;
-using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
+using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using IMIP.Tochu.WPF.Views.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -10,9 +10,8 @@ using System.Windows.Input;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class SearchViewModel : ViewModelBase
+    public class SearchViewModel : ViewModelBaseWPF
     {
-        private readonly INavigationService _nav;
         private readonly IUserService _userService;
         private CancellationTokenSource _cts;
         public ObservableCollection<UserModel> Users { get; } = new();
@@ -32,13 +31,12 @@ namespace IMIP.Tochu.WPF.ViewModels
         public ICommand LoadUser { get;}
         public ICommand EditCommand { get; }
 
-        public SearchViewModel(INavigationService nav, IUserService userService)
+        public SearchViewModel(INavigationService nav, IUserService userService) : base(nav)
         {
-            _nav = nav;
             _userService = userService;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            GoBackCommand = new RelayCommand(() => _nav.GoBack());
+            GoBackCommand = new RelayCommand(() => _navigation.GoBack());
             LoadUser = new RelayCommand(async () => await GetUsers());
             EditCommand = new RelayCommand<UserModel>(OnEdit);
             GetUsers();
@@ -61,7 +59,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             //    MessageBoxButton.OK,
             //    MessageBoxImage.Information);
 
-            _nav.OpenWindow<Registration, RegistrationViewModel>(null, win => { 
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win => { 
                 win.InitUI();
             });
         }

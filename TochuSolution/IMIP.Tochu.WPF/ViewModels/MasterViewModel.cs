@@ -1,20 +1,14 @@
 ﻿using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.UI.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using System.Windows;
 using System.Windows.Input;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class MasterViewModel : ViewModelBase
+    public class MasterViewModel : ViewModelBaseWPF
     {
-        private readonly INavigationService _nav;
-
         private string _masterName = string.Empty;
         public string MasterName
         {
@@ -46,11 +40,10 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         public ICommand GoBackCommand { get; }
 
-        public MasterViewModel(INavigationService nav)
+        public MasterViewModel(INavigationService nav) : base(nav)
         {
-            _nav = nav;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            GoBackCommand = new RelayCommand(() => _nav.GoBack());
+            GoBackCommand = new RelayCommand(() => _navigation.GoBack());
         }
     }
 }
