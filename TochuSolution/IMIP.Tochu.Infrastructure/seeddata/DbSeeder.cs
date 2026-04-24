@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Domain.Entities;
+﻿using IMIP.Tochu.Domain.entities;
+using IMIP.Tochu.Domain.Entities;
 using IMIP.Tochu.Shared;
 using IMIP.Tochu.Shared.Enums;
 using IMIP.Tochu.Shared.helpers;
@@ -39,16 +40,11 @@ namespace IMIP.Tochu.Infrastructure.Data
 
         private static readonly string[] _sampleComments =
         {
-            "Product meets quality standards.",
-            "Need to re-check technical specifications.",
-            "Confirmed with customer.",
-            "This batch has packaging issues.",
-            "Good quality, delivered on time.",
-            "Additional inspection documents required.",
-            "QC inspection completed.",
-            "Customer requested earlier delivery.",
-            "Product meets durability requirements.",
-            "Packaging process needs to be reviewed."
+            "AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBB CCCCCCCCCCCCCCCC",
+            "あああああああああああああ\r\nいいいいいいいいいいい\r\nうううううううううううううう",
+            "1111111111111\r\n2222222222222222\r\n44444444444444444444444\r\n55555555555555555555",
+            "うううううううううううううう",
+            "唖唖唖唖唖唖唖唖唖唖唖唖唖",
         };
 
         public static async Task SeedAsync(TochuDBContext context, bool isProduction = false)
@@ -57,8 +53,8 @@ namespace IMIP.Tochu.Infrastructure.Data
             {
                 AppLogger.Info("Start seeding database...");
 
-                await SeedUsers(context);
-                await SeedProducts(context, isProduction);
+                await SeedSI_TANTOU(context);
+                await SeedSI_MEMO(context);
                 await SeedMasterData(context);
                 await SeedComments(context);
 
@@ -73,159 +69,54 @@ namespace IMIP.Tochu.Infrastructure.Data
             }
         }
 
-        // ───────────────── USERS ─────────────────
-        private static async Task SeedUsers(TochuDBContext context)
+        // ───────────────── SI_TANTOU ─────────────────
+        private static async Task SeedSI_TANTOU(TochuDBContext context)
         {
-            if (context.Users.Any()) return;
+            if (context.SI_TANTOUs.Any()) return;
 
-            context.Users.AddRange(
-                new User
+            context.SI_TANTOUs.AddRange(
+                new SI_TANTOU
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "admin",
-                    PasswordHash = PasswordHelper.HashPassword("admin"),
-                    Email = "admin@gmail.com",
-                    CreatedAt = DateTime.Now
+                    JIGYOUSHO = "310",
+                    NUM = 1,
+                    TEXT1 = "AAAAAAA"
                 },
-                new User
+                new SI_TANTOU
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "user1",
-                    PasswordHash = PasswordHelper.HashPassword("user1"),
-                    Email = "user1@gmail.com",
-                    CreatedAt = DateTime.Now
+                    JIGYOUSHO = "310",
+                    NUM = 2,
+                    TEXT1 = "BBBBBBB"
                 },
-                new User
+                new SI_TANTOU
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "user2",
-                    PasswordHash = PasswordHelper.HashPassword("user2"),
-                    Email = "user2@gmail.com",
-                    CreatedAt = DateTime.Now
+                    JIGYOUSHO = "310",
+                    NUM = 3,
+                    TEXT1 = "CCCCCCC"
                 }
             );
 
             await Task.CompletedTask;
         }
 
-        // ───────────────── PRODUCTS ─────────────────
-        private static async Task SeedProducts(TochuDBContext context, bool isProduction)
+        // ───────────────── SI_MEMO ─────────────────
+        private static async Task SeedSI_MEMO(TochuDBContext context)
         {
-            if (context.Products.Any()) return;
+            if (context.SI_MEMOs.Any()) return;
 
-            var baseOrderDate = new DateTime(2024, 1, 1);
-
-            int total = isProduction ? 200 : 3000;
-
-            for (int i = 1; i <= total; i++)
-            {
-                var orderDate = baseOrderDate.AddDays(_rnd.Next(0, 365));
-
-                context.Products.Add(new Product
+            context.SI_MEMOs.AddRange(
+                _sampleComments.Select((c, i) => new SI_MEMO
                 {
-                    Id = Guid.NewGuid(),
-                    CreatedAt = DateTime.Now,
-                    ProductId = 1000 + i,
-                    OrderNumber = 2000 + i,
-                    OrderDate = orderDate,
-                    DeliveryDate = orderDate.AddDays(_rnd.Next(7, 60)),
-                    PrintingDate = orderDate.AddDays(_rnd.Next(1, 6)),
-
-                    CustomerName = _customerNames[_rnd.Next(_customerNames.Length)],
-                    PartNumber = _rnd.Next(10000, 99999),
-                    ProductName = _productNames[_rnd.Next(_productNames.Length)],
-
-                    OrderQuantity = _rnd.Next(100, 1000),
-                    Unit = _units[_rnd.Next(_units.Length)],
-
-                    PackagingCD = _packagingCDs[_rnd.Next(_packagingCDs.Length)],
-                    PackagingName = _packagingNames[_rnd.Next(_packagingNames.Length)],
-
-                    LotNumber = _rnd.Next(100, 999),
-                    PerformanceM = _performanceMs[_rnd.Next(_performanceMs.Length)],
-                    ForCustomers = _forCustomers[_rnd.Next(_forCustomers.Length)],
-
-                    PerformanceTable = _performanceTables[_rnd.Next(_performanceTables.Length)],
-
-                    Insured = _rnd.Next(0, 2) == 1,
-                    Printing = _rnd.Next(0, 2) == 1,
-
-                    ResinContent = Math.Round((decimal)(_rnd.NextDouble() * 10 + 90), 2),
-                    TransverseRuptureStrengthX = Math.Round((decimal)(_rnd.NextDouble() * 50 + 200), 2),
-                    TransverseRuptureStrengthR = Math.Round((decimal)(_rnd.NextDouble() * 20 + 10), 2),
-                    StickyPoint = Math.Round((decimal)(_rnd.NextDouble() * 30 + 100), 2),
-                    AFS_FN = Math.Round((decimal)(_rnd.NextDouble() * 10 + 40), 2),
-                });
-            }
-
-            await Task.CompletedTask;
-        }
-
-        // ───────────────── MASTER DATA (JSON) ─────────────────
-        private static async Task SeedMasterData(TochuDBContext context)
-        {
-            if (context.SI_Codemsts.Any() || context.SI_Seinoumsts.Any()) return;
-
-            var basePath = AppContext.BaseDirectory;
-            var filePath = Path.Combine(basePath, "SeedData", "masterdata.json");
-
-            if (!File.Exists(filePath))
-            {
-                AppLogger.Error("masterdata.json not found");
-                return;
-            }
-
-            var jsonData = File.ReadAllText(filePath);
-            var masterData = JsonConvert.DeserializeObject<MasterDataSet>(jsonData);
-
-            if (masterData == null) return;
-
-            if (masterData.ProductSpecs?.Count > 0)
-            {
-                context.SI_Seinoumsts.AddRange(masterData.ProductSpecs.Select(ps => new SI_Seinoumst
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedAt = DateTime.Now,
-                    CustomerName = ps.CustomerName,
-                    Product = ps.ProductName,
-                    Min = (decimal)ps.Min,
-                    Max = (decimal)ps.Max,
-                    Num = (int)ps.Id
-                }));
-            }
-
-            if (masterData.Properties?.Count > 0)
-            {
-                context.SI_Codemsts.AddRange(masterData.Properties.Select(p => new SI_Codemst
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedAt = DateTime.Now,
-                    Num = (int)p.Id,
-                    Nm = p.Nm,
-                    Enum = (int)p.Enum,
-                    Kbn = p.Kbn,
-                    Eyobi = p.Eyobi
-                }));
-            }
-
-            await Task.CompletedTask;
-        }
-
-        // ───────────────── COMMENTS ─────────────────
-        private static async Task SeedComments(TochuDBContext context)
-        {
-            if (context.Comments.Any()) return;
-
-            context.Comments.AddRange(
-                _sampleComments.Select((c, i) => new Comment
-                {
-                    Id = Guid.NewGuid(),
-                    Content = c ?? "123",
-                    IsActive = true,
-                    UpdatedAt = DateTime.Now,
-                    CreatedAt = DateTime.Now.AddDays(-i)
+                    JIGYOUSHO = "310",
+                    NUM = i + 1,
+                    MEMO = c
                 })
             );
+            context.SI_MEMOs.Add(new SI_MEMO
+            {
+                JIGYOUSHO = "590",
+                NUM = 5,
+                MEMO = "唖唖唖唖唖唖唖唖唖唖唖唖唖"
+            });
 
             await Task.CompletedTask;
         }

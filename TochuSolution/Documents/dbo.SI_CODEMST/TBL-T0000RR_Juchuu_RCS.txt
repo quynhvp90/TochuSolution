@@ -1,0 +1,25 @@
+create table [dbo].[T0000RR_Juchuu_RCS] (
+  [JuchuuNO] int not null
+  , [JuchuuDenpyouNO] int not null
+  , [JuchuuKyotenCD] varchar(3)
+  , [JuchuuKyotenNM] varchar(64)
+  , [JuchuuYMD] date
+  , [Nouki] date
+  , [ShukkaKyotenCD] varchar(12)
+  , [ShukkaBashoCD] varchar(12)
+  , [JuchuuKBN] varchar(12)
+  , [HaisouCD] varchar(12)
+  , [ChikuCD] varchar(12)
+  , [NouSCD] varchar(12)
+  , [NouSSNM] varchar(64)
+  , [UserHinban] varchar(64)
+  , [UserHinmei] varchar(64)
+  , [ItemCD] varchar(32)
+  , [ItemNM] varchar(64)
+  , [JuchuuSuu] int
+  , [NisugataCD] varchar(16)
+  , [UriKeitaiKBN] varchar(10)
+  , [Tekiyou1] varchar(64)
+  , [TankaUnitCD] varchar(12)
+  , primary key (JuchuuNO)
+);

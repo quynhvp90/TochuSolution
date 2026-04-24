@@ -27,8 +27,13 @@ namespace IMIP.Tochu.WPF
             _serviceProvider = services.BuildServiceProvider();
 
             // Navigate Default Application View
+            var appDataContext = _serviceProvider.GetRequiredService<IAppDataContext>();
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
             nav.NavigateTo<MainViewModel>();
+
+            // check Args default
+            string branchCode = e.Args.Length > 0 ? e.Args[0] : "310";
+            appDataContext.SetBranchCode(branchCode);
 
             // ================= CHECK LOGIN =================
             var token = SecureStorage.Load();
@@ -38,7 +43,7 @@ namespace IMIP.Tochu.WPF
 
                 if (user != null && !Helper.IsTokenExpired(token))
                 {
-                    AppSession.CurrentUser = user;
+                    appDataContext.SetCurrentUser(user);
                     var newToken = Helper.CreateTokenFromUser(user);
                     SecureStorage.Save(newToken);
                     nav.OpenWindow<MainWindow, MainWindowViewModel>();

@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.WPF.Navigation;
+﻿using IMIP.Tochu.WPF.AppData;
+using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels;
 using IMIP.Tochu.WPF.ViewModels.Shared;
 using IMIP.Tochu.WPF.Views.UserControls;
@@ -14,6 +15,8 @@ namespace IMIP.Tochu.WPF
         {
             // --- Navigation ---
             services.AddSingleton<INavigationService, NavigationService>();
+            // -- AppContext ---
+            services.AddSingleton<IAppDataContext, AppDataContext>();
 
             // Factory để NavigationService resolve ViewModel từ DI
             services.AddSingleton<Func<Type, ViewModelBaseWPF>>(sp => type => (ViewModelBaseWPF)sp.GetRequiredService(type));

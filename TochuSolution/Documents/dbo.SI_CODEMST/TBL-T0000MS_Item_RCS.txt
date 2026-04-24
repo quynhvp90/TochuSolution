@@ -1,0 +1,5 @@
+create table [dbo].[T0000MS_Item_RCS] (
+  [UserHinban] varchar(64) not null
+  , [UserHinmei] varchar(64)
+  , primary key (UserHinban)
+);

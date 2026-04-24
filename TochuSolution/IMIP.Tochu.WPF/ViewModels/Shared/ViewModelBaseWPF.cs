@@ -16,15 +16,17 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
     public class ViewModelBaseWPF : ViewModelBase
     {
         public INavigationService _navigation;
+        private readonly IAppDataContext _appDataContext;
         public ICommand Logout { get; }
-        public ViewModelBaseWPF(INavigationService navigation)
+        public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext)
         {
             _navigation = navigation;
+            _appDataContext = appDataContext;
             Logout = new RelayCommand(() => LogoutApplication());
         }
         public void LogoutApplication()
         {
-            AppSession.CurrentUser = null;
+            _appDataContext.SetCurrentUser(null);
             SecureStorage.Remove();
             _navigation.OpenWindow<LoginWindow, LoginViewModel>();
             // close all windows except the login window

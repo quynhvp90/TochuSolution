@@ -71,9 +71,13 @@ namespace IMIP.Tochu.Core.Services
             return products;
         }
 
-        public async Task<PagedResult<ProductModel>> SearchProductAsync(ProductSearchModel search)
+        public async Task<PagedResult<ProductModel>> SearchProductAsync(ProductSearchModel? search)
         {
             var products = _unitOfWork.Products.Query();
+            if (search == null)
+            {
+                search = new ProductSearchModel();
+            }
             // check search fields DeliveryDate, CustomerName, PartNumber, ProductName, PerformanceTable, OrderDateFrom, OrderDateTo
             if (search.DeliveryDate.HasValue)
             {

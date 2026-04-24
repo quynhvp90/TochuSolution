@@ -18,5 +18,9 @@ namespace IMIP.Tochu.UI.Base
         }
 
         protected void ClearError() => ErrorMessage = null;
+
+        protected virtual void OnNavigatedTo(bool isBack) { }
+
+        protected virtual void OnNavigatedFrom() { }
     }
 }

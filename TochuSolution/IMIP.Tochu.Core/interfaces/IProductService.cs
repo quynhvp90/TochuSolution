@@ -10,7 +10,7 @@ namespace IMIP.Tochu.Core.Interfaces
 {
     public interface IProductService
     {
-        Task<PagedResult<ProductModel>> SearchProductAsync(ProductSearchModel search);
+        Task<PagedResult<ProductModel>> SearchProductAsync(ProductSearchModel? search);
         List<ProductModel> GetProductChilds(List<ProductModel> products);
         void GetProductChild(ProductModel products);
         Task<ProductModel> GetByIdAsync(Guid id);

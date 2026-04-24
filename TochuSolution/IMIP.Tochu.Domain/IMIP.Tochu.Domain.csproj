@@ -10,4 +10,8 @@
     <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="exceptions\" />
+  </ItemGroup>
+
 </Project>

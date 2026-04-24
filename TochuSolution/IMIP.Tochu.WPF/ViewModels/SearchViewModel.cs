@@ -12,9 +12,11 @@ namespace IMIP.Tochu.WPF.ViewModels
 {
     public class SearchViewModel : ViewModelBaseWPF
     {
-        private readonly IUserService _userService;
+        private readonly IProductService _productService;
         private CancellationTokenSource _cts;
         public ObservableCollection<UserModel> Users { get; } = new();
+        public ObservableCollection<ProductModel> Products { get; } = new();
+
         private string _searchText = string.Empty;
         public string SearchText
         {
@@ -28,18 +30,18 @@ namespace IMIP.Tochu.WPF.ViewModels
         }
 
         public ICommand GoBackCommand { get; }
-        public ICommand LoadUser { get;}
+        public ICommand LoadProducts { get;}
         public ICommand EditCommand { get; }
 
-        public SearchViewModel(INavigationService nav, IUserService userService) : base(nav)
+        public SearchViewModel(INavigationService nav, IProductService productService) : base(nav)
         {
-            _userService = userService;
+            _productService = productService;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             GoBackCommand = new RelayCommand(() => _navigation.GoBack());
-            LoadUser = new RelayCommand(async () => await GetUsers());
-            EditCommand = new RelayCommand<UserModel>(OnEdit);
-            GetUsers();
+            LoadProducts = new RelayCommand(async () => await GetProducts());
+            EditCommand = new RelayCommand<ProductModel>(OnEdit);
+            GetProducts();
         }
         private void StartSearch()
         {
@@ -49,13 +51,13 @@ namespace IMIP.Tochu.WPF.ViewModels
             _ = SearchAsync(_searchText, _cts.Token);
         }
         // --- Edit button handler ---
-        private void OnEdit(UserModel? user)
+        private void OnEdit(ProductModel? product)
         {
-            if (user is null) return;
+            if (product is null) return;
 
             //MessageBox.Show(
-            //    $"User: {user.Name}\nEmail: {user.Email}",
-            //    "Edit User",
+            //    $"Product: {product.Name}\nPrice: {product.Price}",
+            //    "Edit Product",
             //    MessageBoxButton.OK,
             //    MessageBoxImage.Information);
 
@@ -63,15 +65,15 @@ namespace IMIP.Tochu.WPF.ViewModels
                 win.InitUI();
             });
         }
-        private async Task GetUsers()
+        private async Task GetProducts()
         {
-            var users = await _userService.GetUsersAsync();
-            Users.Clear();
-            foreach (var user in users)
+            var products = await _productService.SearchProductAsync();
+            Products.Clear();
+            foreach (var product in products)
             {
-                Users.Add(user);
+                Products.Add(product);
             }
-            OnPropertyChanged(nameof(Users));
+            OnPropertyChanged(nameof(Products));
         }
         private async Task SearchAsync(string keyword, CancellationToken token)
         {
@@ -83,15 +85,15 @@ namespace IMIP.Tochu.WPF.ViewModels
                 if (token.IsCancellationRequested)
                     return;
 
-                var result = await _userService.GetUsersAsync(keyword);
+                var result = await _productService.GetProductsAsync(keyword);
 
                 if (token.IsCancellationRequested)
                     return;
 
-                Users.Clear();
+                Products.Clear();
                 foreach (var item in result)
                 {
-                    Users.Add(item);
+                    Products.Add(item);
                 }
             }
             catch (TaskCanceledException)

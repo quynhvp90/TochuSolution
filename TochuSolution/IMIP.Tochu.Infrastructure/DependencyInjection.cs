@@ -32,9 +32,9 @@ namespace IMIP.Tochu.Infrastructure
 
             // 🔥 Repositories (Scoped)
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ISICodemstRepository, SICodemstRepository>();
-            services.AddScoped<ISISeinoumstRepository, SISeinoumstRepository>();
+            services.AddScoped<IProductRepository, SI_MEMORepository>();
+            services.AddScoped<ISICodemstRepository, SI_SEINOUDATARepository>();
+            services.AddScoped<ISISeinoumstRepository, SI_SEINOUMSTRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
 
             // 🔥 Logging

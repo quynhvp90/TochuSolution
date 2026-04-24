@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace IMIP.Tochu.Domain.Entities
 {
-    public class SI_Seinoumst : BaseEntity
+    public class SI_SEINOUMST
     {
-        public int Num { get; set; }
-        public string Product { get; set; }
-        public string CustomerName { get; set; }
-        public decimal Min { get; set; }
-        public decimal Max { get; set; }
+        public string PRODUCT { get; set; } = null!;
+        public string NOUSCD { get; set; } = null!;
+        public int NUM { get; set; }
+
+        public decimal? MIN { get; set; }
+        public decimal? MAX { get; set; }
     }
 }

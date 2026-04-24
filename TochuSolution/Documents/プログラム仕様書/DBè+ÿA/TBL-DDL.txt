@@ -1,0 +1,75 @@
+create table [dbo].SI_CODEMST (
+  KBN varchar(2) not null
+  , ID int not null
+  , NM varchar(64) not null
+  , ENUM int default 0
+  , EYOBI varchar(32)
+  , primary key (KBN,ID)
+);
+
+
+create table [dbo].SI_MEMO (
+  JIGYOUSHO varchar(9) not null
+  , NUM int not null
+  , MEMO varchar(256)
+  , primary key (JIGYOUSHO,NUM)
+);
+
+create table [dbo].SI_SEINOUDATA (
+  JUCHUUNO int not null
+  , NUM int not null
+  , LOTNO varchar(32)
+  , USERHINBAN varchar(64)
+  , NOUSCD varchar(12) not null
+  , T10 decimal(5, 2)
+  , T20 decimal(5, 2)
+  , T30 decimal(5, 2)
+  , T40 decimal(5, 2)
+  , T50 decimal(5, 2)
+  , T60 decimal(5, 2)
+  , T70 decimal(5, 2)
+  , T80 decimal(5, 2)
+  , T90 decimal(5, 2)
+  , T100 decimal(5, 2)
+  , T110 decimal(5, 2)
+  , T120 decimal(5, 2)
+  , T130 decimal(5, 2)
+  , T140 decimal(5, 2)
+  , T150 decimal(5, 2)
+  , T160 decimal(5, 2)
+  , UPTIME datetime
+  , NOUKI date
+  , NOUSSNM varchar(64)
+  , NISUGATACD varchar(16)
+  , JUCHUSUU int
+  , SUUJP varchar(24)
+  , TANTOU1 varchar(32)
+  , TANTOU2 varchar(32)
+  , TANTOU3 varchar(32)
+  , COMM varchar(512)
+  , PRINTDT date default '9999-12-31'
+  , MA150 decimal(5, 2)
+  , MA20 decimal(5, 2)
+  , MA30 decimal(5, 2)
+  , primary key (JUCHUUNO,NUM)
+);
+
+
+create table [dbo].SI_SEINOUMST (
+  PRODUCT varchar(64) not null
+  , NOUSCD varchar(12) not null
+  , NUM int not null
+  , MIN decimal(5, 2)
+  , MAX decimal(5, 2)
+  , primary key (PRODUCT,NOUSCD,NUM)
+);
+
+
+
+create table [dbo].SI_TANTOU (
+  JIGYOUSHO varchar(9) not null
+  , NUM int not null
+  , TEXT1 varchar(32)
+  , primary key (JIGYOUSHO,NUM)
+);
+

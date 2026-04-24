@@ -39,12 +39,17 @@ namespace IMIP.Tochu.WPF.Navigation
         public void NavigateTo<TViewModel>(Action<TViewModel>? configure)
             where TViewModel : ViewModelBaseWPF
         {
+            CurrentView?.OnNavigatedFrom();
+
             var vm = Resolve<TViewModel>(configure);
             _history.Push(vm);
             CurrentView = vm;
+            vm.OnNavigatedTo(isBack: false);
 
             if (vm is IAsyncLoad loader)
                 _ = loader.LoadAsync();
+
+            CurrentViewChanged?.Invoke();
         }
 
         
@@ -52,11 +57,15 @@ namespace IMIP.Tochu.WPF.Navigation
         public void GoBack()
         {
             if (!CanGoBack) return;
+            CurrentView?.OnNavigatedFrom();
+
             _history.Pop();
             CurrentView = _history.Peek();
+            CurrentView.OnNavigatedTo(isBack: true); // 🔥 back
 
             if (CurrentView is IAsyncLoad loader)
                 _ = loader.LoadAsync();
+            CurrentViewChanged?.Invoke();
         }
 
         private TViewModel Resolve<TViewModel>(Action<TViewModel>? configure)

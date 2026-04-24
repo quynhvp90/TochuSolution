@@ -19,15 +19,17 @@ namespace IMIP.Tochu.WPF.ViewModels
     public class LoginViewModel : ViewModelBaseWPF
     {
         private readonly IAuthService _auth;
+        private readonly IAppDataContext _appDataContext;
 
         public string Username { get; set; } = "admin";
         public string Password { get; set; }
 
 
-        public LoginViewModel(IAuthService auth, INavigationService navigation) : base(navigation)
+        public LoginViewModel(IAuthService auth, INavigationService navigation, IAppDataContext appDataContext) : base(navigation)
         {
             _auth = auth;
-            AppSession.CurrentUser = null;
+            _appDataContext = appDataContext;
+            _appDataContext.SetCurrentUser(null);
         }
 
         public async Task Login(string password)
@@ -35,7 +37,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             var user = await _auth.Login(Username, password);
             if (user != null)
             {
-                AppSession.CurrentUser = user;
+                _appDataContext.SetCurrentUser(user);
                 string token = Helper.CreateTokenFromUser(user);
                 SecureStorage.Save(token);
                 // Open MainWindow
