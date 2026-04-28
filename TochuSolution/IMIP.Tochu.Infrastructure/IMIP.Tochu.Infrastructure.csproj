@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IMIP.Tochu.Domain\IMIP.Tochu.Domain.csproj" />
-    <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

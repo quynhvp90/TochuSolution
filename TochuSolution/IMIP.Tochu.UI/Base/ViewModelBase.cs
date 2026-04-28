@@ -1,4 +1,6 @@
 ﻿
+using IMIP.Tochu.Shared;
+
 namespace IMIP.Tochu.UI.Base
 {
     public abstract class ViewModelBase : NotifyBase
@@ -16,7 +18,12 @@ namespace IMIP.Tochu.UI.Base
             get => _errorMessage;
             set => SetProperty(ref _errorMessage, value);
         }
-
+        public void NavigatedTo(bool isBack) {
+            this.OnNavigatedTo(isBack);
+        }
+        public void NavigatedFrom() {
+            this.OnNavigatedFrom();
+        }
         protected void ClearError() => ErrorMessage = null;
 
         protected virtual void OnNavigatedTo(bool isBack) { }

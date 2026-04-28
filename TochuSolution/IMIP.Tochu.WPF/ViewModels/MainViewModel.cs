@@ -29,7 +29,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         {
             base.OnNavigatedTo(isBack);
             if (_appDataContext.CurrentUser != null)
-                UserName = _appDataContext.CurrentUser.Name;
+                UserName = _appDataContext.CurrentUser.TEXT1 ?? "Default User";
         }
 
         public void GoToSearch()

@@ -18,10 +18,10 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
         public INavigationService _navigation;
         private readonly IAppDataContext _appDataContext;
         public ICommand Logout { get; }
-        public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext)
+        public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext = null)
         {
             _navigation = navigation;
-            _appDataContext = appDataContext;
+            _appDataContext = appDataContext ?? AppDataContext.Instance;
             Logout = new RelayCommand(() => LogoutApplication());
         }
         public void LogoutApplication()

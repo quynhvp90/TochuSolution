@@ -1,5 +1,4 @@
 ﻿using IMIP.Tochu.Domain.entities;
-using IMIP.Tochu.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace IMIP.Tochu.Domain.interfaces
 {
-    public interface ISI_TANTOURepository : IRepository<SI_TANTOU>
+    public interface IVI_SeinouMstRepository
     {
-        Task<SI_TANTOU?> GetByUserName(string userName);    
+        Task<List<VI_SeinouMst>> GetAllAsync();
+        Task<List<VI_SeinouMst>> GetByProductAsync(string product);
     }
 }

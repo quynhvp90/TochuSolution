@@ -19,7 +19,7 @@ namespace IMIP.Tochu.WPF.Helpers
 {
     public static class Helper
     {
-        public static UserModel GetUserFromToken(string token)
+        public static SI_TANTOU_Model GetUserFromToken(string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
@@ -36,11 +36,11 @@ namespace IMIP.Tochu.WPF.Helpers
             if (userId == null)
                 throw new Exception("Token không chứa UserId");
 
-            return new UserModel
+            return new SI_TANTOU_Model
             {
-                Id = Guid.Parse(userId),
-                Name = name,
-                Email = email
+                JIGYOUSHO = name ?? Guid.NewGuid().ToString(),
+                NUM = int.TryParse(userId, out var id) ? id : 0,
+                TEXT1 = email ?? Guid.NewGuid().ToString(),
             };
         }
 
@@ -51,13 +51,13 @@ namespace IMIP.Tochu.WPF.Helpers
 
             return jwt.ValidTo < DateTime.UtcNow;
         }
-        public static string CreateTokenFromUser(UserModel user)
+        public static string CreateTokenFromUser(SI_TANTOU_Model user)
         {
             var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // nameid
-            new Claim(ClaimTypes.Name, user.Name),                    // unique_name
-            new Claim(ClaimTypes.Email, user.Email ?? "")
+            new Claim(ClaimTypes.NameIdentifier, user.NUM.ToString()), // nameid
+            new Claim(ClaimTypes.Name, user.JIGYOUSHO),                    // unique_name
+            new Claim(ClaimTypes.Email, user.TEXT1 ?? "")
         };
 
             var key = new SymmetricSecurityKey(

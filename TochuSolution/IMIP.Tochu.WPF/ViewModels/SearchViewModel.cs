@@ -14,8 +14,8 @@ namespace IMIP.Tochu.WPF.ViewModels
     {
         private readonly IProductService _productService;
         private CancellationTokenSource _cts;
-        public ObservableCollection<UserModel> Users { get; } = new();
-        public ObservableCollection<ProductModel> Products { get; } = new();
+        public ObservableCollection<SI_TANTOU_Model> Users { get; } = new();
+        public ObservableCollection<VI_Product_Model> Products { get; } = new();
 
         private string _searchText = string.Empty;
         public string SearchText
@@ -40,7 +40,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             GoBackCommand = new RelayCommand(() => _navigation.GoBack());
             LoadProducts = new RelayCommand(async () => await GetProducts());
-            EditCommand = new RelayCommand<ProductModel>(OnEdit);
+            EditCommand = new RelayCommand<VI_Product_Model>(OnEdit);
             GetProducts();
         }
         private void StartSearch()
@@ -51,7 +51,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             _ = SearchAsync(_searchText, _cts.Token);
         }
         // --- Edit button handler ---
-        private void OnEdit(ProductModel? product)
+        private void OnEdit(VI_Product_Model? product)
         {
             if (product is null) return;
 
@@ -67,7 +67,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         }
         private async Task GetProducts()
         {
-            var products = await _productService.SearchProductAsync();
+            var products = await _productService.GetProductsAsync();
             Products.Clear();
             foreach (var product in products)
             {

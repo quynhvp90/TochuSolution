@@ -9,21 +9,22 @@ namespace IMIP.Tochu.WPF.ViewModels
 {
     public class MasterViewModel : ViewModelBaseWPF
     {
-        private string _masterName = string.Empty;
-        public string MasterName
+        private string _jIGYOUSHO = string.Empty;
+        public string JIGYOUSHO
         {
-            get => _masterName;
-            set => SetProperty(ref _masterName, value);
-        }
-        private Guid _userId = Guid.Empty;
-        public Guid UserId
-        {
-            get => _userId;
-            set => SetProperty(ref _userId, value);
+            get => _jIGYOUSHO;
+            set => SetProperty(ref _jIGYOUSHO, value);
         }
 
-        private UserModel _user { get; set; }
-        public UserModel User
+        private string _text1 = string.Empty;
+        public string Text1
+        {
+            get => _text1;
+            set => SetProperty(ref _text1, value);
+        }
+
+        private SI_TANTOU_Model _user { get; set; }
+        public SI_TANTOU_Model User
         {
             get => _user;
             set  {
@@ -31,11 +32,11 @@ namespace IMIP.Tochu.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public void SetUser(UserModel user)
+        public void SetUser(SI_TANTOU_Model user)
         {
             User = user;
-            MasterName = user.Name;
-            UserId = user.Id;
+            JIGYOUSHO = user.JIGYOUSHO;
+            Text1 = user.TEXT1;
         }
 
         public ICommand GoBackCommand { get; }

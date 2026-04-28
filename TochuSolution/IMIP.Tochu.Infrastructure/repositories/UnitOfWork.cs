@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Domain.Interfaces;
+﻿using IMIP.Tochu.Domain.interfaces;
+using IMIP.Tochu.Domain.Interfaces;
 using IMIP.Tochu.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -9,27 +10,38 @@ namespace IMIP.Tochu.Infrastructure.Repositories
         private readonly TochuDBContext _context;
         private IDbContextTransaction? _transaction;
 
-        public IUserRepository Users { get; }
-        public IProductRepository Products { get; }
-        public ISICodemstRepository SICodemsts { get; }
-        public ISISeinoumstRepository SISeinoumsts { get; }
-        public ICommentRepository Comments { get; }
+        public ISI_CODEMSTRepository SI_CODEMST { get; private set; }
+
+        public ISI_MEMORepository SI_MEMO { get; private set; }
+
+        public ISI_SEINOUDATARepository SI_SEINOUDATA { get; private set; }
+
+        public ISI_SEINOUMSTRepository SI_SEINOUMST { get; private set; }
+
+        public ISI_TANTOURepository SI_TANTOU { get; private set; }
+
+        public IT0000MS_Item_RCSRepository T0000MS_Item_RCS { get; private set; }
+
+        public IT0000RR_Juchuu_RCSRepository T0000RR_Juchuu_RCS { get; private set; }
 
         public UnitOfWork(
             TochuDBContext context,
-            IUserRepository users,
-            IProductRepository products,
-            ISICodemstRepository codemsts,
-            ISISeinoumstRepository seinoumsts,
-            ICommentRepository comments)
+            ISI_SEINOUMSTRepository si_seinoumst,
+            ISI_SEINOUDATARepository si_SEINOUDATA,
+            ISI_CODEMSTRepository si_CODEMST,
+            ISI_MEMORepository si_MEMO,
+            ISI_TANTOURepository sI_TANTOURepository, 
+            IT0000MS_Item_RCSRepository t0000MS_Item_RCS,
+            IT0000RR_Juchuu_RCSRepository t0000RR_Juchuu_RCS)
         {
             _context = context;
-
-            Users = users;
-            Products = products;
-            SICodemsts = codemsts;
-            SISeinoumsts = seinoumsts;
-            Comments = comments;
+            SI_SEINOUMST = si_seinoumst;
+            SI_SEINOUDATA = si_SEINOUDATA;
+            SI_CODEMST = si_CODEMST;
+            SI_MEMO = si_MEMO;
+            SI_TANTOU = sI_TANTOURepository;
+            T0000MS_Item_RCS = t0000MS_Item_RCS;
+            T0000RR_Juchuu_RCS = t0000RR_Juchuu_RCS;
         }
 
         public async Task BeginTransactionAsync()

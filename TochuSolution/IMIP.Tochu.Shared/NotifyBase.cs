@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMIP.Tochu.UI.Base
+namespace IMIP.Tochu.Shared
 {
     public abstract class NotifyBase : INotifyPropertyChanged
     {

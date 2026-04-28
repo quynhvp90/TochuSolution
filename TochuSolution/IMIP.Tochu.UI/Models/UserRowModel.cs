@@ -1,24 +1,30 @@
 ﻿using IMIP.Tochu.Core.Models;
+using IMIP.Tochu.Shared;
 using IMIP.Tochu.UI.Base;
 
 namespace IMIP.Tochu.UI.Models
 {
-    public partial class UserRowModel : ModelBase
+    public partial class SITantouRowModel : NotifyBase
     {
-        public Guid Id { get; init; }
-
-        private string _name = string.Empty;
-        public string Name
+        private string _jigyousho = null!;
+        public string JIGYOUSHO
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get => _jigyousho;
+            set => SetProperty(ref _jigyousho, value);
         }
 
-        private string _email = string.Empty;
-        public string Email
+        private int _num;
+        public int NUM
         {
-            get => _email;
-            set => SetProperty(ref _email, value);
+            get => _num;
+            set => SetProperty(ref _num, value);
+        }
+
+        private string? _text1;
+        public string? TEXT1
+        {
+            get => _text1;
+            set => SetProperty(ref _text1, value);
         }
 
         private bool _isSelected;
@@ -37,11 +43,11 @@ namespace IMIP.Tochu.UI.Models
             set => SetProperty(ref _isEditing, value);
         }
 
-        public static UserRowModel FromDto(UserModel dto) => new()
+        public static SITantouRowModel FromDto(SI_TANTOU_Model dto) => new()
         {
-            Id = dto.Id,
-            _name = dto.Name,
-            _email = dto.Email,
+            JIGYOUSHO = dto.JIGYOUSHO,
+            NUM = dto.NUM,
+            TEXT1 = dto.TEXT1,
         };
     }
 }

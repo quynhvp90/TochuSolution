@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Domain.Interfaces;
+﻿using IMIP.Tochu.Domain.interfaces;
+using IMIP.Tochu.Domain.Interfaces;
 using IMIP.Tochu.Infrastructure.Data;
 using IMIP.Tochu.Infrastructure.Repositories;
 using IMIP.Tochu.Shared;
@@ -31,11 +32,13 @@ namespace IMIP.Tochu.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // 🔥 Repositories (Scoped)
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IProductRepository, SI_MEMORepository>();
-            services.AddScoped<ISICodemstRepository, SI_SEINOUDATARepository>();
-            services.AddScoped<ISISeinoumstRepository, SI_SEINOUMSTRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ISI_CODEMSTRepository, SI_CODEMSTRepository>();
+            services.AddScoped<ISI_MEMORepository, SI_MEMORepository>();
+            services.AddScoped<ISI_SEINOUDATARepository, SI_SEINOUDATARepository>();
+            services.AddScoped<ISI_SEINOUMSTRepository, SI_SEINOUMSTRepository>();
+            services.AddScoped<ISI_TANTOURepository, SI_TANTOURepository>();
+            services.AddScoped<IT0000MS_Item_RCSRepository, T0000MS_Item_RCSRepository>();
+            services.AddScoped<IT0000RR_Juchuu_RCSRepository, T0000RR_Juchuu_RCSRepository>();
 
             // 🔥 Logging
             services.AddTransient<ILogRepository, LogRepository>();

@@ -10,34 +10,6 @@ namespace IMIP.Tochu.Infrastructure.Data
 {
     public static class DbSeeder
     {
-        private static readonly Random _rnd = new Random();
-
-        private static readonly string[] _customerNames = {
-            "Toyota", "Honda", "Yamaha", "Suzuki", "Mazda",
-            "Nissan", "Mitsubishi", "Subaru", "Isuzu", "Daihatsu"
-        };
-
-        private static readonly string[] _productNames = {
-            "Resin A", "Resin B", "Resin C", "Compound X", "Compound Y",
-            "Sand Mix 01", "Sand Mix 02", "Binder Alpha", "Binder Beta", "Coating Z",
-            "20-GE", "21-ASP7", "35-713"
-        };
-
-        private static readonly string[] _units = { "kg", "g", "pcs", "lot", "bag" };
-
-        private static readonly string[] _packagingCDs = { "PKG-001", "PKG-002", "PKG-003", "PKG-004", "PKG-005" };
-
-        private static readonly string[] _packagingNames = { "Box A (200)", "Box B (100)", "Pallet (200)", "Drum (90)", "Bag (100)" };
-
-        private static readonly string[] _performanceMs = { "PM-A", "PM-B", "PM-C", "PM-D" };
-
-        private static readonly string[] _forCustomers = { "Standard", "Special", "Custom", "OEM", "Export" };
-
-        private static readonly PerformanceTable[] _performanceTables = {
-            PerformanceTable.NotCreated,
-            PerformanceTable.Created
-        };
-
         private static readonly string[] _sampleComments =
         {
             "AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBB CCCCCCCCCCCCCCCC",
@@ -55,8 +27,11 @@ namespace IMIP.Tochu.Infrastructure.Data
 
                 await SeedSI_TANTOU(context);
                 await SeedSI_MEMO(context);
-                await SeedMasterData(context);
-                await SeedComments(context);
+                await SeedSI_SEINOUMSTDATA(context);
+                await SeedSI_SEINOUMST(context);
+                await SeedSI_SEINOUMST(context);
+                await SeedT0000MS_Item_RCS(context);
+                await SeedT0000RR_Juchuu_RCS(context);
 
                 await context.SaveChangesAsync();
 
@@ -118,6 +93,69 @@ namespace IMIP.Tochu.Infrastructure.Data
                 MEMO = "唖唖唖唖唖唖唖唖唖唖唖唖唖"
             });
 
+            await Task.CompletedTask;
+        }
+
+        // ───────────────── SI_SEINOUMST ─────────────────
+        private static async Task SeedSI_SEINOUMST(TochuDBContext context)
+        {
+            if (context.SI_SEINOUMSTs.Any()) return;
+
+            // path excel file in folder documents in project root
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "documents", "dbo.SI_SEINOUMST.csv");
+            var data = ExcelHelper.ReadExcel<SI_SEINOUMST>(filePath);
+            // insert data to database
+            context.SI_SEINOUMSTs.AddRange(data);
+
+            await Task.CompletedTask;
+        }
+
+        // ───────────────── SI_SEINOUMSTDATA ─────────────────
+        private static async Task SeedSI_SEINOUMSTDATA(TochuDBContext context)
+        {
+            if (context.SI_SEINOUDATAs.Any()) return;
+
+            // path excel file in folder documents in project root
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "documents", "dbo.SI_SEINOUDATA.csv");
+            var data = ExcelHelper.ReadExcel<SI_SEINOUDATA>(filePath);
+            // insert data to database
+            context.SI_SEINOUDATAs.AddRange(data);
+
+            await Task.CompletedTask;
+        }
+        // ───────────────── SI_CODEMST ─────────────────
+        private static async Task SeedSI_CODEMST(TochuDBContext context)
+        {
+            if (context.SI_CODEMSTs.Any()) return;
+
+            // path excel file in folder documents in project root
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "documents", "dbo.SI_CODEMST.csv");
+            var data = ExcelHelper.ReadExcel<SI_CODEMST>(filePath);
+            // insert data to database
+            context.SI_CODEMSTs.AddRange(data);
+
+            await Task.CompletedTask;
+        }
+        // ---------------- T0000MS_Item_RCS ----------------
+        private static async Task SeedT0000MS_Item_RCS(TochuDBContext context)
+        {
+            if (context.T0000MS_Item_RCSs.Any()) return;
+            // path excel file in folder documents in project root
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "documents", "dbo.T0000MS_Item_RCS.csv");
+            var data = ExcelHelper.ReadExcel<T0000MS_Item_RCS>(filePath);
+            // insert data to database
+            context.T0000MS_Item_RCSs.AddRange(data);
+            await Task.CompletedTask;
+        }
+        // ----------------- dbo.T0000RR_Juchuu_RCS -----------------
+        private static async Task SeedT0000RR_Juchuu_RCS(TochuDBContext context)
+        {
+            if (context.T0000RR_Juchuu_RCSs.Any()) return;
+            // path excel file in folder documents in project root
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "documents", "dbo.T0000RR_Juchuu_RCS.csv");
+            var data = ExcelHelper.ReadExcel<T0000RR_Juchuu_RCS>(filePath);
+            // insert data to database
+            context.T0000RR_Juchuu_RCSs.AddRange(data);
             await Task.CompletedTask;
         }
     }

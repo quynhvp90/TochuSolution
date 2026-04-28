@@ -1,4 +1,6 @@
-﻿namespace IMIP.Tochu.UI.Base
+﻿using IMIP.Tochu.Shared;
+
+namespace IMIP.Tochu.UI.Base
 {
     public abstract class ModelBase : NotifyBase
     {

@@ -10,6 +10,6 @@ namespace IMIP.Tochu.Core.Interfaces
     public interface IAuthService
     {
         bool IsLoggedIn();
-        Task<UserModel?> Login(string user, string pass);
+        Task<SI_TANTOU_Model?> Login(string user, string pass);
     }
 }
