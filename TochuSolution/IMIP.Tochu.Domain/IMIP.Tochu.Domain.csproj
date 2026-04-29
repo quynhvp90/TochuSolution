@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
+    <Folder Include="exceptions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="exceptions\" />
+    <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
   </ItemGroup>
 
 </Project>
