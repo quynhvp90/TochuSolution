@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf" x:Class="IMIP.Tochu.WPF.Views.Windows.LoginWindow"
         Title="Login"
-        Width="400"
+        Width="450"
         Height="500"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"

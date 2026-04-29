@@ -18,7 +18,7 @@ namespace IMIP.Tochu.Infrastructure.configurations
             // Primary key
             builder.HasKey(x => x.JuchuuNO);
 
-            builder.Property(x => x.JuchuuNO)
+            builder.Property(x => x.JuchuuNO).ValueGeneratedNever()
                 .IsRequired();
 
             builder.Property(x => x.JuchuuDenpyouNO)

@@ -36,8 +36,13 @@ namespace IMIP.Tochu.WPF
             appDataContext.SetBranchCode(branchCode);
 
             // ================= CHECK LOGIN =================
+            var logined = true;
+
             var token = SecureStorage.Load();
-            if (!string.IsNullOrEmpty(token))
+            if (logined)
+            {
+                nav.OpenWindow<MainWindow, MainWindowViewModel>();
+            } else if (!string.IsNullOrEmpty(token) && logined)
             { 
                 var user = Helper.GetUserFromToken(token);
 

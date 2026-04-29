@@ -36,5 +36,14 @@ namespace IMIP.Tochu.WPF.Views.UserControls
         {
             VM.GoToSearch();
         }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Master_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

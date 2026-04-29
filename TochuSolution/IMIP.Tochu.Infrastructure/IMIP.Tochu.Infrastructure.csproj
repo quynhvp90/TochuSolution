@@ -34,6 +34,31 @@
 
   <ItemGroup>
     <Folder Include="migrations\" />
+    <Folder Include="seeddata\documents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="seeddata\documents\dbo.SI_CODEMST.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.SI_MEMO.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.SI_SEINOUDATA.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.SI_SEINOUMST.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.SI_TANTOU.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.T0000MS_Item_RCS.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="seeddata\documents\dbo.T0000RR_Juchuu_RCS.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

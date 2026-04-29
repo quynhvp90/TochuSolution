@@ -17,6 +17,7 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
     {
         public INavigationService _navigation;
         private readonly IAppDataContext _appDataContext;
+        public string BranchCode { get { return _appDataContext.BranchCode; } set { _appDataContext.SetBranchCode(value); OnPropertyChanged(); } }
         public ICommand Logout { get; }
         public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext = null)
         {

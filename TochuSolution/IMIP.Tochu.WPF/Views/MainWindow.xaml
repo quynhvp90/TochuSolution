@@ -9,7 +9,10 @@
         xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
         xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels;assembly=IMIP.Tochu.WPF" 
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" SizeToContent="Manual"
-        Title="MainWindow" Height="500" Width="800">
+        Title="Tochu Solution" 
+        WindowState="Maximized"
+        Background="#F0F2F5"
+        FontFamily="Segoe UI">
 
 
 
