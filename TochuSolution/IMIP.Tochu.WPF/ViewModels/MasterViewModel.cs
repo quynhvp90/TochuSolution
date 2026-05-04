@@ -1,5 +1,6 @@
 ﻿using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels.Shared;
 using System.Windows;
@@ -41,7 +42,7 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         public ICommand GoBackCommand { get; }
 
-        public MasterViewModel(INavigationService nav) : base(nav)
+        public MasterViewModel(INavigationService nav, IAppDataContext appDataContext) : base(nav, appDataContext)
         {
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             GoBackCommand = new RelayCommand(() => _navigation.GoBack());

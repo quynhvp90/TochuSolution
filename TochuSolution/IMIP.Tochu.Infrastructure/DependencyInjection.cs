@@ -1,6 +1,7 @@
 ﻿using IMIP.Tochu.Domain.interfaces;
 using IMIP.Tochu.Domain.Interfaces;
 using IMIP.Tochu.Infrastructure.Data;
+using IMIP.Tochu.Infrastructure.repositories;
 using IMIP.Tochu.Infrastructure.Repositories;
 using IMIP.Tochu.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,10 @@ namespace IMIP.Tochu.Infrastructure
             services.AddScoped<ISI_TANTOURepository, SI_TANTOURepository>();
             services.AddScoped<IT0000MS_Item_RCSRepository, T0000MS_Item_RCSRepository>();
             services.AddScoped<IT0000RR_Juchuu_RCSRepository, T0000RR_Juchuu_RCSRepository>();
+            // 🔥 Repositories Views
+            services.AddScoped<IVI_ProductRepository, VI_ProductRepository>();
+            services.AddScoped<IVI_SeinouMstRepository, VI_SeinouMstRepository>();
+            services.AddScoped<IVI_SeinouMstSERepository, VI_SeinouMstSERepository>();
 
             // 🔥 Logging
             services.AddTransient<ILogRepository, LogRepository>();

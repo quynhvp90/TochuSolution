@@ -5,6 +5,7 @@ using IMIP.Tochu.WPF.Helpers;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels;
 using IMIP.Tochu.WPF.Views.Windows;
+using Infragistics.Themes;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -19,7 +20,8 @@ namespace IMIP.Tochu.WPF
         protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            // Load Theme
+            ThemeManager.ApplicationTheme = new Office2013Theme();
             var services = new ServiceCollection();
             await InfrastructureDependencyInjection.InitializeDatabase();
             ConfigureServices(services);
@@ -29,11 +31,11 @@ namespace IMIP.Tochu.WPF
             // Navigate Default Application View
             var appDataContext = _serviceProvider.GetRequiredService<IAppDataContext>();
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
-            nav.NavigateTo<MainViewModel>();
+            //nav.OpenWindow<MainWindow, MainWindowViewModel>();
 
             // check Args default
             string branchCode = e.Args.Length > 0 ? e.Args[0] : "310";
-            appDataContext.SetBranchCode(branchCode);
+            appDataContext.BranchCode = branchCode;
 
             // ================= CHECK LOGIN =================
             var logined = true;
@@ -61,6 +63,8 @@ namespace IMIP.Tochu.WPF
             {
                 nav.OpenWindow<LoginWindow, LoginViewModel>();
             }
+
+            
 
         }
         private void ConfigureServices(IServiceCollection services)

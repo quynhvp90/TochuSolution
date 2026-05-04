@@ -24,17 +24,18 @@ namespace IMIP.Tochu.WPF
 
             // ViewModels
             services.AddSingleton<MainWindowViewModel>();   // Singleton
-            services.AddTransient<MainViewModel>(); // Transient
+            services.AddTransient<DashboardViewModel>(); // Transient
             services.AddTransient<SearchViewModel>(); // Transient
             services.AddTransient<SearchViewModel>(); // Transient
             services.AddTransient<MasterViewModel>(); // Transient
+            services.AddTransient<MasterAnalysisViewModel>(); // Transient
             services.AddTransient<RegistrationViewModel>(); // Transient
             services.AddTransient<LoginViewModel>(); // Transient
 
             // Windows
             services.AddTransient<Registration>();
             services.AddTransient<MainWindow>();
-            services.AddTransient<Main>();
+            services.AddTransient<Dashboard>();
             services.AddTransient<SearchView>();
             services.AddTransient<Master>();
             services.AddTransient<LoginWindow>();

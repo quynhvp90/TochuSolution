@@ -5,8 +5,8 @@
     xmlns:windows="clr-namespace:IMIP.Tochu.WPF.Views.Windows"
     xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels">
 
-    <DataTemplate DataType="{x:Type vm:MainViewModel}">
-        <uc:Main/>
+    <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+        <uc:Dashboard/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
@@ -18,6 +18,9 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:RegistrationViewModel}">
         <windows:Registration/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:MasterAnalysisViewModel}">
+        <uc:MasterAnalysis/>
     </DataTemplate>
 
 </ResourceDictionary>

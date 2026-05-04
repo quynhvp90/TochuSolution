@@ -25,7 +25,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string Password { get; set; }
 
 
-        public LoginViewModel(IAuthService auth, INavigationService navigation, IAppDataContext appDataContext) : base(navigation)
+        public LoginViewModel(IAuthService auth, INavigationService navigation, IAppDataContext appDataContext) : base(navigation, appDataContext)
         {
             _auth = auth;
             _appDataContext = appDataContext;

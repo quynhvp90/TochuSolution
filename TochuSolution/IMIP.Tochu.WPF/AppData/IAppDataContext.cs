@@ -9,9 +9,8 @@ namespace IMIP.Tochu.WPF.AppData
 {
     public interface IAppDataContext
     {
-        string BranchCode { get; }
+        string BranchCode { get; set; }
         SI_TANTOU_Model? CurrentUser { get; }
-        void SetBranchCode(string branchCode);
         void SetCurrentUser(SI_TANTOU_Model user);
     }
 }

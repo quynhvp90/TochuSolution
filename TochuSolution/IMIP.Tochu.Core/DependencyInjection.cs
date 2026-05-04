@@ -11,6 +11,7 @@ namespace IMIP.Tochu.Core
         {
             services.AddSingleton<IAuthService, AuthService>();
             services.AddTransient<IDbLogger, LoggerService>();
+            services.AddTransient<IProductService, ProductService>();
 
             // Singleton tương đương ContainerControlledLifetimeManager
             services.AddSingleton<ILogQueue, LogQueueService>();

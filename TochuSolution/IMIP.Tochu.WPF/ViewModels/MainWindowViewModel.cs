@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.WPF.Navigation;
+﻿using IMIP.Tochu.WPF.AppData;
+using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels.Shared;
 
 namespace IMIP.Tochu.WPF.ViewModels
@@ -17,7 +18,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             }
         }
 
-        public MainWindowViewModel(INavigationService navigation) : base(navigation)
+        public MainWindowViewModel(INavigationService navigation, IAppDataContext appDataContext) : base(navigation, appDataContext)
         {
             if (_navigation is NavigationService nav)
             {

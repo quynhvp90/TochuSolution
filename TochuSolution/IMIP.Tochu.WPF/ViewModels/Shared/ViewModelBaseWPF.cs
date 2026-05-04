@@ -1,11 +1,12 @@
 ﻿using IMIP.Tochu.UI.Base;
-using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Helpers;
+using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.Views.Windows;
 using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +17,37 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
     public class ViewModelBaseWPF : ViewModelBase
     {
         public INavigationService _navigation;
-        private readonly IAppDataContext _appDataContext;
-        public string BranchCode { get { return _appDataContext.BranchCode; } set { _appDataContext.SetBranchCode(value); OnPropertyChanged(); } }
+        protected readonly IAppDataContext _appDataContext;
+        public string BranchCode
+        {
+            get => _appDataContext.BranchCode;
+            set { _appDataContext.BranchCode = value; }
+        }
         public ICommand Logout { get; }
-        public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext = null)
+        public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext)
         {
             _navigation = navigation;
-            _appDataContext = appDataContext ?? AppDataContext.Instance;
+            _appDataContext = appDataContext;
+
+            // Forward notify from AppDataContext → ViewModel
+            if (_appDataContext is INotifyPropertyChanged notify)
+            {
+                notify.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(BranchCode))
+                    {
+                        OnPropertyChanged(nameof(BranchCode));
+                    }
+                };
+            }
+
             Logout = new RelayCommand(() => LogoutApplication());
+        }
+        public string GetUsername()
+        {
+            if (_appDataContext.CurrentUser != null)
+                return _appDataContext.CurrentUser.TEXT1 ?? "Default User";
+            return "Default User";
         }
         public void LogoutApplication()
         {

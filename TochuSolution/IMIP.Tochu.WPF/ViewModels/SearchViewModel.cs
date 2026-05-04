@@ -1,6 +1,7 @@
 ﻿using IMIP.Tochu.Core.Interfaces;
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels.Shared;
 using IMIP.Tochu.WPF.Views.Windows;
@@ -33,7 +34,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         public ICommand LoadProducts { get;}
         public ICommand EditCommand { get; }
 
-        public SearchViewModel(INavigationService nav, IProductService productService) : base(nav)
+        public SearchViewModel(INavigationService nav, IProductService productService, IAppDataContext appDataContext) : base(nav, appDataContext)
         {
             _productService = productService;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
