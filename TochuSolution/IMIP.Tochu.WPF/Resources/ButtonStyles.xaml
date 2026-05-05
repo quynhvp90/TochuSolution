@@ -182,7 +182,7 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="#DFE6E9"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Height" Value="75"/>
+        <Setter Property="Height" Value="55"/>
         <Setter Property="Margin" Value="0,0,0,10"/>
 
         <Style.Triggers>

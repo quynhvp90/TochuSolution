@@ -56,6 +56,8 @@ namespace IMIP.Tochu.Infrastructure.configurations
 
 
             // Indexes
+            builder.HasIndex(x => x.Nouki)
+                .HasDatabaseName("IX_Nouki");
             builder.HasIndex(x => x.JuchuuKyotenCD)
                 .HasDatabaseName("IX_Juchuu_KyotenCD");
 

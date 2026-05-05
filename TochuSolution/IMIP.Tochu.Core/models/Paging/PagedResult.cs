@@ -9,7 +9,7 @@ namespace IMIP.Tochu.Core.Models.Paging
 {
     public class PagedResult<T> : PagedRequest
     {
-        public IEnumerable<T> Items { set; get; }
+        public List<T> Items { set; get; } = new List<T>();
         public int TotalCount { get; set; }
         public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
         public bool HasPreviousPage => PageIndex > 1;

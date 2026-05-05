@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using IMIP.Tochu.WPF.ViewModels;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Windows.Controls;
 
 namespace IMIP.Tochu.WPF.Views.UserControls
 {
@@ -7,10 +10,16 @@ namespace IMIP.Tochu.WPF.Views.UserControls
     /// </summary>
     public partial class SearchView : UserControl
     {
-        public SearchView()
+        SearchViewModel _vm;
+        public SearchView(SearchViewModel vm)
         {
             InitializeComponent();
-            
+            _vm = vm;
+        }
+
+        private void SearchButton_Click(object sender, Infragistics.Controls.Inputs.ButtonClickEventArgs args)
+        {
+            _vm.GetJuchuuRCS();
         }
     }
 }
