@@ -24,6 +24,7 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
             set { _appDataContext.BranchCode = value; }
         }
         public ICommand Logout { get; }
+        public ICommand Back { get; }
         public ViewModelBaseWPF(INavigationService navigation, IAppDataContext appDataContext)
         {
             _navigation = navigation;
@@ -42,12 +43,17 @@ namespace IMIP.Tochu.WPF.ViewModels.Shared
             }
 
             Logout = new RelayCommand(() => LogoutApplication());
+            Back = new RelayCommand(() => GoBack());
         }
         public string GetUsername()
         {
             if (_appDataContext.CurrentUser != null)
                 return _appDataContext.CurrentUser.TEXT1 ?? "Default User";
             return "Default User";
+        }
+        public void GoBack()
+        {
+            _navigation.GoBack();
         }
         public void LogoutApplication()
         {

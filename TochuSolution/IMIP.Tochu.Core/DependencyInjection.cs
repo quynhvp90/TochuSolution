@@ -13,6 +13,7 @@ namespace IMIP.Tochu.Core
             services.AddTransient<IDbLogger, LoggerService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IJuchuuRCSService, JuchuuRCSService>();
+            services.AddTransient<ISENINOUDATAService, SENINOUDATAService>();
 
             // Singleton tương đương ContainerControlledLifetimeManager
             services.AddSingleton<ILogQueue, LogQueueService>();

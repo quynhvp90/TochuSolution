@@ -16,16 +16,26 @@ namespace IMIP.Tochu.WPF.ViewModels
 {
     public class SearchViewModel : ViewModelBaseWPF
     {
-        private readonly IProductService _productService;
+        private readonly ISENINOUDATAService _sENINOUDATAService;
         private readonly IJuchuuRCSService _juchuuRCSService;
+        // --- Data state ---
         private ObservableCollection<T0000RR_Juchuu_RCS_Model> _juchuuRCSItems;
         private T0000RR_Juchuu_RCS_Model _selectedJuchuuRCSItem;
-        public ObservableCollection<SI_TANTOU_Model> Users { get; } = new();
-        public ObservableCollection<VI_Product_Model> Products { get; } = new();
 
-        private string _searchText = string.Empty;
+        private ObservableCollection<SI_SEINOUDATA_Model> _seninouDataItems;
+        private SI_SEINOUDATA_Model _selectedSeninouDataItem;
+
+        // Search parameters
+        private string _searchText = "31011";
         private DateTime? _startNoukidate = DateTime.Today.AddDays(-30);
         private DateTime? _endNoukidate = DateTime.Today;
+        // ── Sort state ──────────────────────────────────────────────
+        private string _sortField = "JuchuuNO";
+        private bool _sortAscending = true;
+        // Paging state
+        public PagingViewModel JuChuuPaging { get; } = new();
+        public PagingViewModel SeninouDataPaging { get; } = new();
+        // public properties for data binding
         public string SearchText
         {
             get => _searchText;
@@ -56,12 +66,23 @@ namespace IMIP.Tochu.WPF.ViewModels
                 GetJuchuuRCS();
             }
         }
+        public string SortField
+        {
+            get => _sortField;
+            set => SetProperty(ref _sortField, value);
+        }
+
+        public bool SortAscending
+        {
+            get => _sortAscending;
+            set => SetProperty(ref _sortAscending, value);
+        }
+       
         public ObservableCollection<T0000RR_Juchuu_RCS_Model> JuchuuRCSItems
         {
             get => _juchuuRCSItems;
             set
             {
-                _juchuuRCSItems = value;
                 SetProperty(ref _juchuuRCSItems, value);
             }
         }
@@ -72,94 +93,117 @@ namespace IMIP.Tochu.WPF.ViewModels
             get => _selectedJuchuuRCSItem;
             set
             {
-                if (SetProperty(ref _selectedJuchuuRCSItem, value))
-                    // Re-evaluate Edit CanExecute when selection changes
-                    ((RelayCommand)EditCommand).RaiseCanExecuteChanged();
+                if (SetProperty(ref _selectedJuchuuRCSItem, value) && value != null)
+                {
+                    JuChuuPaging.GoTo(1);  // reset về trang 1
+                    _ = GetJuchuuRCS(1, JuChuuPaging.PageSize);
+                }
             }
         }
 
-        private ObservableCollection<SI_SEINOUDATA_Model> _resultItems;
-        /// <summary>Rows displayed in the lower Result Table.</summary>
-        public ObservableCollection<SI_SEINOUDATA_Model> ResultItems
+        public ObservableCollection<SI_SEINOUDATA_Model> SeninouDataItems
         {
-            get => _resultItems;
-            set => SetProperty(ref _resultItems, value);
+            get => _seninouDataItems;
+            set => SetProperty(ref _seninouDataItems, value);
+        }
+        public SI_SEINOUDATA_Model SelectedSeninouDataItem
+        {
+            get => _selectedSeninouDataItem;
+            set => SetProperty(ref _selectedSeninouDataItem, value);
         }
 
-        private SI_SEINOUDATA_Model _selectedResultItem;
-        /// <summary>Currently selected row in the Result Table.</summary>
-        public SI_SEINOUDATA_Model SelectedResultItem
-        {
-            get => _selectedResultItem;
-            set => SetProperty(ref _selectedResultItem, value);
-        }
-
-
+        // Commands
         public ICommand GoBackCommand { get; }
-        public ICommand Search { get;}
+        public ICommand Search { get; }
+        public ICommand SelectItem { get; }
         public ICommand EditCommand { get; }
 
-        public SearchViewModel(INavigationService nav, IProductService productService, IJuchuuRCSService juchuuRCSService, IAppDataContext appDataContext) : base(nav, appDataContext)
+        public SearchViewModel(INavigationService nav, ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, IAppDataContext appDataContext) : base(nav, appDataContext)
         {
-            _productService = productService;
+            _sENINOUDATAService = sENINOUDATAService;
             _juchuuRCSService = juchuuRCSService;
+            // set window state to maximized when this ViewModel is initialized
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            // Initialize commands
             GoBackCommand = new RelayCommand(() => _navigation.GoBack());
-            Search = new RelayCommand(async () => GetJuchuuRCS());
-            EditCommand = new RelayCommand<VI_Product_Model>(OnEdit);
+            Search = new RelayCommand(async () => _ = GetJuchuuRCS());
+            SelectItem = new RelayCommand<T0000RR_Juchuu_RCS_Model>(OnSelectItem);
+            EditCommand = new RelayCommand(
+                execute: () => OnEdit(),
+                canExecute: () => SelectedJuchuuRCSItem != null  // ← chỉ enabled khi có selection
+            );
+            // Heald events;
+            JuChuuPaging.PageChanged += (page, size) => _ = GetJuchuuRCS(page, size);
+            SeninouDataPaging.PageChanged += (page, size) => _ = GetSeinouData(page, size);
             // GetProducts();
+            _ =GetJuchuuRCS();
         }
-        // --- Edit button handler ---
-        private void OnEdit(VI_Product_Model? product)
+        private void OnEdit()
         {
-            if (product is null) return;
+            if (SelectedJuchuuRCSItem == null) return;
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win => win.InitUI());
+        }
+        // --- Select item handler ---
+        private void OnSelectItem(T0000RR_Juchuu_RCS_Model? item)
+        {
+            if (item is null) return;
 
-            //MessageBox.Show(
-            //    $"Product: {product.Name}\nPrice: {product.Price}",
-            //    "Edit Product",
-            //    MessageBoxButton.OK,
-            //    MessageBoxImage.Information);
 
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win => { 
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win =>
+            {
                 win.InitUI();
             });
         }
-        private async Task GetProducts()
-        {
-            var products = await _productService.GetProductsAsync();
-            Products.Clear();
-            foreach (var product in products)
-            {
-                Products.Add(product);
-            }
-            OnPropertyChanged(nameof(Products));
-        }
-        public async void GetJuchuuRCS()
+
+        
+
+        public async Task GetJuchuuRCS(int pageIndex = 1, int pageSize = 20)
         {
             await Task.Delay(300);
-            JuchuuPaging paging = new JuchuuPaging()
+            JuchuuPagingRequest paging = new JuchuuPagingRequest()
             {
-                PageSize = 1000,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                SortAscending = SortAscending,
+                SortField = SortField, 
                 JuchuuKyotenCD = _appDataContext.BranchCode,
-                StartNouki = _startNoukidate,
-                EndNouki = _endNoukidate
+                StartNouki = _startNoukidate ?? DateTime.Today.AddDays(-30),
+                EndNouki = _endNoukidate ?? DateTime.Today,
             };
-            if (string.IsNullOrEmpty(paging.JuchuuKyotenCD))
-            {
-                paging.JuchuuKyotenCD = _appDataContext.BranchCode;
-            }
-            if (paging.StartNouki == null)
-            {
-                paging.StartNouki = DateTime.Today.AddDays(-30);
-            }
-            if (paging.EndNouki == null)
-            {
-                paging.EndNouki = DateTime.Today;
-            }   
+   
             var result = await _juchuuRCSService.GetJuchuuRCSAsync(paging);
-            MessageBox.Show($"Total: {result.TotalCount}\nItems: {string.Join(", ", result.Items.Select(i => i.JuchuuNO))}");
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                JuChuuPaging.PageSize = pageSize;
+                JuChuuPaging.CurrentPage = pageIndex;
+                JuChuuPaging.Update(result.TotalCount);
+                JuchuuRCSItems = new ObservableCollection<T0000RR_Juchuu_RCS_Model>(result.Items);
+            });
         }
-        
+        public void OnJuchuuRCSortChanged(string field)
+        {
+            if (SortField == field)
+                SortAscending = !SortAscending;
+            else
+            {
+                SortField = field;
+                SortAscending = true;
+            }
+            JuChuuPaging.GoTo(1);
+        }
+        public async Task GetSeinouData(int pageIndex = 1, int pageSize = 20)
+        {
+            await Task.Delay(300);
+            SeninouDataPagingRequest paging = new SeninouDataPagingRequest()
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                JuchuuRCS = SelectedJuchuuRCSItem
+            };
+            var result = await _sENINOUDATAService.GetSENINOUDATAAsync(paging).ConfigureAwait(true);
+            SeninouDataItems = new ObservableCollection<SI_SEINOUDATA_Model>(result.Items);
+
+        }
     }
 }

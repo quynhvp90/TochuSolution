@@ -11,6 +11,9 @@
     <Compile Update="Views\UserControls\MasterAnalysis.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UserControls\PagingControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Windows\LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -20,7 +23,7 @@
     <Compile Update="Views\UserControls\Master.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UserControls\SearchView.xaml.cs">
+    <Compile Update="Views\UserControls\Search.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

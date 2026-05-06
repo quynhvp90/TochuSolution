@@ -6,5 +6,6 @@
         <ResourceDictionary Source="/Resources/UCResources.xaml"/>
         <ResourceDictionary Source="/Resources/BorderStyles.xaml"/>
         <ResourceDictionary Source="/Resources/TextBoxStyles.xaml"/>
+        <ResourceDictionary Source="/Resources/DataGridStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

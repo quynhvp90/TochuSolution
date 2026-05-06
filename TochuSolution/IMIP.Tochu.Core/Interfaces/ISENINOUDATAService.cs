@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace IMIP.Tochu.Core.Interfaces
 {
-    public interface IJuchuuRCSService
+    public interface ISENINOUDATAService
     {
-        Task<PagedResult<T0000RR_Juchuu_RCS_Model>> GetJuchuuRCSAsync(JuchuuPagingRequest paging);
+        Task<PagedResult<SI_SEINOUDATA_Model>> GetSENINOUDATAAsync(SeninouDataPagingRequest paging);
     }
 }

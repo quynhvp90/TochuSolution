@@ -10,7 +10,7 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:SearchViewModel}">
-        <uc:SearchView/>
+        <uc:Search/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:MasterViewModel}">
@@ -22,5 +22,6 @@
     <DataTemplate DataType="{x:Type vm:MasterAnalysisViewModel}">
         <uc:MasterAnalysis/>
     </DataTemplate>
+    
 
 </ResourceDictionary>
