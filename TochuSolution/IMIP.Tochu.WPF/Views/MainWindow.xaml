@@ -50,7 +50,7 @@
                 </StackPanel>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,111,0,40" Grid.RowSpan="2">
                     <StackPanel Margin="15, 0, 15, 0">
-                        <ig:XamButton x:Name="btnSearch" Content="Search main" FontWeight="Bold" TabIndex="1"
+                        <ig:XamButton x:Name="btnSearch" Content="Search" FontWeight="Bold" TabIndex="1"
                                   Style="{StaticResource MenuXamButtonStyle}" Clicked="btnSearch_Clicked"/>
                         <ig:XamButton x:Name="btnMaster" Content="Edit Master" FontWeight="Bold" TabIndex="2"
                                 Style="{StaticResource MenuXamButtonStyle}" Clicked="btnMaster_Clicked"/>

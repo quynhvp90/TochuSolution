@@ -7,7 +7,12 @@
              xmlns:igEditors="http://infragistics.com/Editors"
              xmlns:igDP="http://infragistics.com/DataPresenter"
              x:Class="IMIP.Tochu.WPF.Views.UserControls.Search"
+             xmlns:converters="clr-namespace:IMIP.Tochu.WPF.Converters"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels"
+             xmlns:vmDesign="clr-namespace:IMIP.Tochu.WPF.DataDesign"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vmDesign:SearchDesignViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="800" d:DesignWidth="1000">
 
     <Grid Background="#F5F5F5">
@@ -24,61 +29,54 @@
         <!-- FILTER BAR                                                  -->
         <!-- ══════════════════════════════════════════════════════════ -->
         <Border Grid.Row="0" Background="White" BorderBrush="#D0D0D0" BorderThickness="0,0,0,1" Padding="12,8">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="160"/>
-                </Grid.ColumnDefinitions>
+            <DockPanel LastChildFill="False">
 
-                <!-- Delivery Date From -->
-                <TextBlock Grid.Column="0" Text="Delivery Date" VerticalAlignment="Center" Margin="0,0,6,0"
-                           FontSize="13" Foreground="#333"/>
-                <igEditors:XamDateTimeEditor Grid.Column="1"
-                    Value="{Binding StartNoukidate, Mode=TwoWay}"
-                    Mask="yyyy/MM/dd"
-                    MinWidth="130"
+                <!-- Delivery Date -->
+                <TextBlock DockPanel.Dock="Left" Text="Delivery Date"
+                   VerticalAlignment="Center" Margin="0,0,6,0"
+                   FontSize="13" Foreground="#333"/>
+                <igEditors:XamDateTimeEditor
+                    Value="{Binding StartNoukidate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Width="130"
                     Height="26"
-                    VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Column="2" Text=" ~ " VerticalAlignment="Center" Margin="4,0" FontSize="13" Foreground="#333"/>
-
-                <!-- Delivery Date To -->
-                <igEditors:XamDateTimeEditor Grid.Column="3"
-                    Value="{Binding EndNoukidate, Mode=TwoWay}"
-                    Mask="yyyy/MM/dd"
-                    MinWidth="130"
+                    Format="yyyy/MM/dd"
+                    IsReadOnly="False"
+                    DropDownButtonDisplayMode="Always" Theme="Office2013" SpinButtonDisplayMode="Focused" DisplayMode="IncludePromptChars"/>
+                <TextBlock DockPanel.Dock="Left" Text=" ~ "
+                   VerticalAlignment="Center" Margin="4,0"
+                   FontSize="13" Foreground="#333"/>
+                <igEditors:XamDateTimeEditor
+                    Value="{Binding EndNoukidate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Width="130"
                     Height="26"
-                    VerticalAlignment="Center"
-                    Margin="0,0,12,0"/>
+                    Format="yyyy/MM/dd"
+                    IsReadOnly="False"
+                    DropDownButtonDisplayMode="Always" Theme="Office2013" SpinButtonDisplayMode="Focused" DisplayMode="IncludePromptChars"/>
 
                 <!-- Search Button -->
-                <Button Grid.Column="4" Content="Search" Width="80" Height="26"
-                        Command="{Binding Search}"
-                        VerticalAlignment="Center" Margin="0,0,16,0"
-                        Background="#1976D2" Foreground="White" BorderThickness="0"
-                        Cursor="Hand" FontSize="13"/>
+                <Button DockPanel.Dock="Left"
+                    Content="Search" Width="80" Height="26"
+                    Command="{Binding Search}"
+                    Style="{StaticResource BlueButtonStyle}"
+                    VerticalAlignment="Center" Margin="10,0,16,0"
+                    Cursor="Hand" FontSize="13">
+                    
+                </Button>
 
                 <!-- Site Code -->
-                <TextBlock Grid.Column="5" Text="Site Code" VerticalAlignment="Center" Margin="0,0,6,0"
-                           FontSize="13" Foreground="#333"/>
-                <igEditors:XamTextEditor Grid.Column="6"
+
+                <igEditors:XamTextEditor DockPanel.Dock="Right"
                     Text="{Binding BranchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Width="120" Height="26" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    Width="120" Height="26" IsEnabled="False"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock DockPanel.Dock="Right" Text="Branch Code"
+                   VerticalAlignment="Center" Margin="0,0,6,0"
+                   FontSize="13" Foreground="#333"/>
 
-                <!-- Spacer -->
-                <Grid Grid.Column="7"/>
-            </Grid>
+
+
+            </DockPanel>
         </Border>
-
         <!-- ══════════════════════════════════════════════════════════ -->
         <!-- GRID 1: ORDER SEARCH RESULTS (60%)                         -->
         <!-- ══════════════════════════════════════════════════════════ -->
@@ -101,23 +99,51 @@
                     x:Name="JuchuuRCSGrid"
                     DataSource="{Binding JuchuuRCSItems}"
                     SelectedDataItem="{Binding SelectedJuchuuRCSItem, Mode=TwoWay}"
-                    Theme="Office2013" 
+                    ActiveDataItem="{Binding SelectedJuchuuRCSItem, Mode=TwoWay}"
+                    Theme="Office2013"
                     GroupByAreaLocation="None"
-                    DataSourceResetBehavior="ReuseRecordsViaEnumerator"
-                    UpdateMode="OnCellChangeOrLostFocus">
-                    <!--<igDP:XamDataGrid.Resources>
-                        <Style TargetType="{x:Type igDP:LabelPresenter}"
-                        BasedOn="{StaticResource BlueGridHeaderStyle}"/>
-                    </igDP:XamDataGrid.Resources>-->
+                    UpdateMode="OnCellChangeOrLostFocus" Background="White" >
+                    <igDP:XamDataGrid.Resources>
+                        <!--<Style TargetType="{x:Type igDP:LabelPresenter}"
+                        BasedOn="{StaticResource BlueGridHeaderStyle}"/>-->
+                        <converters:RowIndexToBackgroundConverter x:Key="RowIndexToBackground"/>
+
+                        <!-- Row data background with alternating colors -->
+                        <Style TargetType="{x:Type igDP:DataRecordPresenter}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <Binding Path="Record"
+                                         RelativeSource="{RelativeSource Self}"
+                                         Converter="{StaticResource RowIndexToBackground}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D0E8FF"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#BBDEFB"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="IsActive"   Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="#BBDEFB"/>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+
+                    </igDP:XamDataGrid.Resources>
                     <igDP:XamDataGrid.FieldLayoutSettings>
-                        <igDP:FieldLayoutSettings AutoGenerateFields="False"
-                                  SelectionTypeRecord="Single"/>
+                        <igDP:FieldLayoutSettings AutoGenerateFields="False" DataRecordSizingMode="SizedToContentAndIndividuallySizable"
+                                  SelectionTypeRecord="Default" AllowAddNew="False" AllowDelete="False" HeaderPrefixAreaDisplayMode="Menu" HighlightPrimaryField="Default" LabelLocation="Default" RecordSelectorLocation="Default" SelectionTypeField="Default"/>
                     </igDP:XamDataGrid.FieldLayoutSettings>
 
                     <igDP:XamDataGrid.FieldSettings>
                         <igDP:FieldSettings AllowEdit="False"
-                            AllowSummaries="False"
-                            LabelClickAction="Nothing"/>
+                            LabelClickAction="Nothing" AllowCellVirtualization="False" AllowGroupBy="False" AllowHiding="Never" AllowLabelVirtualization="False" AllowRecordFiltering="False" CellClickAction="SelectRecord" CellContentAlignment="Default" LabelTextAlignment="Center" LabelTextWrapping="WrapWithOverflow"/>
                     </igDP:XamDataGrid.FieldSettings>
 
                     <igDP:XamDataGrid.FieldLayouts>
@@ -141,11 +167,11 @@
                     <igDP:XamDataGrid.ViewSettings>
                         <igDP:GridViewSettings/>
                     </igDP:XamDataGrid.ViewSettings>
-                    
+
                 </igDP:XamDataGrid>
                 <local:PagingControl Grid.Row="2" DataContext="{Binding JuChuuPaging}"/>
             </Grid>
-            
+
         </Border>
 
         <!-- ══════════════════════════════════════════════════════════ -->
@@ -165,44 +191,45 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Count label -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="Performance Data — " FontSize="13" FontWeight="SemiBold" Foreground="#E65100"/>
-                            <TextBlock Text="{Binding ResultItems.Count, StringFormat='{}{0} record(s)'}"
-                                       FontSize="13" Foreground="#BF360C" FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="28">
+                            <TextBlock Text="Performance Sheet Count " FontSize="13" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#E65100"/>
+                            <igEditors:XamTextEditor
+                                Text="{Binding TotalSeninouCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Width="60" Height="26" IsEnabled="False" Background="White"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
                         </StackPanel>
 
                         <!-- Action Buttons -->
-                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1">
                             <Button Content="New"
-                                    Command="{Binding NewCommand}"
-                                    Width="72" Height="26" Margin="0,0,8,0"
-                                    Background="#388E3C" Foreground="White" BorderThickness="0"
-                                    Cursor="Hand" FontSize="13"/>
+                                Command="{Binding NewCommand}"
+                                Style="{StaticResource GreenButtonStyle}"
+                                Width="72"
+                                Height="28"
+                                Margin="0,0,8,0"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            </Button>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                             <Button Content="Edit"
                                 Command="{Binding EditCommand}"
-                                Width="72" Height="26"
-                                Background="#1976D2" Foreground="White" BorderThickness="0"
-                                Cursor="Hand" FontSize="13">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="#1976D2"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                        <Setter Property="Cursor"     Value="Hand"/>
-                                        <Setter Property="Opacity"    Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Background" Value="#BDBDBD"/>
-                                                <Setter Property="Foreground" Value="#757575"/>
-                                                <Setter Property="Cursor"     Value="Arrow"/>
-                                                <Setter Property="Opacity"    Value="0.6"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+                                Style="{StaticResource BlueButtonStyle}"
+                                Width="72"
+                                Height="28"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                BorderThickness="1"
+                                Cursor="Hand">
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -210,12 +237,12 @@
 
                 <!-- XamDataGrid 2 -->
                 <igDP:XamDataGrid Grid.Row="1"
-                    DataSource="{Binding ResultItems}"
+                    DataSource="{Binding SeninouDataItems}"
                     SelectedDataItem="{Binding SelectedResultItem, Mode=TwoWay}"
                     Theme="Office2013"
                     GroupByAreaLocation="None"
                     DataSourceResetBehavior="ReuseRecordsViaEnumerator"
-                    UpdateMode="OnCellChangeOrLostFocus">
+                    UpdateMode="OnCellChangeOrLostFocus" AutoFit="True">
                     <!--<igDP:XamDataGrid.Resources>
                         <Style TargetType="{x:Type igDP:LabelPresenter}"
                             BasedOn="{StaticResource OrangeGridHeaderStyle}"/>
@@ -233,8 +260,8 @@
                         <igDP:FieldLayout>
                             <igDP:FieldLayout.Fields>
                                 <igDP:Field Name="JUCHUUNO"  Label="Order No."   Width="90"/>
-                                <igDP:Field Name="NUM"       Label="Sequence"    Width="80"/>
                                 <igDP:Field Name="NOUSCD"    Label="Code"        Width="100"/>
+                                <igDP:Field Name="NUM"       Label="Sequence"    Width="80"/>
                                 <igDP:Field Name="LOTNO"     Label="Lot No."     Width="120"/>
                                 <igDP:Field Name="PRINTDT"   Label="Print Date"  Width="110" Format="yyyy/MM/dd"/>
                             </igDP:FieldLayout.Fields>

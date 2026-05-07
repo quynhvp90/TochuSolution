@@ -197,4 +197,219 @@
         <Setter Property="Background" Value="#FFF3E0"/>
         <Setter Property="BorderBrush" Value="#FFB74D"/>
     </Style>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- GREEN BUTTON STYLE                    -->
+    <!-- ═══════════════════════════════════════ -->
+    <Style x:Key="GreenButtonStyle" TargetType="Button">
+
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#43A047"/>
+        <Setter Property="BorderBrush" Value="#2E7D32"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="28"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="4">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#388E3C"/>
+                        </Trigger>
+
+                        <!-- Press -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#2E7D32"/>
+                        </Trigger>
+
+                        <!-- Disabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#E0E0E0"/>
+
+                            <Setter TargetName="border"
+                            Property="BorderBrush"
+                            Value="#C2C2C2"/>
+
+                            <Setter Property="Foreground"
+                            Value="#757575"/>
+
+                            <Setter Property="Cursor"
+                            Value="Arrow"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- BLUE BUTTON STYLE                     -->
+    <!-- ═══════════════════════════════════════ -->
+    <Style x:Key="BlueButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#1E88E5"/>
+        <Setter Property="BorderBrush" Value="#1565C0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Height" Value="28"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="4">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#1976D2"/>
+                        </Trigger>
+
+                        <!-- Press -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#0D47A1"/>
+                        </Trigger>
+
+                        <!-- Disabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="#E0E0E0"/>
+
+                            <Setter TargetName="border"
+                            Property="BorderBrush"
+                            Value="#C2C2C2"/>
+
+                            <Setter Property="Foreground"
+                            Value="#757575"/>
+
+                            <Setter Property="Cursor"
+                            Value="Arrow"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    <!-- ═══════════════════════════════════════ -->
+<!-- RED BUTTON STYLE                      -->
+<!-- ═══════════════════════════════════════ -->
+<Style x:Key="RedButtonStyle" TargetType="Button">
+
+    <Setter Property="Foreground" Value="White"/>
+    <Setter Property="Background" Value="#E53935"/>
+    <Setter Property="BorderBrush" Value="#C62828"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="FontSize" Value="13"/>
+    <Setter Property="FontWeight" Value="SemiBold"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Height" Value="28"/>
+
+    <Setter Property="Template">
+        <Setter.Value>
+
+            <ControlTemplate TargetType="Button">
+
+                <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+
+                </Border>
+
+                <ControlTemplate.Triggers>
+
+                    <!-- Hover -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="border"
+                                Property="Background"
+                                Value="#D32F2F"/>
+                    </Trigger>
+
+                    <!-- Press -->
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="border"
+                                Property="Background"
+                                Value="#B71C1C"/>
+                    </Trigger>
+
+                    <!-- Disabled -->
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter TargetName="border"
+                                Property="Background"
+                                Value="#E0E0E0"/>
+
+                        <Setter TargetName="border"
+                                Property="BorderBrush"
+                                Value="#C2C2C2"/>
+
+                        <Setter Property="Foreground"
+                                Value="#757575"/>
+
+                        <Setter Property="Cursor"
+                                Value="Arrow"/>
+                    </Trigger>
+
+                </ControlTemplate.Triggers>
+
+            </ControlTemplate>
+
+        </Setter.Value>
+    </Setter>
+
+</Style>
 </ResourceDictionary>

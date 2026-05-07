@@ -14,7 +14,6 @@ namespace IMIP.Tochu.WPF.Views.UserControls
     /// </summary>
     public partial class Search : UserControl
     {
-        private SearchViewModel _vm => (SearchViewModel)DataContext;
         private static readonly Dictionary<string, string> _fieldLabels = new()
         {
             { "JuchuuDenpyouNO", "Order No." },
