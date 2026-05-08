@@ -10,6 +10,7 @@ using Infragistics.Windows.DataPresenter;
 using OfficeOpenXml.Export.HtmlExport.StyleCollectors.StyleContracts;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -132,6 +133,16 @@ namespace IMIP.Tochu.WPF.ViewModels
         {
             _sENINOUDATAService = sENINOUDATAService;
             _juchuuRCSService = juchuuRCSService;
+            if (appDataContext is INotifyPropertyChanged notify)
+            {
+                notify.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(BranchCode))
+                    {
+                        _ = GetJuchuuRCS();
+                    }
+                };
+            }
             // set window state to maximized when this ViewModel is initialized
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             Application.Current.MainWindow.WindowState = WindowState.Maximized;
@@ -158,14 +169,15 @@ namespace IMIP.Tochu.WPF.ViewModels
         private void OnEdit()
         {
             if (SelectedJuchuuRCSItem == null) return;
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SelectedJuchuuRCS = SelectedJuchuuRCSItem, win => win.InitUI());
         }
         private void OnNew()
         {
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(null, win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SelectedJuchuuRCS = null, win => win.InitUI());
         }
         private void NotifyAll()
         {
+            OnPropertyChanged(nameof(TotalSeninouCount));
             ((RelayCommand)EditCommand).RaiseCanExecuteChanged();
             ((RelayCommand)NewCommand).RaiseCanExecuteChanged();
             ((RelayCommand)Search).RaiseCanExecuteChanged();
@@ -233,6 +245,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             SeninouDataPaging.CurrentPage = pageIndex;
             SeninouDataPaging.Update(result.TotalCount);
             SeninouDataItems = new ObservableCollection<SI_SEINOUDATA_Model>(result.Items);
+            //NotifyAll();
 
         }
     }

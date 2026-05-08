@@ -4,9 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMIP.Tochu.WPF.Views.Windows"
-        xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf" x:Class="IMIP.Tochu.WPF.Views.Windows.Registration"
+        xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf" 
+        x:Class="IMIP.Tochu.WPF.Views.Windows.Registration"
+        xmlns:ig="http://schemas.infragistics.com/xaml"
+        xmlns:igEditors="http://schemas.infragistics.com/xaml/wpf"
+        xmlns:igChart="http://schemas.infragistics.com/xaml/wpf/chart"
         mc:Ignorable="d"
-        Title="Registration" Height="450" Width="800">
+        Width="900" Height="750"
+        Background="#F5F5F5"
+        FontFamily="Meiryo UI, Yu Gothic UI, MS Gothic, sans-serif"
+        FontSize="11"
+        mc:Ignorable="d"
+        Title="Registration">
     <Grid>
 
         <igWPF:XamTextEditor HorizontalAlignment="Left" Margin="50,105,0,0" VerticalAlignment="Top" Width="273" Theme="Office2013"/>

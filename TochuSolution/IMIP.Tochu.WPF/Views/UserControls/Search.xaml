@@ -198,10 +198,10 @@
                         <!-- Count label -->
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="28">
                             <TextBlock Text="Performance Sheet Count " FontSize="13" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#E65100"/>
-                            <igEditors:XamTextEditor
-                                Text="{Binding TotalSeninouCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                Width="60" Height="26" IsEnabled="False" Background="White"
-                                VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+
+                            <igEditors:XamNumericEditor Text="{Binding SeninouDataPaging.TotalCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                Width="60" Height="26" IsEnabled="False" Background="White" NullText="12"
+                                VerticalAlignment="Center" HorizontalContentAlignment="Center" Theme="Office2013"/>
                         </StackPanel>
 
                         <!-- Action Buttons -->
