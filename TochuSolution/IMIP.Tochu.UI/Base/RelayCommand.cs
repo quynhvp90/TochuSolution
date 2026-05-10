@@ -10,12 +10,19 @@ namespace IMIP.Tochu.UI.Base
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
+        private readonly Action<object> _executeObject;
         private readonly Func<bool>? _canExecute;
+        private readonly Func<object, bool>? _canExecuteObject;
 
         public RelayCommand(Action execute, Func<bool>? canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
+        }
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            _executeObject = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecuteObject = canExecute;
         }
 
         public event EventHandler? CanExecuteChanged
