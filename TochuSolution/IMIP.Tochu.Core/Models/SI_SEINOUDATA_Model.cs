@@ -77,7 +77,7 @@ namespace IMIP.Tochu.Core.Models
             get => _t30;
             set
             {
-                if (SetProperty(ref _t20, value))
+                if (SetProperty(ref _t30, value))
                 {
                     if (value.HasValue)
                     {

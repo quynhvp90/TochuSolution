@@ -1,4 +1,6 @@
-﻿using IMIP.Tochu.Core.Interfaces;
+﻿using IMIP.Tochu.Core.interfaces;
+using IMIP.Tochu.Core.Interfaces;
+using IMIP.Tochu.Core.models;
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
@@ -18,6 +20,8 @@ namespace IMIP.Tochu.WPF.ViewModels
         private readonly ISENINOUDATAService _sENINOUDATAService;
         private readonly IJuchuuRCSService _juchuuRCSService;
         private readonly ITANTOUService _tantouService;
+        private readonly IVI_SeinouMstService _seinouMstService;
+        private readonly IVI_SeinouMstSEService _seinouMstSEService;
         #region Fields and Properties
         private T0000RR_Juchuu_RCS_Model? _juchuuRCS;
         public T0000RR_Juchuu_RCS_Model? JuchuuRCS
@@ -38,12 +42,6 @@ namespace IMIP.Tochu.WPF.ViewModels
             set => SetProperty(ref _statusAddnew, value);
         }
 
-        private SI_TANTOU_Model? _tantouSelected;
-        public SI_TANTOU_Model? TantouSelected
-        {
-            get => _tantouSelected;
-            set => SetProperty(ref _tantouSelected, value);
-        }
         private ObservableCollection<SI_TANTOU_Model> _tantouList;
         public ObservableCollection<SI_TANTOU_Model> TantouList
         {
@@ -62,7 +60,13 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string SelectedTantou1
         {
             get => _selectedTantou1;
-            set => SetProperty(ref _selectedTantou1, value);
+            set
+            {
+                if (SetProperty(ref _selectedTantou1, value))
+                {
+                    UpdateTantouItems();
+                }
+            }
         }
 
 
@@ -77,7 +81,13 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string SelectedTantou2
         {
             get => _selectedTantou2;
-            set => SetProperty(ref _selectedTantou2, value);
+            set
+            {
+                if (SetProperty(ref _selectedTantou2, value))
+                {
+                    UpdateTantouItems();
+                }
+            }
         }
 
         private ObservableCollection<string> _tantou3Items;
@@ -91,7 +101,13 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string SelectedTantou3       
         {
             get => _selectedTantou3;
-            set => SetProperty(ref _selectedTantou3, value);
+            set
+            {
+                if (SetProperty(ref _selectedTantou3, value))
+                {
+                    UpdateTantouItems();
+                }
+            }   
         }
 
         private ObservableCollection<ChartDataPoint> _chartData;
@@ -99,6 +115,12 @@ namespace IMIP.Tochu.WPF.ViewModels
         {
             get => _chartData;
             set => SetProperty(ref _chartData, value);
+        }
+        private VI_SeinouMstSE_Model? _seinouMstSE;
+        public VI_SeinouMstSE_Model? SeinouMstSE
+        {
+            get => _seinouMstSE;
+            set => SetProperty(ref _seinouMstSE, value);
         }
         #endregion Fields and Properties
 
@@ -109,28 +131,22 @@ namespace IMIP.Tochu.WPF.ViewModels
         public ICommand PrintCommand { get; private set; }
         #endregion Commands
 
-        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, ITANTOUService tantouService) : base(nav, appDataContext)
+        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, 
+            ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, 
+            ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService, IVI_SeinouMstService seinouMstService) : base(nav, appDataContext)
         {
             _sENINOUDATAService = sENINOUDATAService;
             _juchuuRCSService = juchuuRCSService;
             _tantouService = tantouService;
-            InitializeMeshItems();
+            _seinouMstSEService = seinouMstSEService;
+            _seinouMstService = seinouMstService;
             InitializeChartData();
-            InitializeDropdowns();
             InitializeCommands();
+            _ = GetTantouList();
+            
+        }
 
-        }
-        private void InitializeMeshItems()
-        {
 
-        }
-        private void InitializeDropdowns()
-        {
-            //// Populate with placeholder items — replace from service/repository
-            //Dropdown12Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-            //Dropdown13Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-            //Dropdown14Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-        }
         private void InitializeChartData()
         {
             ChartData = new ObservableCollection<ChartDataPoint>
@@ -149,10 +165,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             };
         }
 
-        private void RefreshChartData()
-        {
-            
-        }
+
 
         private void InitializeCommands()
         {
@@ -161,27 +174,54 @@ namespace IMIP.Tochu.WPF.ViewModels
             AutoCommand = new RelayCommand(ExecuteAuto);
             ClearCommand = new RelayCommand(ExecuteClear);
             PrintCommand = new RelayCommand(ExecutePrint);
-            _ = GetTantouList();
+
         }
-        public void SetJuchuuRCS(T0000RR_Juchuu_RCS_Model? model, SI_SEINOUDATA_Model? seinoidataModel = null)
+        public async void SetJuchuuRCS(T0000RR_Juchuu_RCS_Model model, SI_SEINOUDATA_Model? seinoidataModel = null, int num = 1)
         {
             JuchuuRCS = model;
+            await GetSeinouMSTSE();
             if (seinoidataModel != null)
             {
                 SeinouData = seinoidataModel;
+                _statusAddnew = "Edit";
+                SeinouData = await GetSeinouData();
             } else
             {
+                _statusAddnew = "New";
                 SeinouData = new SI_SEINOUDATA_Model();
+                SeinouData.NUM = num;
             }
+        }
+        public async Task GetSeinouMSTSE()
+        {
+            SeinouMstSE = await _seinouMstSEService.GetByProductAndNouscdAsync(JuchuuRCS.UserHinban, JuchuuRCS.NouSCD);
         }
         public async Task GetTantouList()
         {
             var items = await _tantouService.GetTantouListAsync();
-            TantouList = new ObservableCollection<SI_TANTOU_Model>(items);
+            TantouList = new ObservableCollection<SI_TANTOU_Model>(items.Distinct());
+            UpdateTantouItems();
         }
-        private async Task GetSeinouData()
+        private void UpdateTantouItems()
         {
-            //SeinouData = await _sENINOUDATAService.GetSENINOUDATAByIdAsync(JuchuuRCS?.JuchuuSuu ?? 0, 1);
+            var list1 = TantouList.Where(t => t.TEXT1 != SelectedTantou2 && t.TEXT1 != SelectedTantou3).Distinct().Select(t => t.TEXT1).ToList();
+            // add null/empty option at the top
+            list1.Insert(0, string.Empty);
+            Tantou1Items = new ObservableCollection<string>(list1 ?? new List<string>());
+
+            var list2 = TantouList.Where(t => t.TEXT1 != SelectedTantou1 && t.TEXT1 != SelectedTantou3).Distinct().Select(t => t.TEXT1).ToList();
+            // add null/empty option at the top
+            list2.Insert(0, string.Empty);
+            Tantou2Items = new ObservableCollection<string>(list2 ?? new List<string>());
+
+            var list3 = TantouList.Where(t => t.TEXT1 != SelectedTantou1 && t.TEXT1 != SelectedTantou2).Distinct().Select(t => t.TEXT1).ToList();
+            // add null/empty option at the top
+            list3.Insert(0, string.Empty);
+            Tantou3Items = new ObservableCollection<string>(list3 ?? new List<string>());
+        }
+        private async Task<SI_SEINOUDATA_Model?> GetSeinouData()
+        {
+           return await _sENINOUDATAService.GetSENINOUDATAByIdAsync(JuchuuRCS.JuchuuNO, SeinouData.NUM);
         }   
         private void ExecuteLoadMaster(object parameter)
         {
@@ -225,7 +265,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             //foreach (var item in MeshItems)
             //    item.Value = null;
 
-            RefreshChartData();
+            //RefreshChartData();
         }
 
         private void ExecutePrint(object parameter)

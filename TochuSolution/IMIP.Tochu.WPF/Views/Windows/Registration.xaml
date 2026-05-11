@@ -8,7 +8,9 @@
         x:Class="IMIP.Tochu.WPF.Views.Windows.Registration"
         xmlns:ig="http://schemas.infragistics.com/xaml"
         xmlns:igEditors="http://schemas.infragistics.com/xaml/wpf"
+        xmlns:vmDesign="clr-namespace:IMIP.Tochu.WPF.DataDesign"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vmDesign:RegistrationDesignViewModel, IsDesignTimeCreatable=True}"
         Width="900" Height="750"
         Background="#F5F5F5"
         FontFamily="Meiryo UI, Yu Gothic UI, MS Gothic, sans-serif"
@@ -29,13 +31,37 @@
         <!-- Green-tinted input style (受注情報 area) -->
         <Style x:Key="GreenInputStyle" TargetType="igEditors:XamTextEditor" BasedOn="{StaticResource InputEditorStyle}">
             <Setter Property="Background" Value="#E8F5E9"/>
+            <Setter Property="IsEnabled" Value="False"/>
         </Style>
         <!--XamDateTimeEditorStyle-->
         <Style x:Key="XamDateTimeEditorStyle" TargetType="igEditors:XamDateTimeEditor">
             <Setter Property="Height" Value="24"/>
             <Setter Property="Padding" Value="2,1"/>
-            <Setter Property="BorderBrush" Value="#AAAAAA"/>
-            <Setter Property="Background" Value="#E8F5E9"/>
+            
+        </Style>
+        <!--GreenXamDateTimeEditorStyle-->
+        <Style x:Key="GreenXamDateTimeEditorStyle"
+           TargetType="{x:Type igEditors:XamDateTimeEditor}"
+           BasedOn="{StaticResource XamDateTimeEditorStyle}">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type igEditors:XamDateTimeEditor}">
+                        <Border BorderBrush="#FFABABAB"
+                            BorderThickness="1">
+
+                            <Grid>
+                                <igEditors:XamDateTimeEditor
+                                    Value="{TemplateBinding Value}"
+                                    Background="#FFE8F5E9"
+                                    BorderThickness="0"/>
+                            </Grid>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
         </Style>
         <!--XamNumericEditor-->
         <Style x:Key="InputNumericEditorStyle" TargetType="igEditors:XamNumericEditor">
@@ -60,8 +86,11 @@
         <Style x:Key="XamMaskedEditorStyle" TargetType="igEditors:XamMaskedEditor">
             <Setter Property="Height" Value="24"/>
             <Setter Property="Padding" Value="2,1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
             <Setter Property="BorderBrush" Value="#AAAAAA"/>
+            <!-- decimal -->
+            <Setter Property="Mask" Value="nnnnnn.nn"/>
+            <Setter Property="PromptChar" Value=" "/>
         </Style>
 
         <!--Yellow XamMaskedEditor style-->
@@ -75,6 +104,7 @@
             <Setter Property="BorderBrush" Value="#CCCCCC"/>
             <Setter Property="Foreground" Value="#888888"/>
             <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="IsEnabled" Value="False"/>
         </Style>
         <!--Green XamMaskedEditor style-->
         <Style x:Key="GreenXamMaskedEditorStyle" TargetType="igEditors:XamMaskedEditor" BasedOn="{StaticResource XamMaskedEditorStyle}">
@@ -97,6 +127,7 @@
         <Style x:Key="BlueLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource FieldLabelStyle}">
             <Setter Property="Foreground" Value="#1565C0"/>
             <Setter Property="FontSize" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
 
         <!-- Section border style -->
@@ -153,17 +184,13 @@
 
                     <TextBlock Grid.Column="2" Text="Order Date" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamDateTimeEditor Grid.Column="3"
-                        Style="{StaticResource XamDateTimeEditorStyle}"
-                        Background="#E8F5E9"
-                        BorderBrush="#AAAAAA"
+                        Style="{StaticResource GreenXamDateTimeEditorStyle}"
                         Value="{Binding JuchuuRCS.JuchuuYMD, Mode=TwoWay}"
                         x:Name="Field3" Theme="Office2013"/>
 
                     <TextBlock Grid.Column="4" Text="Delivery Date" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamDateTimeEditor Grid.Column="5"
-                        Style="{StaticResource XamDateTimeEditorStyle}"
-                        Background="#E8F5E9"
-                        BorderBrush="#AAAAAA"
+                        Style="{StaticResource GreenXamDateTimeEditorStyle}"
                         Value="{Binding JuchuuRCS.Nouki, Mode=TwoWay}"
                         x:Name="Field4" Theme="Office2013"/>
 
@@ -275,8 +302,8 @@
                         Background="#FFF9C4"
                         BorderBrush="#AAAAAA"
                         Style="{StaticResource InputComboEditorStyle}"
-                        ItemsSource="{Binding Dropdown12Items}"
-                        SelectedItem="{Binding SelectedDropdown12, Mode=TwoWay}"
+                        ItemsSource="{Binding Tantou1Items}"
+                        SelectedItem="{Binding SelectedTantou1, Mode=TwoWay}"
                         x:Name="Field12"/>
 
                     <!-- Dropdown 13 -->
@@ -284,8 +311,8 @@
                         Background="#FFF9C4"
                         BorderBrush="#AAAAAA"
                         Style="{StaticResource InputComboEditorStyle}"
-                        ItemsSource="{Binding Dropdown13Items}"
-                        SelectedItem="{Binding SelectedDropdown13, Mode=TwoWay}"
+                        ItemsSource="{Binding Tantou2Items}"
+                        SelectedItem="{Binding SelectedTantou2, Mode=TwoWay}"
                         x:Name="Field13"/>
 
                     <!-- Dropdown 14 -->
@@ -293,16 +320,9 @@
                         Style="{StaticResource InputComboEditorStyle}"
                         Background="#FFF9C4"
                         BorderBrush="#AAAAAA"
-                        ItemsSource="{Binding Dropdown14Items}"
-                        SelectedItem="{Binding SelectedDropdown14, Mode=TwoWay}"
+                        ItemsSource="{Binding Tantou3Items}"
+                        SelectedItem="{Binding SelectedTantou3, Mode=TwoWay}"
                         x:Name="Field14"/>
-                    <igEditors:XamComboEditor Grid.Column="3"
-                        Background="#FFF9C4"
-                        BorderBrush="#AAAAAA"
-                        Style="{StaticResource InputComboEditorStyle}"
-                        ItemsSource="{Binding Dropdown12Items}"
-                        SelectedItem="{Binding SelectedDropdown12, Mode=TwoWay}"
-                        x:Name="Field12_Copy"/>
                 </Grid>
             </Grid>
         </Border>
@@ -331,21 +351,18 @@
                     TextBlock.TextAlignment="Center"/>
 
                 <!-- Field 20 -->
-                <igEditors:XamNumericEditor Grid.Column="2"
-                    Style="{StaticResource XamNumericEditorStyle}"
-                    Background="#E8F5E9"
-                    BorderBrush="#AAAAAA"
-                    Value="{Binding JuchuuRCS.NouSCD, Mode=TwoWay}"
-                    x:Name="Field20" Margin="1,2,1,2"/>
+                <igEditors:XamTextEditor Grid.Column="2"
+                    Style="{StaticResource GreenInputStyle}"
+                    Text="{Binding JuchuuRCS.NouSCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    x:Name="Field20" Margin="1,0,1,0"/>
+                
 
                 <!-- 印刷日 label + Field 17 -->
                 <TextBlock Grid.Column="3" Text="Print Date" Style="{StaticResource FieldLabelStyle}" Margin="8,0,4,0"/>
                 <igEditors:XamDateTimeEditor Grid.Column="4"
-                    Style="{StaticResource XamDateTimeEditorStyle}"
-                    Background="#E8F5E9"
-                    BorderBrush="#AAAAAA"
-                    Value="{Binding SeinouData.PRINTDT, Mode=TwoWay}"
-                    x:Name="Field17" Margin="1,2,1,2"/>
+                    Style="{StaticResource GreenXamDateTimeEditorStyle}"
+                    Value="{Binding SeinouData.PRINTDT, Mode=TwoWay}"  Theme="Office2013"
+                    x:Name="Field17" Margin="1,0,1,0"/>
 
                 <!-- 自動 button -->
                 <Button Grid.Column="6"
@@ -378,11 +395,11 @@
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Resin Content" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="0 ～ A0" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T10A, StringFormat=0 ~ {0}}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor Grid.Column="2"
                             Style="{StaticResource YellowXamMaskedEditorStyle}"
                             Value="{Binding SeinouData.T10, Mode=TwoWay}"
@@ -393,11 +410,11 @@
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Adhesion Point" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A1 ～ B1" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T20A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor Grid.Column="2"
                             Style="{StaticResource YellowXamMaskedEditorStyle}"
                             Value="{Binding SeinouData.T40, Mode=TwoWay}"
@@ -431,11 +448,11 @@
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m14" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A4 ～ B4" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T50A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor Grid.Column="2"
                             Style="{StaticResource YellowXamMaskedEditorStyle}"
                             Value="{Binding SeinouData.T50, Mode=TwoWay}"
@@ -444,122 +461,122 @@
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m18.5" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A5 ～ B5" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T60A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM18_5" Value="{Binding SeinouData.T60, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m26" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A6 ～ B6" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T70A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM26" Value="{Binding SeinouData.T70, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m36" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A7 ～ B7" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T80A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM36" Value="{Binding SeinouData.T80, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m50" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A8 ～ B8" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T90A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM50" Value="{Binding SeinouData.T90, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m70" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A9 ～ B9" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T100A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM70" Value="{Binding SeinouData.T100, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m100" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A10 ～ B10" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T110A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM100" Value="{Binding SeinouData.T110, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m140" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A11 ～ B11" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T120A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM140" Value="{Binding SeinouData.T120, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m200" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A12 ～ B12" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T130A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM200" Value="{Binding SeinouData.T130, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="m280" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A13 ～ B13" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T140A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldM280" Value="{Binding SeinouData.T140, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="mPAN" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A14 ～ B14" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T150A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldMPan" Value="{Binding SeinouData.T150, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource YellowXamMaskedEditorStyle}"/>
                     </Grid>
                     <!--mTotal-->
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="mTotal" Style="{StaticResource FieldLabelStyle}"/>
-                        <igEditors:XamMaskedEditor x:Name="FieldMTotal" Value="{Binding SeinouData.MA150, Mode=TwoWay}" IsEnabled="False" Grid.Column="2" Style="{StaticResource DisabledXamMaskedEditorStyle}"/>
+                        <igEditors:XamMaskedEditor x:Name="FieldMTotal" Value="{Binding SeinouData.MA150, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource DisabledXamMaskedEditorStyle}"/>
                     </Grid>
                     <!-- AFS.FN -->
                     <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="AFS.FN" Style="{StaticResource FieldLabelStyle}"/>
-                        <TextBlock Grid.Column="1" Text="A15 ～ B15" Style="{StaticResource BlueLabelStyle}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T160A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor x:Name="FieldAFS_FN" Value="{Binding SeinouData.T160, Mode=TwoWay}" Grid.Column="2" Style="{StaticResource DisabledXamMaskedEditorStyle}"/>
                     </Grid>
                 
@@ -585,14 +602,14 @@
                         <Grid Grid.Row="0" Margin="0,1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="145"/>
-                                <ColumnDefinition Width="44"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Transverse Rupture Strength X" Style="{StaticResource FieldLabelStyle}"/>
-                            <TextBlock Grid.Column="1" Text="A2 ～ B2" Style="{StaticResource BlueLabelStyle}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T30A}" Style="{StaticResource BlueLabelStyle}"/>
                             <igEditors:XamMaskedEditor Grid.Column="2"
                                 Style="{StaticResource YellowXamMaskedEditorStyle}"
                                 Width="60"
@@ -600,8 +617,8 @@
                                 x:Name="Field35"/>
                             <TextBlock Grid.Column="3" Text="kgf/cm²" Style="{StaticResource FieldLabelStyle}" HorizontalAlignment="Center"/>
                             <igEditors:XamMaskedEditor Grid.Column="4"
-                                Style="{StaticResource DisabledXamMaskedEditorStyle}"
-                                Value="{Binding SeinouData.M2A0, Mode=TwoWay}"
+                                Style="{StaticResource XamMaskedEditorStyle}"
+                                Value="{Binding SeinouData.MA20, Mode=OneWay}"
                                 x:Name="Field36"/>
                             <TextBlock Grid.Column="5" Text="N/cm²" Style="{StaticResource FieldLabelStyle}" Margin="4,0,0,0"/>
                         </Grid>
@@ -610,14 +627,14 @@
                         <Grid Grid.Row="1" Margin="0,1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="145"/>
-                                <ColumnDefinition Width="44"/>
+                                <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="50"/>
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Transverse Rupture Strength R" Style="{StaticResource FieldLabelStyle}"/>
-                            <TextBlock Grid.Column="1" Text="A3 ～ B3" Style="{StaticResource BlueLabelStyle}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T40A}" Style="{StaticResource BlueLabelStyle}"/>
                             <igEditors:XamMaskedEditor Grid.Column="2"
                                 Style="{StaticResource YellowXamMaskedEditorStyle}"
                                 Width="60"
@@ -625,8 +642,8 @@
                                 x:Name="Field37"/>
                             <TextBlock Grid.Column="3" Text="kgf/cm²" Style="{StaticResource FieldLabelStyle}" HorizontalAlignment="Center"/>
                             <igEditors:XamMaskedEditor Grid.Column="4"
-                                Style="{StaticResource DisabledXamMaskedEditorStyle}"
-                                Value="{Binding SeinouData.MA30, Mode=TwoWay}"
+                                Style="{StaticResource XamMaskedEditorStyle}"
+                                Value="{Binding SeinouData.MA30, Mode=OneWay}"
                                 x:Name="Field38"/>
                             <TextBlock Grid.Column="5" Text="N/cm²" Style="{StaticResource FieldLabelStyle}" Margin="4,0,0,0"/>
                         </Grid>

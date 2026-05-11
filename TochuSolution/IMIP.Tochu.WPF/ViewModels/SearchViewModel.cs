@@ -170,11 +170,11 @@ namespace IMIP.Tochu.WPF.ViewModels
         private void OnEdit()
         {
             if (SelectedJuchuuRCSItem == null) return;
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, SelectedSeninouDataItem), win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, SelectedSeninouDataItem, SelectedSeninouDataItem.NUM), win => win.InitUI());
         }
         private void OnNew()
         {
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, null), win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, null, SeninouDataItems.Count + 1), win => win.InitUI());
         }
         private void NotifyAll()
         {

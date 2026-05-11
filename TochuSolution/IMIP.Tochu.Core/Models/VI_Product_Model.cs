@@ -9,8 +9,23 @@ namespace IMIP.Tochu.Core.Models
 {
     public class VI_Product_Model : NotifyBase
     {
-        public string? UserHinban { get; set; }
-        public string? UserHinmei { get; set; }
-        public string? NOUSCD { get; set; }
+        private string? _userHinban;
+        private string? _userHinmei;
+        private string? _nouscd;
+        public string? UserHinban
+        {
+            get => _userHinban;
+            set => SetProperty(ref _userHinban, value);
+        }
+        public string? UserHinmei
+        {
+            get => _userHinmei;
+            set => SetProperty(ref _userHinmei, value);
+        }
+        public string? NOUSCD
+        {
+            get => _nouscd;
+            set => SetProperty(ref _nouscd, value);
+        }
     }
 }

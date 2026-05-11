@@ -25,5 +25,10 @@ namespace IMIP.Tochu.Infrastructure.repositories
         {
             return await _context.VI_SeinouMstSEs.Where(x => x.PRODUCT == product).ToListAsync();
         }
+
+        public async Task<VI_SeinouMstSE?> GetByProductNameAndNouSCDAsync(string productName, string nouSCD)
+        {
+            return await _context.VI_SeinouMstSEs.FirstOrDefaultAsync(x => x.PRODUCT == productName && x.NOUSCD == nouSCD);
+        }
     }
 }
