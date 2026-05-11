@@ -10,5 +10,6 @@ namespace IMIP.Tochu.Domain.interfaces
 {
     public interface IT0000RR_Juchuu_RCSRepository : IRepository<T0000RR_Juchuu_RCS>
     {
+        Task<T0000RR_Juchuu_RCS?> GetByIDAsync(int juchuuNO);
     }
 }

@@ -55,14 +55,40 @@ namespace IMIP.Tochu.Core.Models
         public decimal? T20
         {
             get => _t20;
-            set => SetProperty(ref _t20, value);
+            set
+            {
+                if (SetProperty(ref _t20, value))
+                {
+                    if (value.HasValue)
+                    {
+                        MA20 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        MA20 = null;
+                    }
+                }
+            }
         }
 
         private decimal? _t30;
         public decimal? T30
         {
             get => _t30;
-            set => SetProperty(ref _t30, value);
+            set
+            {
+                if (SetProperty(ref _t20, value))
+                {
+                    if (value.HasValue)
+                    {
+                        MA30 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        MA30 = null;
+                    }
+                }
+            }
         }
 
         private decimal? _t40;

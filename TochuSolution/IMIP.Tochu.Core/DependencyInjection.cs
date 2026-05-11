@@ -11,7 +11,7 @@ namespace IMIP.Tochu.Core
         {
             services.AddSingleton<IAuthService, AuthService>();
             services.AddTransient<IDbLogger, LoggerService>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ITANTOUService, TANTOUService>();
             services.AddTransient<IJuchuuRCSService, JuchuuRCSService>();
             services.AddTransient<ISENINOUDATAService, SENINOUDATAService>();
 

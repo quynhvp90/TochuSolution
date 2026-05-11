@@ -21,6 +21,9 @@
             <Setter Property="Padding" Value="2,1"/>
             <Setter Property="BorderBrush" Value="#AAAAAA"/>
             <Setter Property="Background" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <!-- Green-tinted input style (受注情報 area) -->
@@ -165,13 +168,13 @@
                         x:Name="Field4" Theme="Office2013"/>
 
                     <igEditors:XamTextEditor Grid.Column="7"
-                    Style="{StaticResource GreenInputStyle}"
-                    Text="{Binding SeinouData.NUM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    x:Name="Field15" Theme="Office2013"/>
+                        Style="{StaticResource GreenInputStyle}"
+                        Text="{Binding SeinouData.NUM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        x:Name="Field15" Theme="Office2013"/>
 
                     <igEditors:XamTextEditor Grid.Column="9"
-                    Style="{StaticResource GreenInputStyle}"
-                    Text="{Binding StatusAddnew, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource GreenInputStyle}"
+                        Text="{Binding StatusAddnew, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="Field16" Theme="Office2013"/>
                 </Grid>
 
@@ -622,7 +625,7 @@
                                 x:Name="Field37"/>
                             <TextBlock Grid.Column="3" Text="kgf/cm²" Style="{StaticResource FieldLabelStyle}" HorizontalAlignment="Center"/>
                             <igEditors:XamMaskedEditor Grid.Column="4"
-                                Style="{StaticResource BlueXamMaskedEditorStyle}"
+                                Style="{StaticResource DisabledXamMaskedEditorStyle}"
                                 Value="{Binding SeinouData.MA30, Mode=TwoWay}"
                                 x:Name="Field38"/>
                             <TextBlock Grid.Column="5" Text="N/cm²" Style="{StaticResource FieldLabelStyle}" Margin="4,0,0,0"/>

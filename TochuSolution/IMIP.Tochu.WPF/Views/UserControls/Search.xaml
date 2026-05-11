@@ -228,7 +228,8 @@
                                 Height="28"
                                 FontSize="13"
                                 FontWeight="SemiBold"
-                                BorderThickness="1"
+                                Foreground="White"
+                                BorderThickness="0"
                                 Cursor="Hand">
                             </Button>
                         </StackPanel>
@@ -238,7 +239,8 @@
                 <!-- XamDataGrid 2 -->
                 <igDP:XamDataGrid Grid.Row="1"
                     DataSource="{Binding SeninouDataItems}"
-                    SelectedDataItem="{Binding SelectedResultItem, Mode=TwoWay}"
+                    SelectedDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
+                    ActiveDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
                     Theme="Office2013"
                     GroupByAreaLocation="None"
                     DataSourceResetBehavior="ReuseRecordsViaEnumerator"

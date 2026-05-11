@@ -138,5 +138,42 @@ namespace IMIP.Tochu.Core.Services
             }
             return result;
         }
+
+        public async Task<T0000RR_Juchuu_RCS_Model> Save(T0000RR_Juchuu_RCS_Model model)
+        {
+            var modelUpdate = await _juchuuRCSRepository.GetByIDAsync(model.JuchuuNO);
+
+            if (modelUpdate != null)
+            {
+                modelUpdate.JuchuuDenpyouNO = model.JuchuuDenpyouNO;
+                modelUpdate.JuchuuKyotenCD = model.JuchuuKyotenCD;
+                modelUpdate.JuchuuKyotenNM = model.JuchuuKyotenNM;
+                modelUpdate.JuchuuYMD = model.JuchuuYMD;
+                modelUpdate.Nouki = model.Nouki;
+                modelUpdate.ShukkaKyotenCD = model.ShukkaKyotenCD;
+                modelUpdate.ShukkaBashoCD = model.ShukkaBashoCD;
+                modelUpdate.JuchuuKBN = model.JuchuuKBN;
+                modelUpdate.HaisouCD = model.HaisouCD;
+                modelUpdate.ChikuCD = model.ChikuCD;
+                modelUpdate.NouSCD = model.NouSCD;
+                modelUpdate.NouSSNM = model.NouSSNM;
+                modelUpdate.UserHinban = model.UserHinban;
+                modelUpdate.UserHinmei = model.UserHinmei;
+                modelUpdate.ItemCD = model.ItemCD;
+                modelUpdate.ItemNM = model.ItemNM;
+                modelUpdate.JuchuuSuu = model.JuchuuSuu;
+                modelUpdate.NisugataCD = model.NisugataCD;
+                modelUpdate.UriKeitaiKBN = model.UriKeitaiKBN;
+                modelUpdate.Tekiyou1 = model.Tekiyou1;
+                modelUpdate.TankaUnitCD = model.TankaUnitCD;
+                _juchuuRCSRepository.Update(modelUpdate);
+                await _unitOfWork.CommitAsync();
+                return modelUpdate.ToModel();
+            }
+            else
+            {
+                throw new InvalidOperationException($"JuchuuRCS with JuchuuNO {model.JuchuuNO} not found.");
+            }
+        }
     }
 }

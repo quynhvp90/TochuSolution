@@ -11,5 +11,6 @@ namespace IMIP.Tochu.Core.Interfaces
     public interface IJuchuuRCSService
     {
         Task<PagedResult<T0000RR_Juchuu_RCS_Model>> GetJuchuuRCSAsync(JuchuuPagingRequest paging);
+        Task<T0000RR_Juchuu_RCS_Model> Save(T0000RR_Juchuu_RCS_Model model);
     }
 }

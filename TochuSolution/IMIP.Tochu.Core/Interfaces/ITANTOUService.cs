@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace IMIP.Tochu.Core.Interfaces
 {
-    public interface IProductService
+    public interface ITANTOUService
     {
-        Task<List<VI_Product_Model>> GetProductsAsync(string keyword = "");
+        public Task<List<SI_TANTOU_Model>> GetTantouListAsync();
     }
 }

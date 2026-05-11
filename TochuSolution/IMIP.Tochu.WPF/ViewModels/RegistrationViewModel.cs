@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Core.Models;
+﻿using IMIP.Tochu.Core.Interfaces;
+using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
@@ -7,12 +8,17 @@ using Infragistics;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
     public class RegistrationViewModel : ViewModelBaseWPF
     {
+        private readonly ISENINOUDATAService _sENINOUDATAService;
+        private readonly IJuchuuRCSService _juchuuRCSService;
+        private readonly ITANTOUService _tantouService;
+        #region Fields and Properties
         private T0000RR_Juchuu_RCS_Model? _juchuuRCS;
         public T0000RR_Juchuu_RCS_Model? JuchuuRCS
         {
@@ -44,23 +50,6 @@ namespace IMIP.Tochu.WPF.ViewModels
             get => _tantouList;
             set => SetProperty(ref _tantouList, value);
         }
-
-        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext) : base(nav, appDataContext)
-        {
-            InitializeMeshItems();
-            InitializeChartData();
-            InitializeDropdowns();
-            InitializeCommands();
-
-        }
-
-        public void SetJuchuuRCS(T0000RR_Juchuu_RCS_Model? model)
-        {
-            JuchuuRCS = model;
-        }
-        // ──────────────────────────────────────────────
-        //  Dropdowns ⑫⑬⑭
-        // ──────────────────────────────────────────────
 
         private ObservableCollection<string> _tantou1Items;
         public ObservableCollection<string> Tantou1Items
@@ -105,25 +94,43 @@ namespace IMIP.Tochu.WPF.ViewModels
             set => SetProperty(ref _selectedTantou3, value);
         }
 
-    
-
-        private void InitializeMeshItems()
-        {
-            
-        }
-
-        
-        // ══════════════════════════════════════════════
-        //  SECTION 4 — Chart data
-        // ══════════════════════════════════════════════
-
         private ObservableCollection<ChartDataPoint> _chartData;
         public ObservableCollection<ChartDataPoint> ChartData
         {
             get => _chartData;
             set => SetProperty(ref _chartData, value);
         }
+        #endregion Fields and Properties
 
+        #region Commands
+        public ICommand LoadMasterCommand { get; private set; }
+        public ICommand AutoCommand { get; private set; }
+        public ICommand ClearCommand { get; private set; }
+        public ICommand PrintCommand { get; private set; }
+        #endregion Commands
+
+        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, ITANTOUService tantouService) : base(nav, appDataContext)
+        {
+            _sENINOUDATAService = sENINOUDATAService;
+            _juchuuRCSService = juchuuRCSService;
+            _tantouService = tantouService;
+            InitializeMeshItems();
+            InitializeChartData();
+            InitializeDropdowns();
+            InitializeCommands();
+
+        }
+        private void InitializeMeshItems()
+        {
+
+        }
+        private void InitializeDropdowns()
+        {
+            //// Populate with placeholder items — replace from service/repository
+            //Dropdown12Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
+            //Dropdown13Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
+            //Dropdown14Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
+        }
         private void InitializeChartData()
         {
             ChartData = new ObservableCollection<ChartDataPoint>
@@ -142,41 +149,40 @@ namespace IMIP.Tochu.WPF.ViewModels
             };
         }
 
-        /// <summary>Sync MeshItems values → ChartData for live chart update.</summary>
         private void RefreshChartData()
         {
             
         }
 
-        // ══════════════════════════════════════════════
-        //  SECTION 5 — Remarks
-        // ══════════════════════════════════════════════
-
-        /// <summary>Field ㊵: 備考 / Ghi chú</summary>
-        private string _remarks;
-        public string Remarks
-        {
-            get => _remarks;
-            set => SetProperty(ref _remarks, value);
-        }
-
-        // ══════════════════════════════════════════════
-        //  Commands
-        // ══════════════════════════════════════════════
-
-        public ICommand LoadMasterCommand { get; private set; }
-        public ICommand AutoCommand { get; private set; }
-        public ICommand ClearCommand { get; private set; }
-        public ICommand PrintCommand { get; private set; }
-
         private void InitializeCommands()
         {
+            SeinouData = new SI_SEINOUDATA_Model();
             LoadMasterCommand = new RelayCommand(ExecuteLoadMaster);
             AutoCommand = new RelayCommand(ExecuteAuto);
             ClearCommand = new RelayCommand(ExecuteClear);
             PrintCommand = new RelayCommand(ExecutePrint);
+            _ = GetTantouList();
         }
-
+        public void SetJuchuuRCS(T0000RR_Juchuu_RCS_Model? model, SI_SEINOUDATA_Model? seinoidataModel = null)
+        {
+            JuchuuRCS = model;
+            if (seinoidataModel != null)
+            {
+                SeinouData = seinoidataModel;
+            } else
+            {
+                SeinouData = new SI_SEINOUDATA_Model();
+            }
+        }
+        public async Task GetTantouList()
+        {
+            var items = await _tantouService.GetTantouListAsync();
+            TantouList = new ObservableCollection<SI_TANTOU_Model>(items);
+        }
+        private async Task GetSeinouData()
+        {
+            //SeinouData = await _sENINOUDATAService.GetSENINOUDATAByIdAsync(JuchuuRCS?.JuchuuSuu ?? 0, 1);
+        }   
         private void ExecuteLoadMaster(object parameter)
         {
             // TODO: Open master lookup dialog and populate fields
@@ -231,13 +237,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         //  Helpers
         // ──────────────────────────────────────────────
 
-        private void InitializeDropdowns()
-        {
-            //// Populate with placeholder items — replace from service/repository
-            //Dropdown12Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-            //Dropdown13Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-            //Dropdown14Items = new ObservableCollection<string> { "選択1", "選択2", "選択3" };
-        }
+       
     }
     // ══════════════════════════════════════════════════
     //  Supporting classes

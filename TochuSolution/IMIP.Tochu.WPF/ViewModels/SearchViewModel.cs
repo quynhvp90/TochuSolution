@@ -23,6 +23,7 @@ namespace IMIP.Tochu.WPF.ViewModels
     {
         private readonly ISENINOUDATAService _sENINOUDATAService;
         private readonly IJuchuuRCSService _juchuuRCSService;
+        private CancellationTokenSource _cts;
         // --- Data state ---
         private ObservableCollection<T0000RR_Juchuu_RCS_Model> _juchuuRCSItems;
         private T0000RR_Juchuu_RCS_Model _selectedJuchuuRCSItem;
@@ -154,11 +155,11 @@ namespace IMIP.Tochu.WPF.ViewModels
             );
             EditCommand = new RelayCommand(
                 execute: () => OnEdit(),
-                canExecute: () => SelectedJuchuuRCSItem != null 
+                canExecute: () => SelectedSeninouDataItem != null 
             );
             NewCommand = new RelayCommand(
                 execute: () => OnNew(),
-                canExecute: () => true
+                canExecute: () => SelectedJuchuuRCSItem != null
             );
             // Heald events;
             JuChuuPaging.PageChanged += (page, size) => _ = GetJuchuuRCS(page, size);
@@ -169,11 +170,11 @@ namespace IMIP.Tochu.WPF.ViewModels
         private void OnEdit()
         {
             if (SelectedJuchuuRCSItem == null) return;
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem), win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, SelectedSeninouDataItem), win => win.InitUI());
         }
         private void OnNew()
         {
-            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(null), win => win.InitUI());
+            _navigation.OpenWindow<Registration, RegistrationViewModel>(vm => vm.SetJuchuuRCS(SelectedJuchuuRCSItem, null), win => win.InitUI());
         }
         private void NotifyAll()
         {
@@ -184,22 +185,30 @@ namespace IMIP.Tochu.WPF.ViewModels
         }
         public async Task GetJuchuuRCS(int pageIndex = 1, int pageSize = 20)
         {
-            await Task.Delay(300);
-            JuchuuPagingRequest paging = new JuchuuPagingRequest()
-            {
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                SortAscending = SortAscending,
-                SortField = SortField, 
-                JuchuuKyotenCD = _appDataContext.BranchCode,
-                StartNouki = _startNoukidate ?? DateTime.Today.AddDays(-30),
-                EndNouki = _endNoukidate ?? DateTime.Today,
-            };
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
             try
             {
+                await Task.Delay(300, token);
+
                 if (_isSearching) return;
                 _isSearching = true;
+
+                JuchuuPagingRequest paging = new JuchuuPagingRequest()
+                {
+                    PageIndex = pageIndex,
+                    PageSize = pageSize,
+                    SortAscending = SortAscending,
+                    SortField = SortField,
+                    JuchuuKyotenCD = _appDataContext.BranchCode,
+                    StartNouki = _startNoukidate ?? DateTime.Today.AddDays(-30),
+                    EndNouki = _endNoukidate ?? DateTime.Today,
+                };
+
                 var result = await _juchuuRCSService.GetJuchuuRCSAsync(paging);
+
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     SelectedJuchuuRCSItem = null;
@@ -210,14 +219,18 @@ namespace IMIP.Tochu.WPF.ViewModels
                     NotifyAll();
                 });
             }
+            catch (OperationCanceledException)
+            {
+                // Search was canceled, no need to show an error message
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Invalid search input: {ex.Message}");
-                return;
-            } finally {
+            }
+            finally
+            {
                 _isSearching = false;
             }
-            
         }
         public void OnJuchuuRCSortChanged(string field)
         {

@@ -10,5 +10,6 @@ namespace IMIP.Tochu.Domain.interfaces
 {
     public interface ISI_SEINOUDATARepository : IRepository<SI_SEINOUDATA>
     {
+        Task<SI_SEINOUDATA?> GetByIDAsync(int juchuuNO, int num);
     }
 }
