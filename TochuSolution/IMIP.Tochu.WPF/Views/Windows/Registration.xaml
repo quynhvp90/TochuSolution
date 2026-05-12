@@ -13,6 +13,7 @@
         d:DataContext="{d:DesignInstance Type=vmDesign:RegistrationDesignViewModel, IsDesignTimeCreatable=True}"
         Width="900" Height="750"
         Background="#F5F5F5"
+        WindowStartupLocation="CenterScreen"
         FontFamily="Meiryo UI, Yu Gothic UI, MS Gothic, sans-serif"
         FontSize="11"
         Title="Registration">

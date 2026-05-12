@@ -138,10 +138,10 @@ namespace IMIP.Tochu.WPF.ViewModels
         public ICommand AutoCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
         public ICommand PrintCommand { get; private set; }
-
+        public ICommand LoadMasterCommand { get; private set; }
         #endregion Commands
 
-        
+
         public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, 
             ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, 
             ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService, IVI_SeinouMstService seinouMstService) : base(nav, appDataContext)
@@ -184,7 +184,23 @@ namespace IMIP.Tochu.WPF.ViewModels
             }
             SeinouData.ChartValidated += OnChartValidated;
         }
+        private void ExecuteLoadMaster(object? _)
+        {
+            // Field7 = JuchuuRCS.UserHinban (Part Number / 先方品番)
+            var productName = JuchuuRCS?.UserHinban ?? string.Empty;
 
+            var modal = new IMIP.Tochu.WPF.Views.Windows.AnalysisMasterModal(productName);
+
+            // Show as a blocking dialog owned by the Registration window
+            bool? result = modal.ShowDialog();
+
+            if (result == true && !string.IsNullOrEmpty(modal.SelectedNouscd))
+            {
+                // Write the chosen NOUSCD back into Field20
+                if (JuchuuRCS != null)
+                    JuchuuRCS.NouSCD = modal.SelectedNouscd;
+            }
+        }
         private void OnChartValidated(string field, bool isValid)
         {
             refreshChartData();
@@ -233,6 +249,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             AutoCommand = new RelayCommand(ExecuteAuto);
             ClearCommand = new RelayCommand(ExecuteClear);
             PrintCommand = new RelayCommand(ExecutePrint);
+            LoadMasterCommand = new RelayCommand(ExecuteLoadMaster);
 
         }
         public async void SetJuchuuRCS(T0000RR_Juchuu_RCS_Model model, SI_SEINOUDATA_Model? seinoidataModel = null, int num = 1)
@@ -317,7 +334,7 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         private void ExecuteClear()
         {
-            //JuchuuRCS.NouSCD = null;
+            JuchuuRCS.NouSCD = null;
             SeinouData.T10 = null;
             SeinouData.T20 = null;
             SeinouData.T30 = null;

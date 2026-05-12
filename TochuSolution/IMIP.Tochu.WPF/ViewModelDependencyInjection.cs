@@ -32,9 +32,11 @@ namespace IMIP.Tochu.WPF
             services.AddTransient<RegistrationViewModel>(); // Transient
             services.AddTransient<LoginViewModel>(); // Transient
             services.AddTransient<PagingViewModel>(); // Transient
+            services.AddTransient<AnalysisMasterModalViewModel>(); // Transient
 
             // Views
             services.AddTransient<Registration>();
+            services.AddTransient<AnalysisMasterModal>();
             services.AddTransient<MainWindow>();
             services.AddTransient<Dashboard>();
             services.AddTransient<Search>();

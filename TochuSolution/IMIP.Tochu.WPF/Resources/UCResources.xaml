@@ -22,6 +22,8 @@
     <DataTemplate DataType="{x:Type vm:MasterAnalysisViewModel}">
         <uc:MasterAnalysis/>
     </DataTemplate>
-    
+    <DataTemplate DataType="{x:Type vm:AnalysisMasterModalViewModel}">
+        <windows:AnalysisMasterModal/>
+    </DataTemplate>
 
 </ResourceDictionary>

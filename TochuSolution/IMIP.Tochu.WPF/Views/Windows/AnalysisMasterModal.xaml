@@ -1,0 +1,150 @@
+﻿<Window x:Class="IMIP.Tochu.WPF.Views.Windows.AnalysisMasterModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IMIP.Tochu.WPF.Views.Windows"
+        xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf"
+        xmlns:igEditors="http://schemas.infragistics.com/xaml/wpf"
+        xmlns:ig="http://schemas.infragistics.com/xaml"
+        mc:Ignorable="d"
+        Title="Analysis Master"
+        Width="900" Height="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F5F5"
+        FontFamily="Meiryo UI, Yu Gothic UI, MS Gothic, sans-serif"
+        FontSize="11" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Filter row -->
+            <RowDefinition Height="*"/>
+            <!-- Grid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- ===== ROW 0: Filter / Search ===== -->
+        <Border Grid.Row="0"
+                BorderBrush="#CCCCCC" BorderThickness="1"
+                Background="White" Padding="6" Margin="0,0,0,4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Product Name"
+                           VerticalAlignment="Center"
+                           Margin="0,0,6,0" FontSize="10"/>
+
+                <igEditors:XamTextEditor
+                    Grid.Column="1"
+                    Height="24"
+                    Background="#FFF9C4"
+                    BorderBrush="#AAAAAA"
+                    Text="{Binding FilterProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    x:Name="FilterField"
+                    Theme="Office2013"/>
+            </Grid>
+        </Border>
+
+        <!-- ===== ROW 1: DataGrid ===== -->
+        <Border Grid.Row="1"
+                BorderBrush="#CCCCCC" BorderThickness="1"
+                Background="White" Padding="2">
+            <DataGrid
+                x:Name="MasterGrid"
+                ItemsSource="{Binding FilteredItems}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                SelectionMode="Single"
+                GridLinesVisibility="All"
+                HorizontalGridLinesBrush="#DDDDDD"
+                VerticalGridLinesBrush="#DDDDDD"
+                HeadersVisibility="Column"
+                Background="White"
+                RowBackground="White"
+                AlternatingRowBackground="#FAFAFA"
+                BorderThickness="0"
+                CanUserResizeColumns="True"
+                CanUserSortColumns="True"
+                FontSize="10"
+                RowHeight="22"
+                MouseDoubleClick="MasterGrid_MouseDoubleClick">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#E8EAF6"/>
+                        <Setter Property="BorderBrush" Value="#CCCCCC"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                        <Setter Property="Padding" Value="4,2"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="10"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="PRODUCT"  Binding="{Binding PRODUCT}"  Width="90"/>
+                    <DataGridTextColumn Header="NOUSCD"   Binding="{Binding NOUSCD}"   Width="70"/>
+                    <DataGridTextColumn Header="T10A"     Binding="{Binding T10A}"     Width="80"/>
+                    <DataGridTextColumn Header="T20A"     Binding="{Binding T20A}"     Width="80"/>
+                    <DataGridTextColumn Header="T30A"     Binding="{Binding T30A}"     Width="80"/>
+                    <DataGridTextColumn Header="T40A"     Binding="{Binding T40A}"     Width="80"/>
+                    <DataGridTextColumn Header="m14"      Binding="{Binding T50A}"     Width="60"/>
+                    <DataGridTextColumn Header="m18.5"    Binding="{Binding T60A}"     Width="60"/>
+                    <DataGridTextColumn Header="m26"      Binding="{Binding T70A}"     Width="60"/>
+                    <DataGridTextColumn Header="m36"      Binding="{Binding T80A}"     Width="60"/>
+                    <DataGridTextColumn Header="m50"      Binding="{Binding T90A}"     Width="60"/>
+                    <DataGridTextColumn Header="m70"      Binding="{Binding T100A}"    Width="60"/>
+                    <DataGridTextColumn Header="m100"     Binding="{Binding T110A}"    Width="60"/>
+                    <DataGridTextColumn Header="m140"     Binding="{Binding T120A}"    Width="60"/>
+                    <DataGridTextColumn Header="m200"     Binding="{Binding T130A}"    Width="60"/>
+                    <DataGridTextColumn Header="m280"     Binding="{Binding T140A}"    Width="60"/>
+                    <DataGridTextColumn Header="mPAN"     Binding="{Binding T150A}"    Width="60"/>
+                    <DataGridTextColumn Header="AFS.FN"   Binding="{Binding T160A}"    Width="60"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- ===== ROW 2: Footer buttons ===== -->
+        <Border Grid.Row="2"
+                BorderBrush="#CCCCCC" BorderThickness="1"
+                Background="White" Padding="6" Margin="0,4,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- 選択 / Select button -->
+                <Button Grid.Column="1"
+                        Style="{StaticResource BlueButtonStyle}"
+                        Content="Select"
+                        Command="{Binding SelectCommand}"
+                        Height="26"/>
+
+                <!-- キャンセル / Cancel button -->
+                <Button Grid.Column="3"
+                        Style="{StaticResource BlueButtonStyle}"
+                        Content="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Height="26"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
