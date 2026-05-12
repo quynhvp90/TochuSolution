@@ -1,4 +1,5 @@
-﻿using IMIP.Tochu.Shared;
+﻿using IMIP.Tochu.Core.models;
+using IMIP.Tochu.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,27 @@ namespace IMIP.Tochu.Core.Models
 {
     public class SI_SEINOUDATA_Model : NotifyBase
     {
+        public VI_SeinouMst_Model SeinouMst { get; set; } = null!;
+        public event Action<string, bool>? ChartValidated;
+
+        public void UpdateT160() // T50～T150の平均を計算してMA150にセット
+        {
+            T160 = ((T50.HasValue ? T50.Value : 0)*7
+                    + (T60.HasValue ? T60.Value : 0)*10
+                    + (T70.HasValue ? T70.Value : 0)*20
+                    + (T80.HasValue ? T80.Value : 0)*30
+                    + (T90.HasValue ? T90.Value : 0)*40
+                    + (T100.HasValue ? T100.Value : 0)*50
+                    + (T110.HasValue ? T110.Value : 0)*70
+                    + (T120.HasValue ? T120.Value : 0)*100
+                    + (T130.HasValue ? T130.Value : 0)*140
+                    + (T140.HasValue ? T140.Value : 0)*200
+                    + (T150.HasValue ? T150.Value : 0)*300) / 100;
+            
+        }
+
+
+        #region Base Properties
         private int _juchuuno;
         public int JUCHUUNO
         {
@@ -48,7 +70,13 @@ namespace IMIP.Tochu.Core.Models
         public decimal? T10
         {
             get => _t10;
-            set => SetProperty(ref _t10, value);
+            set
+            {
+                if (SetProperty(ref _t10, value))
+                {
+                    ValidateRange(value, SeinouMst.T10A, SeinouMst.T10B, nameof(T10));
+                }
+            }
         }
 
         private decimal? _t20;
@@ -59,6 +87,7 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t20, value))
                 {
+                    ValidateRange(value, SeinouMst.T30A, SeinouMst.T30B, nameof(T20));
                     if (value.HasValue)
                     {
                         MA20 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
@@ -81,6 +110,7 @@ namespace IMIP.Tochu.Core.Models
                 {
                     if (value.HasValue)
                     {
+                        ValidateRange(value, SeinouMst.T40A, SeinouMst.T40B, nameof(T30));
                         MA30 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
                     }
                     else
@@ -95,74 +125,164 @@ namespace IMIP.Tochu.Core.Models
         public decimal? T40
         {
             get => _t40;
-            set => SetProperty(ref _t40, value);
+            set
+            {
+                if (SetProperty(ref _t40, value))
+                {
+                    ValidateRange(value, SeinouMst.T20A, SeinouMst.T20B, nameof(T40));
+                }
+            }
         }
 
         private decimal? _t50;
         public decimal? T50
         {
             get => _t50;
-            set => SetProperty(ref _t50, value);
+            set { 
+                if (SetProperty(ref _t50, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T50A, SeinouMst.T50B, nameof(T50));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T50), isValid);
+                }
+            }
         }
         private decimal? _t60;
         public decimal? T60
         {
             get => _t60;
-            set => SetProperty(ref _t60, value);
+            set { 
+                if (SetProperty(ref _t60, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T60A, SeinouMst.T60B, nameof(T60));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T60), isValid);
+                }
+            }
         }
         private decimal? _t70;
         public decimal? T70
         {
             get => _t70;
-            set => SetProperty(ref _t70, value);
+            set { 
+                if (SetProperty(ref _t70, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T70A, SeinouMst.T70B, nameof(T70));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T70), isValid);
+                }
+            }
         }
         private decimal? _t80;
         public decimal? T80
         {
             get => _t80;
-            set => SetProperty(ref _t80, value);
+            set { 
+                if (SetProperty(ref _t80, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T80A, SeinouMst.T80B, nameof(T80));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T80), isValid);
+                }
+            }
         }
         private decimal? _t90;
         public decimal? T90
         {
             get => _t90;
-            set => SetProperty(ref _t90, value);
+            set
+            {
+                if (SetProperty(ref _t90, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T90A, SeinouMst.T90B, nameof(T90));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T90), isValid);
+                }
+            }
         }
         private decimal? _t100;
         public decimal? T100
         {
             get => _t100;
-            set => SetProperty(ref _t100, value);
+            set
+            { 
+                if (SetProperty(ref _t100, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T100A, SeinouMst.T100B, nameof(T100));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T100), isValid);
+                }
+            }
         }
         private decimal? _t110;
         public decimal? T110
         {
             get => _t110;
-            set => SetProperty(ref _t110, value);
+            set
+            {
+                if (SetProperty(ref _t110, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T110A, SeinouMst.T110B, nameof(T110));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T110), isValid);
+                }
+            }
         }
         private decimal? _t120;
         public decimal? T120
         {
             get => _t120;
-            set => SetProperty(ref _t120, value);
+            set
+            {
+                if (SetProperty(ref _t120, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T120A, SeinouMst.T120B, nameof(T120));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T120), isValid);
+                }
+            }
         }
         private decimal? _t130;
         public decimal? T130
         {
             get => _t130;
-            set => SetProperty(ref _t130, value);
+            set
+            {
+                if (SetProperty(ref _t130, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T130A, SeinouMst.T130B, nameof(T130));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T130), isValid);
+                }
+            }
         }
         private decimal? _t140;
         public decimal? T140
         {
             get => _t140;
-            set => SetProperty(ref _t140, value);
+            set
+            {
+                if (SetProperty(ref _t140, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T140A, SeinouMst.T140B, nameof(T140));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T140), isValid);
+                }
+            }
         }
         private decimal? _t150;
         public decimal? T150
         {
             get => _t150;
-            set => SetProperty(ref _t150, value);
+            set
+            {
+                if (SetProperty(ref _t150, value))
+                {
+                    var isValid = ValidateRange(value, SeinouMst.T150A, SeinouMst.T150B, nameof(T150));
+                    UpdateT160();
+                    ChartValidated?.Invoke(nameof(T150), isValid);
+                }
+            }
         }
         private decimal? _t160;
         public decimal? T160
@@ -268,5 +388,6 @@ namespace IMIP.Tochu.Core.Models
             get => _ma30;
             set => SetProperty(ref _ma30, value);
         }
+        #endregion Base Properties
     }
 }

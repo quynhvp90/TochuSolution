@@ -11,5 +11,6 @@ namespace IMIP.Tochu.Domain.interfaces
     {
         Task<List<VI_SeinouMst>> GetAllAsync();
         Task<List<VI_SeinouMst>> GetByProductAsync(string product);
+        Task<VI_SeinouMst?> GetByProductNameAndNouSCDAsync(string productName, string nouSCD);
     }
 }

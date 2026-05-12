@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMIP.Tochu.Core.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace IMIP.Tochu.Core.interfaces
 {
     public interface IVI_SeinouMstService
     {
-        Task<List<models.VI_SeinouMst_Model>> GetByProductAndNouscdAsync(string product, string nouscd);
+        Task<VI_SeinouMst_Model> GetByProductAndNouscdAsync(string product, string nouscd);
     }
 }
