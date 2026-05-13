@@ -41,18 +41,7 @@
                     VerticalAlignment="Center"/>
 
                 <!-- Company logo area -->
-                <Border Grid.Column="1"
-                    BorderBrush="#333333" BorderThickness="1"
-                    Padding="8,4" MinWidth="160">
-                    <StackPanel>
-                        <TextBlock Text="株式会社トウチュウ"
-                            FontSize="13" FontWeight="Bold"
-                            HorizontalAlignment="Center"/>
-                        <TextBlock Text="野　間　事　業　所"
-                            FontSize="9"
-                            HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
+                
             </Grid>
 
             <!-- ===== ROW 1: Customer + Address ===== -->
@@ -67,20 +56,23 @@
                     <TextBlock Text="{Binding CompanyName}"
                         FontSize="14" FontWeight="Bold"
                         VerticalAlignment="Bottom"/>
-                    <TextBlock Text="　御中"
+                    <TextBlock Margin="50, 0, 0, 0" Text="　御中"
                         FontSize="12"
                         VerticalAlignment="Bottom"/>
                 </StackPanel>
 
-                <!-- Address + Date -->
+                <!-- logo + Address + Date -->
                 <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Border BorderBrush="#333333" BorderThickness="1" Padding="8,4" MinWidth="160">
+                        <StackPanel>
+                            <TextBlock Text="株式会社トウチュウ" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="野　間　事　業　所" FontSize="9" HorizontalAlignment="Center"/>  
+                        </StackPanel>
+                    </Border>
                     <TextBlock Text="愛知県知多郡美浜町野間字新町242番地"
                         FontSize="8" HorizontalAlignment="Right"/>
                     <TextBlock Text="TEL 0569-87-0511㈹/FAX 0569-88-5509"
                         FontSize="8" HorizontalAlignment="Right"/>
-                    <TextBlock Text="{Binding PrintDate}"
-                        FontSize="10" HorizontalAlignment="Right"
-                        Margin="0,4,0,0"/>
                 </StackPanel>
             </Grid>
 
@@ -90,12 +82,13 @@
             <!-- ===== ROW 2: Info table (品名, 樹脂分, 製造No, 担当, 数量) ===== -->
             <Grid Grid.Row="2" Margin="0,6,0,8">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Left: 品名 / 樹脂分 / 製造No -->
-                <Border Grid.Column="0" BorderBrush="#333333" BorderThickness="1" Margin="0,0,4,0">
+                <Border Grid.Column="0" BorderBrush="#333333" Width="300" BorderThickness="1" Margin="0,0,4,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="24"/>
@@ -133,33 +126,36 @@
                 </Border>
 
                 <!-- Right: 担当 + 数量 -->
-                <Grid Grid.Column="1" MinWidth="200">
+                <Grid Grid.Column="2" Width="200">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="24"/>
                         <RowDefinition Height="24"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="60*"/>
                     </Grid.ColumnDefinitions>
-
+                    <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="#333333" BorderThickness="1,1,1,0">
+                        <TextBlock Text="{Binding PrintDate}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
+                    </Border>
                     <!-- 担当3, 担当2, 担当1 -->
-                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="#333333" BorderThickness="1,1,0,0">
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="#333333" BorderThickness="1,1,0,0">
                         <TextBlock Text="{Binding Tantou3}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="#333333" BorderThickness="1,1,0,0">
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="#333333" BorderThickness="1,1,0,0">
                         <TextBlock Text="{Binding Tantou2}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="#333333" BorderThickness="1,1,1,0">
+                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="#333333" BorderThickness="1,1,1,0">
                         <TextBlock Text="{Binding Tantou1}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                     </Border>
 
                     <!-- 数量 -->
-                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="#333333" BorderThickness="1,1,0,1">
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="#333333" BorderThickness="1,1,0,1">
                         <TextBlock Text="数　量" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="#333333" BorderThickness="1,1,1,1">
+                    <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" BorderBrush="#333333" BorderThickness="1,1,1,1">
                         <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                     </Border>
                 </Grid>
