@@ -20,16 +20,18 @@ namespace IMIP.Tochu.WPF.Views.Windows
     /// </summary>
     public partial class PrintPreviewWindow : Window
     {
-        public PrintPreviewWindow(ReportViewModel reportVm)
+        public PrintPreviewWindow()
         {
             InitializeComponent();
+            Loaded += PrintPreviewWindow_Loaded;
+        }
 
-            // Truyền ReportContent (visual) và Close action vào ViewModel
-            var vm = new PrintPreviewViewModel(reportVm, ReportContent, Close);
-            DataContext = vm;
-
-            // Bind ReportContent.DataContext riêng cho ReportView
-            ReportContent.DataContext = reportVm;
+        private void PrintPreviewWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is PrintPreviewViewModel vm)
+            {
+                vm.InitFormView(ReportContent, Close);
+            }
         }
     }
 }

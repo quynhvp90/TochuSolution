@@ -4,7 +4,7 @@
     <DropShadowEffect x:Key="DropShadowEffect" BlurRadius="10" Opacity="0.3"/>
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/ButtonStyles.xaml"/>
-        <ResourceDictionary Source="/Resources/UCResources.xaml"/>
+        <ResourceDictionary Source="/Resources/AppDataTemplateResources.xaml"/>
         <ResourceDictionary Source="/Resources/BorderStyles.xaml"/>
         <ResourceDictionary Source="/Resources/TextBoxStyles.xaml"/>
         <ResourceDictionary Source="/Resources/DataGridStyle.xaml"/>

@@ -370,19 +370,16 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         private void OpenPrintPreview()
         {
-            var reportVm = ReportViewModel.From(
-                seinouData: SeinouData,
-                juchuuRCS: JuchuuRCS,
-                tantou1: SelectedTantou1?.ToString() ?? string.Empty,
-                tantou2: SelectedTantou2?.ToString() ?? string.Empty,
-                tantou3: SelectedTantou3?.ToString() ?? string.Empty
+             _navigation.OpenDialog<PrintPreviewWindow, PrintPreviewViewModel>(
+                configureWindow: win => win.Owner = Application.Current.MainWindow,
+                configureVm: vm => vm.Initialize(
+                    seinouData: SeinouData,
+                    juchuuRCS: JuchuuRCS,
+                    tantou1: SelectedTantou1 ?? string.Empty,
+                    tantou2: SelectedTantou2 ?? string.Empty,
+                    tantou3: SelectedTantou3 ?? string.Empty
+                )
             );
-
-            var preview = new PrintPreviewWindow(reportVm)
-            {
-                Owner = Application.Current.MainWindow
-            };
-            preview.ShowDialog();
         }
 
 
@@ -394,35 +391,37 @@ namespace IMIP.Tochu.WPF.ViewModels
             SeinouData.USERHINBAN = JuchuuRCS.UserHinban;
             await _sENINOUDATAService.Save(SeinouData);
         }
-        private async Task Print()
-        {
-            // ── SaveFileDialog ở tầng WPF (ViewModel) ────────────────────────────
-            var date = SeinouData.PRINTDT ?? DateTime.Now;
-            var defaultFileName = $"{SeinouData.LOTNO}_{JuchuuRCS.JuchuuDenpyouNO}_{date:yyyyMMdd}.csv";
 
-            var dialog = new SaveFileDialog
-            {
-                Title = "Save CSV File",
-                FileName = defaultFileName,
-                DefaultExt = ".csv",
-                Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
-                OverwritePrompt = true,
-            };
+        //// save data file to local and delegate to Core service to print, instead of generating the file in Core and then having to deal with file dialogs in Core
+        //private async Task Print()
+        //{
+        //    // ── SaveFileDialog ở tầng WPF (ViewModel) ────────────────────────────
+        //    var date = SeinouData.PRINTDT ?? DateTime.Now;
+        //    var defaultFileName = $"{SeinouData.LOTNO}_{JuchuuRCS.JuchuuDenpyouNO}_{date:yyyyMMdd}.csv";
 
-            if (dialog.ShowDialog() != true)
-                return; // User cancelled
+        //    var dialog = new SaveFileDialog
+        //    {
+        //        Title = "Save CSV File",
+        //        FileName = defaultFileName,
+        //        DefaultExt = ".csv",
+        //        Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
+        //        OverwritePrompt = true,
+        //    };
 
-            // ── Delegate file writing to Core service ─────────────────────────────
-            await _printCSVService.PrintAsync(
-                filePath: dialog.FileName,
-                seinouData: SeinouData,
-                juchuuRCS: JuchuuRCS,
-                seinouMst: SeinouMstSE,
-                tantou1: SelectedTantou1?.ToString() ?? string.Empty,
-                tantou2: SelectedTantou2?.ToString() ?? string.Empty,
-                tantou3: SelectedTantou3?.ToString() ?? string.Empty
-            );
-        }
+        //    if (dialog.ShowDialog() != true)
+        //        return; // User cancelled
+
+        //    // ── Delegate file writing to Core service ─────────────────────────────
+        //    await _printCSVService.PrintAsync(
+        //        filePath: dialog.FileName,
+        //        seinouData: SeinouData,
+        //        juchuuRCS: JuchuuRCS,
+        //        seinouMst: SeinouMstSE,
+        //        tantou1: SelectedTantou1?.ToString() ?? string.Empty,
+        //        tantou2: SelectedTantou2?.ToString() ?? string.Empty,
+        //        tantou3: SelectedTantou3?.ToString() ?? string.Empty
+        //    );
+        //}
         private void ExecuteLoadMaster()
         {
             var userHinban = JuchuuRCS?.UserHinban ?? string.Empty;

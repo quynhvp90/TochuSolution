@@ -1,5 +1,9 @@
-﻿using IMIP.Tochu.Shared;
+﻿using IMIP.Tochu.Core.Models;
+using IMIP.Tochu.Shared;
 using IMIP.Tochu.UI.Base;
+using IMIP.Tochu.WPF.AppData;
+using IMIP.Tochu.WPF.Navigation;
+using IMIP.Tochu.WPF.ViewModels.Shared;
 using Microsoft.Win32;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
@@ -12,28 +16,44 @@ using System.Windows.Media.Imaging;
 
 namespace IMIP.Tochu.WPF.ViewModels
 {
-    public class PrintPreviewViewModel : NotifyBase
+    public class PrintPreviewViewModel : ViewModelBaseWPF
     {
-        private readonly FrameworkElement _visual;
-        private readonly Action _closeAction;
+        private FrameworkElement _visual { set; get; }
+        private Action _closeAction { set; get; }
 
         public ICommand PrintCommand { get; }
         public ICommand ExportPdfCommand { get; }
         public ICommand CloseCommand { get; }
 
-        public ReportViewModel Report { get; }
+        public ReportViewModel Report { get; } = new();
+        public SI_SEINOUDATA_Model seinouData { set; get; }
+        public T0000RR_Juchuu_RCS_Model juchuuRCS { set; get; }
+        public string tantou1 { set; get; }
+        public string tantou2 { set; get; }
+        public string tantou3 { set; get; }
 
-        public PrintPreviewViewModel(ReportViewModel report, FrameworkElement visual, Action closeAction)
+
+        public PrintPreviewViewModel(INavigationService navigationService, IAppDataContext appDataContext) : base(navigationService, appDataContext)
         {
-            Report = report;
-            _visual = visual;
-            _closeAction = closeAction;
-
-            PrintCommand = new RelayCommand(_ => ExecutePrint());
-            ExportPdfCommand = new RelayCommand(_ => ExecuteExportPdf());
-            CloseCommand = new RelayCommand(_ => _closeAction());
+            PrintCommand = new RelayCommand(ExecutePrint);
+            ExportPdfCommand = new RelayCommand(ExecuteExportPdf);
+            CloseCommand = new RelayCommand(ExecuteClose);
         }
 
+        public void Initialize(SI_SEINOUDATA_Model seinouData, T0000RR_Juchuu_RCS_Model juchuuRCS, string tantou1, string tantou2, string tantou3)
+        { 
+            this.seinouData = seinouData;
+            this.juchuuRCS = juchuuRCS;
+            this.tantou1 = tantou1;
+            this.tantou2 = tantou2;
+            this.tantou3 = tantou3;
+            Report.Initialize(seinouData, juchuuRCS, tantou1, tantou2, tantou3);
+        }
+        public void InitFormView(FrameworkElement visual, Action closeAction)
+        {
+            _visual = visual;
+            _closeAction = closeAction;
+        }
         // ── Print ─────────────────────────────────────────────────────────────
         private void ExecutePrint()
         {
@@ -45,7 +65,10 @@ namespace IMIP.Tochu.WPF.ViewModels
 
             dialog.PrintVisual(_visual, "コーテッドサンド性能表");
         }
-
+        private void ExecuteClose()
+        {
+            _closeAction?.Invoke();
+        }   
         // ── Export PDF ────────────────────────────────────────────────────────
         private void ExecuteExportPdf()
         {
@@ -82,51 +105,53 @@ namespace IMIP.Tochu.WPF.ViewModels
         // ── Core: WPF Visual → PNG → PdfSharp ────────────────────────────────
         private static void ExportToPdf(FrameworkElement visual, string pdfPath)
         {
-            const double wpfWidth = 794;
-            const double wpfHeight = 1123;
+            const double width = 794;
+            const double height = 1123;
 
-            visual.Measure(new Size(wpfWidth, wpfHeight));
-            visual.Arrange(new Rect(0, 0, wpfWidth, wpfHeight));
+            visual.Measure(new Size(width, height));
+            visual.Arrange(new Rect(0, 0, width, height));
             visual.UpdateLayout();
 
-            const double scale = 300.0 / 96.0;
-            int bmpW = (int)(wpfWidth * scale);
-            int bmpH = (int)(wpfHeight * scale);
+            var renderTarget = new RenderTargetBitmap(
+                (int)width,
+                (int)height,
+                96,
+                96,
+                PixelFormats.Pbgra32);
 
-            var renderTarget = new RenderTargetBitmap(bmpW, bmpH, 300, 300, PixelFormats.Pbgra32);
+            renderTarget.Render(visual);
 
-            var dv = new DrawingVisual();
-            using (var dc = dv.RenderOpen())
-            {
-                dc.DrawRectangle(Brushes.White, null, new Rect(0, 0, bmpW, bmpH));
-                dc.PushTransform(new ScaleTransform(scale, scale));
-                dc.DrawRectangle(new VisualBrush(visual), null, new Rect(0, 0, wpfWidth, wpfHeight));
-                dc.Pop();
-            }
-            renderTarget.Render(dv);
+            byte[] imageBytes;
 
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(renderTarget));
-            byte[] imageBytes;
+
             using (var ms = new MemoryStream())
             {
                 encoder.Save(ms);
                 imageBytes = ms.ToArray();
             }
 
-            var pdfDoc = new PdfDocument();
-            var pdfPage = pdfDoc.AddPage();
-            pdfPage.Size = PdfSharp.PageSize.A4;
-            pdfPage.Orientation = PdfSharp.PageOrientation.Portrait;
+            var document = new PdfDocument();
 
-            using (var gfx = XGraphics.FromPdfPage(pdfPage))
+            var page = document.AddPage();
+            page.Size = PdfSharp.PageSize.A4;
+            page.Orientation = PdfSharp.PageOrientation.Portrait;
+
+            using (var gfx = XGraphics.FromPdfPage(page))
             using (var imgStream = new MemoryStream(imageBytes))
             {
-                var xImg = XImage.FromStream(imgStream);
-                gfx.DrawImage(xImg, 0, 0, pdfPage.Width, pdfPage.Height);
+                var image = XImage.FromStream(imgStream);
+
+                gfx.DrawImage(
+                    image,
+                    0,
+                    0,
+                    page.Width,
+                    page.Height);
             }
 
-            pdfDoc.Save(pdfPath);
+            document.Save(pdfPath);
         }
     }
 }

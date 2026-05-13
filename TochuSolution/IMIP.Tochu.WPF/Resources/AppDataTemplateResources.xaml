@@ -25,5 +25,11 @@
     <DataTemplate DataType="{x:Type vm:AnalysisMasterModalViewModel}">
         <windows:AnalysisMasterModal/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:PrintPreviewViewModel}">
+        <windows:PrintPreviewWindow/>
+    </DataTemplate>
+    <!--<DataTemplate DataType="{x:Type vm:ReportViewModel}">
+        <uc:ReportView />
+    </DataTemplate>-->
 
 </ResourceDictionary>

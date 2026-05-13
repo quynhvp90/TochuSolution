@@ -31,8 +31,8 @@ namespace IMIP.Tochu.WPF
             services.AddTransient<MasterAnalysisViewModel>(); // Transient
             services.AddTransient<RegistrationViewModel>(); // Transient
             services.AddTransient<LoginViewModel>(); // Transient
-            services.AddTransient<PagingViewModel>(); // Transient
             services.AddTransient<AnalysisMasterModalViewModel>(); // Transient
+            services.AddTransient<PrintPreviewViewModel>(); // Transient
 
             // Views
             services.AddTransient<Registration>();
@@ -42,7 +42,7 @@ namespace IMIP.Tochu.WPF
             services.AddTransient<Search>();
             services.AddTransient<Master>();
             services.AddTransient<LoginWindow>();
-            services.AddTransient<PagingControl>();
+            services.AddTransient<PrintPreviewWindow>();
             return services;
         }
     }

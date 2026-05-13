@@ -39,7 +39,7 @@
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.4" ShadowDepth="4"/>
                 </Border.Effect>
-                <views:ReportView x:Name="ReportContent"/>
+                <views:ReportView x:Name="ReportContent" DataContext="{Binding Report}"/>
             </Border>
         </ScrollViewer>
     </Grid>

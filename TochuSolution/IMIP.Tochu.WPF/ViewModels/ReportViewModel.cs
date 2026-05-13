@@ -17,6 +17,8 @@ namespace IMIP.Tochu.WPF.ViewModels
 
     public class ReportViewModel : NotifyBase
     {
+        public SI_SEINOUDATA_Model EeinouData { set; get; }
+        public T0000RR_Juchuu_RCS_Model JuchuuRCS { set; get; }
         // ── Header ────────────────────────────────────────────────────────────
         public string CompanyName { get; set; } = string.Empty;
         public string PrintDate { get; set; } = string.Empty;
@@ -58,45 +60,42 @@ namespace IMIP.Tochu.WPF.ViewModels
         public double ChartMaxY { get; private set; } = 40;
 
         // ── Factory ───────────────────────────────────────────────────────────
-        public static ReportViewModel From(
-            SI_SEINOUDATA_Model seinouData,
-            T0000RR_Juchuu_RCS_Model juchuuRCS,
-            string tantou1, string tantou2, string tantou3)
+        public ReportViewModel()
         {
-            var vm = new ReportViewModel
-            {
-                CompanyName = juchuuRCS.NouSSNM ?? string.Empty,
-                PrintDate = (seinouData.PRINTDT ?? DateTime.Now).ToString("yyyy年MM月dd日"),
-                ProductName = juchuuRCS.UserHinmei ?? string.Empty,
-                ResinContent = seinouData.T10?.ToString() ?? string.Empty,
-                LotNo = seinouData.LOTNO ?? string.Empty,
-                Tantou1 = tantou1,
-                Tantou2 = tantou2,
-                Tantou3 = tantou3,
-                Quantity = $"P {juchuuRCS.JuchuuSuu} {juchuuRCS.TankaUnitCD}",
-                XN = seinouData.MA20?.ToString() ?? string.Empty,
-                XK = seinouData.T20?.ToString() ?? string.Empty,
-                YN = seinouData.MA30?.ToString() ?? string.Empty,
-                YK = seinouData.T30?.ToString() ?? string.Empty,
-                AdhesionPoint = seinouData.T40?.ToString() ?? string.Empty,
-                M14 = seinouData.T50?.ToString() ?? string.Empty,
-                M18 = seinouData.T60?.ToString() ?? string.Empty,
-                M26 = seinouData.T70?.ToString() ?? string.Empty,
-                M36 = seinouData.T80?.ToString() ?? string.Empty,
-                M50 = seinouData.T90?.ToString() ?? string.Empty,
-                M70 = seinouData.T100?.ToString() ?? string.Empty,
-                M100 = seinouData.T110?.ToString() ?? string.Empty,
-                M140 = seinouData.T120?.ToString() ?? string.Empty,
-                M200 = seinouData.T130?.ToString() ?? string.Empty,
-                M250 = seinouData.T140?.ToString() ?? string.Empty,
-                Pan = seinouData.T150?.ToString() ?? string.Empty,
-                Remarks = seinouData.COMM ?? string.Empty,
-            };
-
-            vm.BuildChartPoints(seinouData);
-            return vm;
+        }   
+        public void Initialize(SI_SEINOUDATA_Model seinouData, T0000RR_Juchuu_RCS_Model juchuuRCS, string tantou1, string tantou2, string tantou3)
+        {
+            EeinouData = seinouData;
+            JuchuuRCS = juchuuRCS;
+            CompanyName = juchuuRCS.NouSSNM ?? string.Empty;
+            PrintDate = (seinouData.PRINTDT ?? DateTime.Now).ToString("yyyy年MM月dd日");
+            ProductName = juchuuRCS.UserHinmei ?? string.Empty;
+            ResinContent = seinouData.T10?.ToString() ?? string.Empty;
+            LotNo = seinouData.LOTNO ?? string.Empty;
+            Tantou1 = tantou1;
+            Tantou2 = tantou2;
+            Tantou3 = tantou3;
+            Quantity = $"P {juchuuRCS.JuchuuSuu} {juchuuRCS.TankaUnitCD}";
+            XN = seinouData.MA20?.ToString() ?? string.Empty;
+            XK = seinouData.T20?.ToString() ?? string.Empty;
+            YN = seinouData.MA30?.ToString() ?? string.Empty;
+            YK = seinouData.T30?.ToString() ?? string.Empty;
+            AdhesionPoint = seinouData.T40?.ToString() ?? string.Empty;
+            M14 = seinouData.T50?.ToString() ?? string.Empty;
+            M18 = seinouData.T60?.ToString() ?? string.Empty;
+            M26 = seinouData.T70?.ToString() ?? string.Empty;
+            M36 = seinouData.T80?.ToString() ?? string.Empty;
+            M50 = seinouData.T90?.ToString() ?? string.Empty;
+            M70 = seinouData.T100?.ToString() ?? string.Empty;
+            M100 = seinouData.T110?.ToString() ?? string.Empty;
+            M140 = seinouData.T120?.ToString() ?? string.Empty;
+            M200 = seinouData.T130?.ToString() ?? string.Empty;
+            M250 = seinouData.T140?.ToString() ?? string.Empty;
+            Pan = seinouData.T150?.ToString() ?? string.Empty;
+            Remarks = seinouData.COMM ?? string.Empty;
+            BuildChartPoints(seinouData);
         }
-
+        
         private void BuildChartPoints(SI_SEINOUDATA_Model d)
         {
             var points = new[]
