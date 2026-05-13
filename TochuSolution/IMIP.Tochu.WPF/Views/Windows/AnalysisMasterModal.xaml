@@ -1,4 +1,4 @@
-﻿<Window x:Class="IMIP.Tochu.WPF.Views.Windows.AnalysisMasterModal"
+﻿<Window xmlns:UserControls="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"  x:Class="IMIP.Tochu.WPF.Views.Windows.AnalysisMasterModal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,7 +26,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Filter row -->
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="174*"/>
+            <RowDefinition Height="17*"/>
             <!-- Grid -->
             <RowDefinition Height="Auto"/>
             <!-- Footer buttons -->
@@ -62,7 +63,7 @@
         <!-- ===== ROW 1: DataGrid ===== -->
         <Border Grid.Row="1"
                 BorderBrush="#CCCCCC" BorderThickness="1"
-                Background="White" Padding="2">
+                Background="White" Padding="2" >
             <DataGrid
                 x:Name="MasterGrid"
                 ItemsSource="{Binding FilteredItems}"
@@ -118,9 +119,10 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
-
-        <!-- ===== ROW 2: Footer buttons ===== -->
-        <Border Grid.Row="2"
+        <!-- ===== ROW 2: Paging ===== -->
+        <UserControls:PagingControl Grid.Row="2" DataContext="{Binding analysisMasterPaging}"/>
+        <!-- ===== ROW 3: Footer buttons ===== -->
+        <Border Grid.Row="3"
                 BorderBrush="#CCCCCC" BorderThickness="1"
                 Background="White" Padding="6" Margin="0,4,0,0">
             <Grid>

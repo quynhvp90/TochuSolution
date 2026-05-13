@@ -1,9 +1,11 @@
 ﻿using IMIP.Tochu.Core.interfaces;
 using IMIP.Tochu.Core.mappers;
 using IMIP.Tochu.Core.models;
+using IMIP.Tochu.Core.Models.Paging;
 using IMIP.Tochu.Domain.entities;
 using IMIP.Tochu.Domain.interfaces;
 using IMIP.Tochu.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,41 @@ namespace IMIP.Tochu.Core.services
                 items = await _seinouMstSERepository.GetByProductNameAndNouSCDAsync(product, "999-9999");
             }
             return items?.ToModel();
+        }
+
+        public async Task<PagedResult<VI_SeinouMstSE_Model>> GetByProductAndNouscdAsync(VI_SeinouMstSEPagingRequest request)
+        {
+            var result = new PagedResult<VI_SeinouMstSE_Model>()
+            {
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+            };
+
+            var query = _seinouMstSERepository.Query();
+
+            if (!string.IsNullOrWhiteSpace(request.ProductName))
+            {
+                var keyword = request.ProductName.ToLower();
+
+                query = query.Where(x =>
+                    x.PRODUCT != null &&
+                    x.PRODUCT.ToLower().Contains(keyword));
+            }
+
+            query = query.OrderBy(x => x.NOUSCD);
+
+            var total = await query.CountAsync();
+
+            var items = await query
+                .Skip(request.PageSize * (request.PageIndex - 1))
+                .Take(request.PageSize)
+                .Select(s => s.ToModel())
+                .ToListAsync();
+
+            result.TotalCount = total;
+            result.Items = items;
+
+            return result;
         }
     }
 }

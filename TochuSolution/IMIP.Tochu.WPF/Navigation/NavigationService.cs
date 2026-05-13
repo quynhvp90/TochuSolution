@@ -83,7 +83,7 @@ namespace IMIP.Tochu.WPF.Navigation
             return window;
         }
 
-        public void OpenWindow<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
+        public void OpenWindow<TWindow, TViewModel>(Action<TWindow>? configureWindow = null, Action<TViewModel>? configureVm = null)
             where TWindow : Window
             where TViewModel : ViewModelBaseWPF
         {
@@ -96,7 +96,7 @@ namespace IMIP.Tochu.WPF.Navigation
             window.Show();
         }
 
-        public bool? OpenDialog<TWindow, TViewModel>(Action<TViewModel>? configureVm = null, Action<TWindow>? configureWindow = null)
+        public bool? OpenDialog<TWindow, TViewModel>(Action<TWindow>? configureWindow = null, Action<TViewModel>? configureVm = null)
             where TWindow : Window
             where TViewModel : ViewModelBaseWPF
         {

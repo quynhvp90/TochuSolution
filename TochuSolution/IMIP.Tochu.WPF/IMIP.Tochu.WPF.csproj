@@ -19,6 +19,7 @@
     <PackageReference Include="Infragistics.WPF.Themes.IG" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.Themes.Metro" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.Themes.Office2013" Version="25.2.45" />
+    <PackageReference Include="PDFsharp-WPF" Version="6.1.1" />
   </ItemGroup>
 
   <ItemGroup>

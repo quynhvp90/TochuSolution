@@ -36,9 +36,9 @@ namespace IMIP.Tochu.Core.Services
             try
             {
                 var query = _si_SEINOUDATARepository.Query();
-                if (paging.JuchuuRCS?.JuchuuNO != null)
+                if (paging.JuchuuRCS?.JuchuuDenpyouNO != null)
                 {
-                    query = query.Where(j => j.JUCHUUNO == paging.JuchuuRCS.JuchuuNO);
+                    query = query.Where(j => j.JUCHUUNO == paging.JuchuuRCS.JuchuuDenpyouNO);
                 }
                 query = query.OrderBy(x => x.NUM);
 
@@ -73,17 +73,12 @@ namespace IMIP.Tochu.Core.Services
             return item?.ToModel();
         }
 
-        public SI_SEINOUDATA_Model MeshAutomatically(
-            SI_SEINOUDATA_Model seinouData,
-            VI_SeinouMst_Model seinouMst)
+        public SI_SEINOUDATA_Model MeshAutomatically(SI_SEINOUDATA_Model seinouData, VI_SeinouMst_Model seinouMst)
         {
             var rng = new Random();
             const decimal target = 100m;
 
-            var meshFields = new (
-                Action<SI_SEINOUDATA_Model, decimal> setVal,
-                decimal min,
-                decimal max)[]
+            var meshFields = new (Action<SI_SEINOUDATA_Model, decimal> setVal, decimal min, decimal max)[]
             {
                 ((m, v) => m.T50  = v, seinouMst.T50A ?? 0m, seinouMst.T50B  ?? target),
                 ((m, v) => m.T60  = v, seinouMst.T60A ?? 0m, seinouMst.T60B  ?? target),
@@ -97,19 +92,16 @@ namespace IMIP.Tochu.Core.Services
                 ((m, v) => m.T140 = v, seinouMst.T140A ?? 0m, seinouMst.T140B ?? target),
                 ((m, v) => m.T150 = v, seinouMst.T150A ?? 0m, seinouMst.T150B ?? target),
             };
-            var simpleFields = new (
-                Action<SI_SEINOUDATA_Model, decimal> setVal,
-                decimal min,
-                decimal max)[]
-                {
-                    ((m, v) => m.T10  = v, seinouMst.T10A ?? 0m, seinouMst.T10B  ?? target),
-                    ((m, v) => m.T20  = v, seinouMst.T30A ?? 0m, seinouMst.T30B  ?? target),
-                    ((m, v) => m.T30  = v, seinouMst.T40A ?? 0m, seinouMst.T40B  ?? target),
-                    ((m, v) => m.T40  = v, seinouMst.T20A ?? 0m, seinouMst.T20B  ?? target),
-                };
+            var simpleFields = new (Action<SI_SEINOUDATA_Model, decimal> setVal, decimal min, decimal max)[]
+            {
+                ((m, v) => m.T10  = v, seinouMst.T10A ?? 0m, seinouMst.T10B  ?? target),
+                ((m, v) => m.T20  = v, seinouMst.T30A ?? 0m, seinouMst.T30B  ?? target),
+                ((m, v) => m.T30  = v, seinouMst.T40A ?? 0m, seinouMst.T40B  ?? target),
+                ((m, v) => m.T40  = v, seinouMst.T20A ?? 0m, seinouMst.T20B  ?? target),
+            };
             foreach (var field in simpleFields)
             {
-                decimal lo = Math.Min(field.min, field.max); // tránh min > max do data lỗi
+                decimal lo = Math.Min(field.min, field.max);
                 decimal hi = Math.Max(field.min, field.max);
                 decimal value = lo + (decimal)rng.NextDouble() * (hi - lo);
                 field.setVal(seinouData, Math.Round(value, 2));
@@ -120,7 +112,7 @@ namespace IMIP.Tochu.Core.Services
 
             if (totalMin > target || totalMax < target)
                 throw new InvalidOperationException(
-                    $"Cấu hình master không hợp lệ: tổng min={totalMin:F1} > 100 hoặc tổng max={totalMax:F1} < 100.");
+                    $"Setting master not match: sum min={totalMin:F1} > 100 or sum max={totalMax:F1} < 100.");
 
             // --- Sequential Constrained Random ---
             decimal[] values = new decimal[meshFields.Length];
@@ -132,7 +124,6 @@ namespace IMIP.Tochu.Core.Services
 
                 if (isLast)
                 {
-                    // Field cuối = phần còn lại, clamp vào [min, max]
                     values[i] = Math.Max(meshFields[i].min, Math.Min(meshFields[i].max, remaining));
                 }
                 else
@@ -146,23 +137,21 @@ namespace IMIP.Tochu.Core.Services
                     lo = Math.Max(0m, lo);
                     hi = Math.Max(lo, hi);
 
-                    // Random decimal: rng.NextDouble() trả double, cast sang decimal
+                    // Random decimal: rng.NextDouble() return double, cast to decimal
                     decimal randomFraction = (decimal)rng.NextDouble();
                     values[i] = lo + randomFraction * (hi - lo);
                 }
 
-                // Làm tròn 1 chữ số thập phân
                 values[i] = Math.Round(values[i], 2);
                 remaining -= values[i];
             }
             
 
-            // --- Gán vào model ---
             for (int i = 0; i < meshFields.Length; i++)
                 meshFields[i].setVal(seinouData, values[i]);
             // Field 34: m合計
             seinouData.MA150 = values.Sum();
-            // Field 39: Á.FN
+            // Field 39: AFS.FN
             seinouData.T160 = (seinouData.T50 * 7
                     + seinouData.T60 * 10
                     + seinouData.T70 * 20
@@ -180,28 +169,64 @@ namespace IMIP.Tochu.Core.Services
 
         public async Task<SI_SEINOUDATA_Model> Save(SI_SEINOUDATA_Model model)
         {
-            var modelUpdate = await _si_SEINOUDATARepository.GetByIDAsync(model.JUCHUUNO, model.NUM);
-            if (modelUpdate != null)
+            try
             {
-                modelUpdate.NOUSCD = model.NOUSCD;
-                modelUpdate.LOTNO = model.LOTNO;
-                modelUpdate.PRINTDT = model.PRINTDT ?? new DateTime(9999, 12, 31);
-                _si_SEINOUDATARepository.Update(modelUpdate);
-            }
-            else
-            {
-                modelUpdate = new SI_SEINOUDATA
+                await _unitOfWork.BeginTransactionAsync();
+                // DELETE existing record if exists
+                var modelExisting = await _si_SEINOUDATARepository.GetByIDAsync(model.JUCHUUNO, model.NUM);
+                if (modelExisting != null)
+                    _si_SEINOUDATARepository.Delete(modelExisting);
+
+                // INSERT new record
+                var modelInsert = new SI_SEINOUDATA
                 {
+                    USERHINBAN = model.USERHINBAN,
+                    // ── Header ────────────────────────────────────────────
                     JUCHUUNO = model.JUCHUUNO,
                     NUM = model.NUM,
                     NOUSCD = model.NOUSCD,
                     LOTNO = model.LOTNO,
-                    PRINTDT = model.PRINTDT ?? new DateTime(9999, 12, 31)
+                    PRINTDT = model.PRINTDT ?? new DateTime(9999, 12, 31),
+
+                    // ── Analysis ──────────────────────────────────────────
+                    T10 = model.T10,   // 樹脂分   Resin Content
+                    T40 = model.T40,   // 粘着点   Adhesion Point
+
+                    // ── Transverse Rupture Strength ───────────────────────
+                    T20 = model.T20,   // 抗折力X (kgf/cm²)
+                    MA20 = model.MA20,  // 抗折力X (N/cm²) 自動計算
+                    T30 = model.T30,   // 抗折力R (kgf/cm²)
+                    MA30 = model.MA30,  // 抗折力R (N/cm²) 自動計算
+
+                    // ── Mesh ──────────────────────────────────────────────
+                    T50 = model.T50,   // m14
+                    T60 = model.T60,   // m18.5
+                    T70 = model.T70,   // m26
+                    T80 = model.T80,   // m36
+                    T90 = model.T90,   // m50
+                    T100 = model.T100,  // m70
+                    T110 = model.T110,  // m100
+                    T120 = model.T120,  // m140
+                    T130 = model.T130,  // m200
+                    T140 = model.T140,  // m280
+                    T150 = model.T150,  // mPAN
+
+                    // ── Auto-calculated ───────────────────────────────────
+                    MA150 = model.MA150, // m合計 自動計算⑥
+                    T160 = model.T160,  // AFS.FN 自動計算⑦
+
+                    // ── Footer ────────────────────────────────────────────
+                    COMM = model.COMM,   // 備考
                 };
-                _si_SEINOUDATARepository.Add(modelUpdate);
+
+                _si_SEINOUDATARepository.Add(modelInsert);
+
+                await _unitOfWork.CommitAsync();
+                return modelInsert.ToModel();
+            } finally
+            {
+                _unitOfWork.EndTransactionAsync();
             }
-            await _unitOfWork.CommitAsync();
-            return modelUpdate.ToModel();
         }
     }
 }

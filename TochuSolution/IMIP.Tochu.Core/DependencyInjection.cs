@@ -19,6 +19,7 @@ namespace IMIP.Tochu.Core
             services.AddTransient<IVI_ProductService, VI_ProductService>();
             services.AddTransient<IVI_SeinouMstSEService, VI_SeinouMstSEService>();
             services.AddTransient<IVI_SeinouMstService, VI_SeinouMstService>();
+            services.AddTransient<IPrintCSVService, PrintCSVService>();
 
             // Singleton tương đương ContainerControlledLifetimeManager
             services.AddSingleton<ILogQueue, LogQueueService>();

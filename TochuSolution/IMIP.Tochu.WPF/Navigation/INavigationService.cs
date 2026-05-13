@@ -21,14 +21,14 @@ namespace IMIP.Tochu.WPF.Navigation
 
         // OPEN WINDOW
         void OpenWindow<TWindow, TViewModel>(
-            Action<TViewModel>? configureVm = null,
-            Action<TWindow>? configureWindow = null)
+            Action<TWindow>? configureWindow = null,
+            Action<TViewModel>? configureVm = null)
             where TWindow : Window
             where TViewModel : ViewModelBaseWPF;
 
         bool? OpenDialog<TWindow, TViewModel>(
-            Action<TViewModel>? configureVm = null,
-            Action<TWindow>? configureWindow = null)
+            Action<TWindow>? configureWindow = null,
+            Action<TViewModel>? configureVm = null)
             where TWindow : Window
             where TViewModel : ViewModelBaseWPF;
 

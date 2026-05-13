@@ -46,7 +46,21 @@ namespace IMIP.Tochu.Infrastructure.Repositories
 
         public async Task BeginTransactionAsync()
         {
+            if (_context.Database.CurrentTransaction != null)
+            {
+                _transaction = _context.Database.CurrentTransaction;
+                return;
+            }
+
             _transaction = await _context.Database.BeginTransactionAsync();
+        }
+        public async Task EndTransactionAsync()
+        {
+            if (_transaction != null)
+            {
+                await _transaction.DisposeAsync();
+                _transaction = null;
+            }
         }
 
         public async Task CommitAsync()

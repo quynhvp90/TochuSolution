@@ -23,5 +23,6 @@ namespace IMIP.Tochu.Domain.Interfaces
         Task BeginTransactionAsync();
         Task CommitAsync();
         Task RollbackAsync();
+        Task EndTransactionAsync();
     }
 }

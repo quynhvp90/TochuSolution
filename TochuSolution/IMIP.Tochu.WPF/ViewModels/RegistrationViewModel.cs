@@ -2,11 +2,14 @@
 using IMIP.Tochu.Core.Interfaces;
 using IMIP.Tochu.Core.models;
 using IMIP.Tochu.Core.Models;
+using IMIP.Tochu.Core.Services;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels.Shared;
+using IMIP.Tochu.WPF.Views.Windows;
 using Infragistics;
+using Microsoft.Win32;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +26,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         private readonly ITANTOUService _tantouService;
         private readonly IVI_SeinouMstService _seinouMstService;
         private readonly IVI_SeinouMstSEService _seinouMstSEService;
+        private readonly IPrintCSVService _printCSVService;
 
         private int numDefault = 1;
         #region Fields and Properties
@@ -144,8 +148,11 @@ namespace IMIP.Tochu.WPF.ViewModels
 
         public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, 
             ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, 
-            ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService, IVI_SeinouMstService seinouMstService) : base(nav, appDataContext)
+            ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService, 
+            IPrintCSVService printCSVService,
+            IVI_SeinouMstService seinouMstService) : base(nav, appDataContext)
         {
+            _printCSVService = printCSVService;
             _sENINOUDATAService = sENINOUDATAService;
             _juchuuRCSService = juchuuRCSService;
             _tantouService = tantouService;
@@ -184,23 +191,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             }
             SeinouData.ChartValidated += OnChartValidated;
         }
-        private void ExecuteLoadMaster(object? _)
-        {
-            // Field7 = JuchuuRCS.UserHinban (Part Number / 先方品番)
-            var productName = JuchuuRCS?.UserHinban ?? string.Empty;
-
-            var modal = new IMIP.Tochu.WPF.Views.Windows.AnalysisMasterModal(productName);
-
-            // Show as a blocking dialog owned by the Registration window
-            bool? result = modal.ShowDialog();
-
-            if (result == true && !string.IsNullOrEmpty(modal.SelectedNouscd))
-            {
-                // Write the chosen NOUSCD back into Field20
-                if (JuchuuRCS != null)
-                    JuchuuRCS.NouSCD = modal.SelectedNouscd;
-            }
-        }
+        
         private void OnChartValidated(string field, bool isValid)
         {
             refreshChartData();
@@ -260,14 +251,17 @@ namespace IMIP.Tochu.WPF.ViewModels
             {
                 SeinouData = seinoidataModel;
                 StatusAddnew = "Edit";
-                await GetSeinouData(SeinouData.NUM);
+                SeinouData = await GetSeinouData(SeinouData.NUM);
             } else
             {
                 StatusAddnew = "New";
                 SeinouData.NUM = numDefault;
+                
             }
+            SeinouData.JUCHUUNO = JuchuuRCS.JuchuuDenpyouNO;
             await GetSeinouMSTSE();
             await GetSeinouMST();
+            refreshChartData();
         }
         public async Task GetSeinouMSTSE()
         {
@@ -307,7 +301,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         private async Task<SI_SEINOUDATA_Model?> GetSeinouData(int num)
         {
             if (JuchuuRCS == null) return null;
-            var seinouData = await _sENINOUDATAService.GetSENINOUDATAByIdAsync(JuchuuRCS.JuchuuNO, num);
+            var seinouData = await _sENINOUDATAService.GetSENINOUDATAByIdAsync(JuchuuRCS.JuchuuDenpyouNO, num);
             if (seinouData == null) seinouData = new SI_SEINOUDATA_Model() { NUM = num };
             seinouData.SeinouMst = SeinouMst == null ? new VI_SeinouMst_Model() : SeinouMst;
             return seinouData;
@@ -357,13 +351,91 @@ namespace IMIP.Tochu.WPF.ViewModels
             SeinouData.COMM = "";
             refreshChartData();
         }
-
-        private void ExecutePrint()
+        private async void ExecutePrint()
         {
-            // TODO: Trigger print / export flow
+            try
+            {
+                await Save();
+                OpenPrintPreview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Save failed.\n{ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenPrintPreview()
+        {
+            var reportVm = ReportViewModel.From(
+                seinouData: SeinouData,
+                juchuuRCS: JuchuuRCS,
+                tantou1: SelectedTantou1?.ToString() ?? string.Empty,
+                tantou2: SelectedTantou2?.ToString() ?? string.Empty,
+                tantou3: SelectedTantou3?.ToString() ?? string.Empty
+            );
+
+            var preview = new PrintPreviewWindow(reportVm)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            preview.ShowDialog();
         }
 
 
+        private async Task Save()
+        {
+            SeinouData.PRINTDT = DateTime.Now;
+            if (JuchuuRCS.NouSCD == null) throw (new Exception("NouScd don't empty!"));
+            SeinouData.NOUSCD = JuchuuRCS.NouSCD;
+            SeinouData.USERHINBAN = JuchuuRCS.UserHinban;
+            await _sENINOUDATAService.Save(SeinouData);
+        }
+        private async Task Print()
+        {
+            // ── SaveFileDialog ở tầng WPF (ViewModel) ────────────────────────────
+            var date = SeinouData.PRINTDT ?? DateTime.Now;
+            var defaultFileName = $"{SeinouData.LOTNO}_{JuchuuRCS.JuchuuDenpyouNO}_{date:yyyyMMdd}.csv";
+
+            var dialog = new SaveFileDialog
+            {
+                Title = "Save CSV File",
+                FileName = defaultFileName,
+                DefaultExt = ".csv",
+                Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
+                OverwritePrompt = true,
+            };
+
+            if (dialog.ShowDialog() != true)
+                return; // User cancelled
+
+            // ── Delegate file writing to Core service ─────────────────────────────
+            await _printCSVService.PrintAsync(
+                filePath: dialog.FileName,
+                seinouData: SeinouData,
+                juchuuRCS: JuchuuRCS,
+                seinouMst: SeinouMstSE,
+                tantou1: SelectedTantou1?.ToString() ?? string.Empty,
+                tantou2: SelectedTantou2?.ToString() ?? string.Empty,
+                tantou3: SelectedTantou3?.ToString() ?? string.Empty
+            );
+        }
+        private void ExecuteLoadMaster()
+        {
+            var userHinban = JuchuuRCS?.UserHinban ?? string.Empty;
+
+            _navigation.OpenDialog<AnalysisMasterModal, AnalysisMasterModalViewModel>(
+                configureWindow: null,
+                configureVm: vm => vm.Initialize(userHinban, (selectedNouscd) =>
+                {
+                    if (!string.IsNullOrEmpty(selectedNouscd) && JuchuuRCS != null)
+                        JuchuuRCS.NouSCD = selectedNouscd;
+                })
+            );
+        }
     }
     
     /// <summary>One point in the grain-size distribution chart</summary>

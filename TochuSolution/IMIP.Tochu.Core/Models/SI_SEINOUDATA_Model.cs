@@ -74,7 +74,8 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t10, value))
                 {
-                    ValidateRange(value, SeinouMst.T10A, SeinouMst.T10B, nameof(T10));
+                    if (SeinouMst != null)
+                        ValidateRange(value, SeinouMst.T10A, SeinouMst.T10B, nameof(T10));
                 }
             }
         }
@@ -87,7 +88,8 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t20, value))
                 {
-                    ValidateRange(value, SeinouMst.T30A, SeinouMst.T30B, nameof(T20));
+                    if (SeinouMst != null)
+                        ValidateRange(value, SeinouMst.T30A, SeinouMst.T30B, nameof(T20));
                     if (value.HasValue)
                     {
                         MA20 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
@@ -110,7 +112,8 @@ namespace IMIP.Tochu.Core.Models
                 {
                     if (value.HasValue)
                     {
-                        ValidateRange(value, SeinouMst.T40A, SeinouMst.T40B, nameof(T30));
+                        if (SeinouMst != null)
+                            ValidateRange(value, SeinouMst.T40A, SeinouMst.T40B, nameof(T30));
                         MA30 = Math.Round(value.Value * 9.80665m, 2, MidpointRounding.AwayFromZero);
                     }
                     else
@@ -129,7 +132,8 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t40, value))
                 {
-                    ValidateRange(value, SeinouMst.T20A, SeinouMst.T20B, nameof(T40));
+                    if (SeinouMst != null)
+                        ValidateRange(value, SeinouMst.T20A, SeinouMst.T20B, nameof(T40));
                 }
             }
         }
@@ -141,9 +145,12 @@ namespace IMIP.Tochu.Core.Models
             set { 
                 if (SetProperty(ref _t50, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T50A, SeinouMst.T50B, nameof(T50));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T50), isValid);
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T50A, SeinouMst.T50B, nameof(T50));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T50), isValid);
+                    }
                 }
             }
         }
@@ -154,9 +161,12 @@ namespace IMIP.Tochu.Core.Models
             set { 
                 if (SetProperty(ref _t60, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T60A, SeinouMst.T60B, nameof(T60));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T60), isValid);
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T60A, SeinouMst.T60B, nameof(T60));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T60), isValid);
+                    }
                 }
             }
         }
@@ -167,9 +177,12 @@ namespace IMIP.Tochu.Core.Models
             set { 
                 if (SetProperty(ref _t70, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T70A, SeinouMst.T70B, nameof(T70));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T70), isValid);
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T70A, SeinouMst.T70B, nameof(T70));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T70), isValid);
+                    }
                 }
             }
         }
@@ -180,9 +193,13 @@ namespace IMIP.Tochu.Core.Models
             set { 
                 if (SetProperty(ref _t80, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T80A, SeinouMst.T80B, nameof(T80));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T80), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T80A, SeinouMst.T80B, nameof(T80));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T80), isValid);
+                    }
                 }
             }
         }
@@ -194,9 +211,13 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t90, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T90A, SeinouMst.T90B, nameof(T90));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T90), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T90A, SeinouMst.T90B, nameof(T90));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T90), isValid);
+                    }
                 }
             }
         }
@@ -208,9 +229,13 @@ namespace IMIP.Tochu.Core.Models
             { 
                 if (SetProperty(ref _t100, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T100A, SeinouMst.T100B, nameof(T100));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T100), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T100A, SeinouMst.T100B, nameof(T100));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T100), isValid);
+                    }
                 }
             }
         }
@@ -222,9 +247,12 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t110, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T110A, SeinouMst.T110B, nameof(T110));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T110), isValid);
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T110A, SeinouMst.T110B, nameof(T110));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T110), isValid);
+                    }
                 }
             }
         }
@@ -236,9 +264,13 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t120, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T120A, SeinouMst.T120B, nameof(T120));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T120), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T120A, SeinouMst.T120B, nameof(T120));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T120), isValid);
+                    }
                 }
             }
         }
@@ -250,9 +282,13 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t130, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T130A, SeinouMst.T130B, nameof(T130));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T130), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T130A, SeinouMst.T130B, nameof(T130));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T130), isValid);
+                    }
                 }
             }
         }
@@ -264,9 +300,13 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t140, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T140A, SeinouMst.T140B, nameof(T140));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T140), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T140A, SeinouMst.T140B, nameof(T140));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T140), isValid);
+                    }
                 }
             }
         }
@@ -278,9 +318,13 @@ namespace IMIP.Tochu.Core.Models
             {
                 if (SetProperty(ref _t150, value))
                 {
-                    var isValid = ValidateRange(value, SeinouMst.T150A, SeinouMst.T150B, nameof(T150));
-                    UpdateT160();
-                    ChartValidated?.Invoke(nameof(T150), isValid);
+
+                    if (SeinouMst != null)
+                    {
+                        var isValid = ValidateRange(value, SeinouMst.T150A, SeinouMst.T150B, nameof(T150));
+                        UpdateT160();
+                        ChartValidated?.Invoke(nameof(T150), isValid);
+                    }
                 }
             }
         }

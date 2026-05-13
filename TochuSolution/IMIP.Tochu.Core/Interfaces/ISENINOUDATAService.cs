@@ -15,5 +15,6 @@ namespace IMIP.Tochu.Core.Interfaces
         Task<SI_SEINOUDATA_Model?> GetSENINOUDATAByIdAsync(int juchuuNo, int num);
         SI_SEINOUDATA_Model MeshAutomatically(SI_SEINOUDATA_Model seinouData, VI_SeinouMst_Model seinouMst);
         Task<SI_SEINOUDATA_Model> Save(SI_SEINOUDATA_Model model);
+
     }
 }

@@ -20,27 +20,24 @@ namespace IMIP.Tochu.WPF.Views.Windows
     /// </summary>
     public partial class AnalysisMasterModal : Window
     {
-        public AnalysisMasterModal(string productName)
+        public AnalysisMasterModal()
         {
             InitializeComponent();
-
-            var vm = new AnalysisMasterModalViewModel(productName);
-
-            // When the ViewModel requests close, close this window
-            vm.RequestClose += (selectedNouscd) =>
-            {
-                SelectedNouscd = selectedNouscd;
-                DialogResult = selectedNouscd != null;
-                Close();
-            };
-
-            DataContext = vm;
+            DataContextChanged += OnDataContextChanged;
         }
 
-        /// <summary>
-        /// The NOUSCD value selected by the user. Null if cancelled.
-        /// </summary>
-        public string? SelectedNouscd { get; private set; }
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is AnalysisMasterModalViewModel vm)
+            {
+                // RequestClose từ VM → đóng dialog, DialogResult = true nếu có selection
+                vm.RequestClose += (nouscd) =>
+                {
+                    DialogResult = !string.IsNullOrEmpty(nouscd);
+                    // Gọi Close() không cần thiết vì set DialogResult tự close dialog
+                };
+            }
+        }
 
         private void MasterGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

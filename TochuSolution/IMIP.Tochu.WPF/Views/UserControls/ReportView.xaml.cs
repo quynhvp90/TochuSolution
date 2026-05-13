@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IMIP.Tochu.WPF.Views.Windows
+namespace IMIP.Tochu.WPF.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for Registration.xaml
+    /// Interaction logic for ReportView.xaml
     /// </summary>
-    public partial class Registration : Window
+    public partial class ReportView : UserControl
     {
-        public Registration()
+        public ReportView()
         {
             InitializeComponent();
-        }
-        public void InitUI()
-        {
-            WindowState = WindowState.Normal;
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }
