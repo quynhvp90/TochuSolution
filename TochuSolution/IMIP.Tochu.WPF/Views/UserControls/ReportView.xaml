@@ -35,7 +35,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                    Text="コーテッドサンド性能表"
+                    Text="コーテッドサンド性能表" TextDecorations="Underline"
                     FontSize="18" FontWeight="Bold"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"/>
@@ -56,8 +56,8 @@
                     <TextBlock Text="{Binding CompanyName}"
                         FontSize="14" FontWeight="Bold"
                         VerticalAlignment="Bottom"/>
-                    <TextBlock Margin="50, 0, 0, 0" Text="　御中"
-                        FontSize="12"
+                    <TextBlock Padding="50, 0, 0, 0" Text="　御中"
+                        FontSize="12" 
                         VerticalAlignment="Bottom"/>
                 </StackPanel>
 
@@ -77,7 +77,7 @@
             </Grid>
 
             <!-- Separator line -->
-            <Separator Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
+            <!--<Separator Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,0,0"/>-->
 
             <!-- ===== ROW 2: Info table (品名, 樹脂分, 製造No, 担当, 数量) ===== -->
             <Grid Grid.Row="2" Margin="0,6,0,8">
@@ -172,93 +172,73 @@
                         <RowDefinition Height="Auto"/>
                         <!-- Values -->
                         <RowDefinition Height="Auto"/>
-                        <!-- MESH table header -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- 目開き row -->
-                        <RowDefinition Height="Auto"/>
                         <!-- 分布 row -->
                     </Grid.RowDefinitions>
 
                     <!-- 検査結果 title -->
-                    <Border Grid.Row="0" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="6,3">
-                        <TextBlock Text="検査結果" FontSize="11" FontWeight="Bold"/>
+                    <Border Grid.Row="0" BorderBrush="#333333" BorderThickness="0,0,0,1">
+                        <!--<TextBlock Text="検査結果" FontSize="11" FontWeight="Bold"/>-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!--Row 1-->
+                            <Border Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
+                                <TextBlock Text="抵抗力　（曲げ強度）" FontSize="9" HorizontalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="2" Grid.RowSpan="2" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
+                                <TextBlock Text="粘着点" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.RowSpan="2" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="4,2">
+                            </Border>
+                            <!--Row 2-->
+                            <Border Grid.Column="0" Grid.Row="1" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
+                                <TextBlock Text="X" HorizontalAlignment="Center" FontSize="9"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
+                                <TextBlock Text="Y" HorizontalAlignment="Center" FontSize="9"/>
+                            </Border>
+                            <Border Grid.Column="3" Grid.Row="2" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="4,2">
+                            </Border>
+                            <!--Row 3-->
+                            <Border Grid.Column="0" Grid.Row="2" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,3">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="10"> <Run Text="{Binding XN}"/><Run Text=" N/㎝²"/> </TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" FontSize="10"> <Run Text="{Binding XK}"/><Run Text=" kgf/㎝²"/> </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="2" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,3">
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" FontSize="10">
+                                        <Run Text="{Binding YN}"/><Run Text=" N/㎝²"/>
+                                    </TextBlock>
+                                    <TextBlock HorizontalAlignment="Center" FontSize="10">
+                                        <Run Text="{Binding YK}"/><Run Text=" kgf/㎝²"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="2" Grid.Row="2" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"> <Run Text="{Binding AdhesionPoint}"/><Run Text=" ℃"/></TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Border>
 
-                    <!-- 抵抗力 + 粘着点 header -->
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="180"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
-                            <TextBlock Text="抵抗力　（曲げ強度）" FontSize="9" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="1" BorderBrush="#333333" BorderThickness="0,0,0,0" Padding="4,2">
-                            <TextBlock Text="粘着点" FontSize="14" FontWeight="Bold"
-                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </Grid>
-
-                    <!-- X / Y labels -->
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="180"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
-                            <TextBlock Text="X" HorizontalAlignment="Center" FontSize="9"/>
-                        </Border>
-                        <Border Grid.Column="1" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,2">
-                            <TextBlock Text="Y" HorizontalAlignment="Center" FontSize="9"/>
-                        </Border>
-
-                        <!-- 粘着点 value (spans rows) -->
-                        <Border Grid.Column="2" BorderBrush="#333333" BorderThickness="1,0,0,1" Padding="4">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontSize="28" FontWeight="Bold" HorizontalAlignment="Center">
-                                    <Run Text="{Binding AdhesionPoint}"/><Run Text=" ℃"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-
-                    <!-- X / Y values (N/cm², kgf/cm²) -->
-                    <Grid Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="180"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,3">
-                            <StackPanel HorizontalAlignment="Center">
-                                <TextBlock HorizontalAlignment="Center" FontSize="10">
-                                    <Run Text="{Binding XN}"/><Run Text=" N/㎝²"/>
-                                </TextBlock>
-                                <TextBlock HorizontalAlignment="Center" FontSize="10">
-                                    <Run Text="{Binding XK}"/><Run Text=" kgf/㎝²"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                        <Border Grid.Column="1" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="4,3">
-                            <StackPanel HorizontalAlignment="Center">
-                                <TextBlock HorizontalAlignment="Center" FontSize="10">
-                                    <Run Text="{Binding YN}"/><Run Text=" N/㎝²"/>
-                                </TextBlock>
-                                <TextBlock HorizontalAlignment="Center" FontSize="10">
-                                    <Run Text="{Binding YK}"/><Run Text=" kgf/㎝²"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                        <Border Grid.Column="2" BorderBrush="#333333" BorderThickness="1,0,0,1"/>
-                    </Grid>
-
                     <!-- MESH table header -->
-                    <Grid Grid.Row="4" x:Name="MeshHeaderGrid">
+                    <Grid Grid.Row="1" x:Name="MeshHeaderGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -302,17 +282,21 @@
                             <TextBlock Text="200"    FontSize="8" HorizontalAlignment="Center"/>
                         </Border>
                         <Border Grid.Column="10" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="250"    FontSize="8" HorizontalAlignment="Center"/>
+                            <TextBlock Text="280"    FontSize="8" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
-                            <TextBlock Text="PAN AFS.FN" FontSize="7" HorizontalAlignment="Center"/>
+                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="PAN" FontSize="7" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="12" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
+                            <TextBlock Text="AFS.FN" FontSize="7" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
 
                     <!-- 目開き row -->
-                    <Grid Grid.Row="5">
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -327,6 +311,64 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
                             <TextBlock Text="目開(μm)" FontSize="7" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        </Border>
+                        <Border Grid.Column="1"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M14}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="2"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M18}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="3"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M26}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="4"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M36}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="5"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M50}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="6"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M70}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="7"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M100}"  FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="8"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M140}"  FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="9"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M200}"  FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="10" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding M280}"  FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="{Binding Pan}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="12" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
+                            <TextBlock Text="{Binding Pan}"   FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- 分布(%) row -->
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="分布(%)" FontSize="7" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         </Border>
                         <Border Grid.Column="1"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
                             <TextBlock Text="1,180" FontSize="8" HorizontalAlignment="Center"/>
@@ -358,64 +400,14 @@
                         <Border Grid.Column="10" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
                             <TextBlock Text="53"    FontSize="8" HorizontalAlignment="Center"/>
                         </Border>
-                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
+                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
+                            <TextBlock Text="－"    FontSize="8" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Column="12" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
                             <TextBlock Text="－"    FontSize="8" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>
 
-                    <!-- 分布(%) row -->
-                    <Grid Grid.Row="6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="分布(%)" FontSize="7" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                        </Border>
-                        <Border Grid.Column="1"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M14}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="2"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M18}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="3"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M26}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="4"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M36}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="5"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M50}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="6"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M70}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="7"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M100}"  FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="8"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M140}"  FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="9"  BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M200}"  FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="10" BorderBrush="#333333" BorderThickness="0,0,1,1" Padding="2,2">
-                            <TextBlock Text="{Binding M250}"  FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                        <Border Grid.Column="11" BorderBrush="#333333" BorderThickness="0,0,0,1" Padding="2,2">
-                            <TextBlock Text="{Binding Pan}"   FontSize="8" HorizontalAlignment="Center"/>
-                        </Border>
-                    </Grid>
                 </Grid>
             </Border>
 

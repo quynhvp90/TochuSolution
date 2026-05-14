@@ -49,8 +49,9 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string M100 { get; set; } = string.Empty;
         public string M140 { get; set; } = string.Empty;
         public string M200 { get; set; } = string.Empty;
-        public string M250 { get; set; } = string.Empty;
+        public string M280 { get; set; } = string.Empty;
         public string Pan { get; set; } = string.Empty;
+        public string AFS_FN { get; set; } = string.Empty;
 
         // ── Footer ────────────────────────────────────────────────────────────
         public string Remarks { get; set; } = string.Empty;
@@ -90,8 +91,10 @@ namespace IMIP.Tochu.WPF.ViewModels
             M100 = seinouData.T110?.ToString() ?? string.Empty;
             M140 = seinouData.T120?.ToString() ?? string.Empty;
             M200 = seinouData.T130?.ToString() ?? string.Empty;
-            M250 = seinouData.T140?.ToString() ?? string.Empty;
+            M280 = seinouData.T140?.ToString() ?? string.Empty;
             Pan = seinouData.T150?.ToString() ?? string.Empty;
+            AFS_FN = seinouData.T160?.ToString() ?? string.Empty;
+
             Remarks = seinouData.COMM ?? string.Empty;
             BuildChartPoints(seinouData);
         }
