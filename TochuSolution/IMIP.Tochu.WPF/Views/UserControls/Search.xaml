@@ -150,17 +150,17 @@
                     <igDP:XamDataGrid.FieldLayouts>
                         <igDP:FieldLayout>
                             <igDP:FieldLayout.Fields>
-                                <igDP:Field Name="JuchuuDenpyouNO" Label="{loc:Loc Key=Col_OrderNo}"        Width="90"/>
-                                <igDP:Field Name="JuchuuYMD"       Label="{loc:Loc Key=Col_OrderDate}"      Width="100" Format="yyyy/MM/dd"/>
-                                <igDP:Field Name="Nouki"           Label="{loc:Loc Key=Col_DeliveryDate}"   Width="100" Format="yyyy/MM/dd"/>
-                                <igDP:Field Name="NouSSNM"         Label="{loc:Loc Key=Col_CustomerName}"   Width="160"/>
-                                <igDP:Field Name="UserHinban"      Label="{loc:Loc Key=Col_CustomerPartNo}" Width="130"/>
-                                <igDP:Field Name="UserHinmei"      Label="{loc:Loc Key=Col_ProductName}"    Width="160"/>
-                                <igDP:Field Name="JuchuuSuu"       Label="{loc:Loc Key=Col_OrderQty}"       Width="80"/>
-                                <igDP:Field Name="NouSCD"          Label="{loc:Loc Key=Col_CustomerCode}"   Width="110"/>
-                                <igDP:Field Name="TankaUnitCD"     Label="{loc:Loc Key=Col_Unit}"           Width="60"/>
-                                <igDP:Field Name="NisugataCD"      Label="{loc:Loc Key=Col_Package}"        Width="90"/>
-                                <igDP:Field Name="Tekiyou1"        Label="{loc:Loc Key=Col_Note}"           Width="*"/>
+                                <igDP:Field Name="JuchuuDenpyouNO" Width="90"/>
+                                <igDP:Field Name="JuchuuYMD"       Width="100" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="Nouki"           Width="100" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="NouSSNM"         Width="160"/>
+                                <igDP:Field Name="UserHinban"      Width="130"/>
+                                <igDP:Field Name="UserHinmei"      Width="160"/>
+                                <igDP:Field Name="JuchuuSuu"       Width="80"/>
+                                <igDP:Field Name="NouSCD"          Width="110"/>
+                                <igDP:Field Name="TankaUnitCD"     Width="60"/>
+                                <igDP:Field Name="NisugataCD"      Width="90"/>
+                                <igDP:Field Name="Tekiyou1"        Width="*"/>
                             </igDP:FieldLayout.Fields>
                         </igDP:FieldLayout>
                     </igDP:XamDataGrid.FieldLayouts>
@@ -239,6 +239,7 @@
 
                 <!-- XamDataGrid 2 -->
                 <igDP:XamDataGrid Grid.Row="1"
+                    x:Name="SeninouDataGrid"
                     DataSource="{Binding SeninouDataItems}"
                     SelectedDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
                     ActiveDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
@@ -262,11 +263,11 @@
                     <igDP:XamDataGrid.FieldLayouts>
                         <igDP:FieldLayout>
                             <igDP:FieldLayout.Fields>
-                                <igDP:Field Name="JUCHUUNO"  Label="{loc:Loc Key=Col_OrderNo}"    Width="90"/>
-                                <igDP:Field Name="NOUSCD"    Label="{loc:Loc Key=Col_Code}"       Width="100"/>
-                                <igDP:Field Name="NUM"       Label="{loc:Loc Key=Col_Sequence}"   Width="80"/>
-                                <igDP:Field Name="LOTNO"     Label="{loc:Loc Key=Col_LotNo}"      Width="120"/>
-                                <igDP:Field Name="PRINTDT"   Label="{loc:Loc Key=Col_PrintDate}"  Width="110" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="JUCHUUNO"  Width="90"/>
+                                <igDP:Field Name="NOUSCD"    Width="100"/>
+                                <igDP:Field Name="NUM"       Width="80"/>
+                                <igDP:Field Name="LOTNO"     Width="120"/>
+                                <igDP:Field Name="PRINTDT"   Width="110" Format="yyyy/MM/dd"/>
                             </igDP:FieldLayout.Fields>
                         </igDP:FieldLayout>
                     </igDP:XamDataGrid.FieldLayouts>

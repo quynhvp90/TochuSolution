@@ -1,5 +1,7 @@
-﻿using IMIP.Tochu.WPF.ViewModels;
+﻿using IMIP.Tochu.Shared;
+using IMIP.Tochu.WPF.ViewModels;
 using Infragistics.Windows.DataPresenter;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
@@ -9,30 +11,53 @@ using System.Windows.Media;
 
 namespace IMIP.Tochu.WPF.Views.UserControls
 {
-    /// <summary>
-    /// Interaction logic for Search.xaml
-    /// </summary>
     public partial class Search : UserControl
     {
-        private static readonly Dictionary<string, string> _fieldLabels = new()
+        private static readonly Dictionary<string, string> _fieldKeys = new()
         {
-            { "JuchuuDenpyouNO", "Order No." },
-            { "JuchuuYMD",       "Order Date" },
-            { "Nouki",           "Delivery Date" },
-            { "NouSSNM",         "Customer Name" },
-            { "UserHinban",      "Customer Part No." },
-            { "UserHinmei",      "Product Name" },
-            { "JuchuuSuu",       "Order Qty" },
-            { "NouSCD",          "Customer Code" },
-            { "TankaUnitCD",     "Unit" },
-            { "NisugataCD",      "Package" },
-            { "Tekiyou1",        "Note" },
+            { "JuchuuDenpyouNO", "Col_OrderNo" },
+            { "JuchuuYMD",       "Col_OrderDate" },
+            { "Nouki",           "Col_DeliveryDate" },
+            { "NouSSNM",         "Col_CustomerName" },
+            { "UserHinban",      "Col_CustomerPartNo" },
+            { "UserHinmei",      "Col_ProductName" },
+            { "JuchuuSuu",       "Col_OrderQty" },
+            { "NouSCD",          "Col_CustomerCode" },
+            { "TankaUnitCD",     "Col_Unit" },
+            { "NisugataCD",      "Col_Package" },
+            { "Tekiyou1",        "Col_Note" },
         };
+
+        private static readonly Dictionary<string, string> _seninouFieldKeys = new()
+        {
+            { "JUCHUUNO", "Col_OrderNo" },
+            { "NOUSCD",   "Col_Code" },
+            { "NUM",      "Col_Sequence" },
+            { "LOTNO",    "Col_LotNo" },
+            { "PRINTDT",  "Col_PrintDate" },
+        };
+
         public Search()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
             DataContextChanged += OnDataContextChanged;
-            JuchuuRCSGrid.MouseLeftButtonUp += JuchuuRCSGrid_LabelMouseUp; 
+            JuchuuRCSGrid.MouseLeftButtonUp += JuchuuRCSGrid_LabelMouseUp;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var loc = App.Services?.GetService<ILocalizationService>();
+            if (loc == null) return;
+
+            var layout = SeninouDataGrid.FieldLayouts.FirstOrDefault();
+            if (layout == null) return;
+
+            foreach (var field in layout.Fields)
+            {
+                if (field.Name != null && _seninouFieldKeys.TryGetValue(field.Name, out var key))
+                    field.Label = loc.Get(key);
+            }
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -61,8 +86,11 @@ namespace IMIP.Tochu.WPF.Views.UserControls
 
         private static string BuildLabel(string fieldName, string sortField, bool sortAscending)
         {
-            if (!_fieldLabels.TryGetValue(fieldName, out var text))
+            if (!_fieldKeys.TryGetValue(fieldName, out var key))
                 return fieldName;
+
+            var loc = App.Services?.GetService<ILocalizationService>();
+            var text = loc != null ? loc.Get(key) : key;
 
             if (sortField != fieldName) return $"{text}  ⇅";
             return sortAscending ? $"{text}  ▲" : $"{text}  ▼";
