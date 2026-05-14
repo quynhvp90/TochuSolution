@@ -1,4 +1,5 @@
 ﻿using IMIP.Tochu.Core.Interfaces;
+using IMIP.Tochu.Shared;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.AppData;
@@ -20,15 +21,17 @@ namespace IMIP.Tochu.WPF.ViewModels
     {
         private readonly IAuthService _auth;
         private readonly IAppDataContext _appDataContext;
+        private readonly ILocalizationService _loc;
 
         public string Username { get; set; } = "admin";
         public string Password { get; set; }
 
 
-        public LoginViewModel(IAuthService auth, INavigationService navigation, IAppDataContext appDataContext) : base(navigation, appDataContext)
+        public LoginViewModel(IAuthService auth, INavigationService navigation, IAppDataContext appDataContext, ILocalizationService loc) : base(navigation, appDataContext)
         {
             _auth = auth;
             _appDataContext = appDataContext;
+            _loc = loc;
             _appDataContext.SetCurrentUser(null);
         }
 
@@ -47,7 +50,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             } else
             {
                 // show message box error
-                MessageBoxManager.ShowError("Invalid username or password", "Login failed");
+                MessageBoxManager.ShowError(_loc.Get("Login_Error_InvalidCredentials"), _loc.Get("Login_Error_Title"));
             }
         }
 

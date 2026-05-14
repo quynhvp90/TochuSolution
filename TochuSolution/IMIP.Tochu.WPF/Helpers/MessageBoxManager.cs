@@ -1,33 +1,34 @@
-﻿using IMIP.Tochu.Shared.enums;
+﻿using IMIP.Tochu.Shared;
+using IMIP.Tochu.Shared.enums;
 using IMIP.Tochu.WPF.Views.MessageBox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IMIP.Tochu.WPF.Helpers
 {
     public static class MessageBoxManager
     {
-        public static void ShowInfo(string message, string title = "Info")
+        private static ILocalizationService? Loc =>
+            App.Services?.GetService<ILocalizationService>();
+
+        public static void ShowInfo(string message, string? title = null)
         {
-            Show(message, title, MessageType.Info);
+            Show(message, title ?? Loc?.Get("Msg_Info") ?? "Info", MessageType.Info);
         }
 
-        public static void ShowSuccess(string message, string title = "Success")
+        public static void ShowSuccess(string message, string? title = null)
         {
-            Show(message, title, MessageType.Success);
+            Show(message, title ?? Loc?.Get("Msg_Success") ?? "Success", MessageType.Success);
         }
 
-        public static void ShowError(string message, string title = "Error")
+        public static void ShowError(string message, string? title = null)
         {
-            Show(message, title, MessageType.Error);
+            Show(message, title ?? Loc?.Get("Msg_Error") ?? "Error", MessageType.Error);
         }
 
-        public static bool ShowConfirm(string message, string title = "Confirm")
+        public static bool ShowConfirm(string message, string? title = null)
         {
-            var window = new CustomMessageBox(message, title, MessageType.Confirm);
+            var resolvedTitle = title ?? Loc?.Get("Msg_Confirm") ?? "Confirm";
+            var window = new CustomMessageBox(message, resolvedTitle, MessageType.Confirm);
             return window.ShowDialog() == true;
         }
 

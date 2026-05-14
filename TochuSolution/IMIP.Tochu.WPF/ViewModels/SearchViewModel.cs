@@ -1,6 +1,7 @@
 ﻿using IMIP.Tochu.Core.Interfaces;
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.Core.Models.Paging;
+using IMIP.Tochu.Shared;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
@@ -130,10 +131,13 @@ namespace IMIP.Tochu.WPF.ViewModels
         public ICommand EditCommand { get; }
         public ICommand NewCommand { get; }
 
-        public SearchViewModel(INavigationService nav, ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, IAppDataContext appDataContext) : base(nav, appDataContext)
+        private readonly ILocalizationService _loc;
+
+        public SearchViewModel(INavigationService nav, ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, IAppDataContext appDataContext, ILocalizationService loc) : base(nav, appDataContext)
         {
             _sENINOUDATAService = sENINOUDATAService;
             _juchuuRCSService = juchuuRCSService;
+            _loc = loc;
             if (appDataContext is INotifyPropertyChanged notify)
             {
                 notify.PropertyChanged += (s, e) =>
@@ -225,7 +229,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Invalid search input: {ex.Message}");
+                MessageBox.Show(string.Format(_loc.Get("Search_InvalidInput"), ex.Message));
             }
             finally
             {

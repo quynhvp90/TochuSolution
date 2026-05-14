@@ -3,6 +3,7 @@ using IMIP.Tochu.Core.Interfaces;
 using IMIP.Tochu.Core.models;
 using IMIP.Tochu.Core.Models;
 using IMIP.Tochu.Core.Services;
+using IMIP.Tochu.Shared;
 using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
@@ -42,7 +43,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             get => _seinouData;
             set => SetProperty(ref _seinouData, value);
         }
-        private string _statusAddnew = "New";
+        private string _statusAddnew = string.Empty;
         public string StatusAddnew
         {
             get => _statusAddnew;
@@ -146,11 +147,14 @@ namespace IMIP.Tochu.WPF.ViewModels
         #endregion Commands
 
 
-        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext, 
-            ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService, 
-            ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService, 
+        private readonly ILocalizationService _loc;
+
+        public RegistrationViewModel(INavigationService nav, IAppDataContext appDataContext,
+            ISENINOUDATAService sENINOUDATAService, IJuchuuRCSService juchuuRCSService,
+            ITANTOUService tantouService, IVI_SeinouMstSEService seinouMstSEService,
             IPrintCSVService printCSVService,
-            IVI_SeinouMstService seinouMstService) : base(nav, appDataContext)
+            IVI_SeinouMstService seinouMstService,
+            ILocalizationService loc) : base(nav, appDataContext)
         {
             _printCSVService = printCSVService;
             _sENINOUDATAService = sENINOUDATAService;
@@ -158,6 +162,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             _tantouService = tantouService;
             _seinouMstSEService = seinouMstSEService;
             _seinouMstService = seinouMstService;
+            _loc = loc;
             InitializeChartData();
             InitializeCommands();
             _ = GetTantouList();
@@ -174,7 +179,7 @@ namespace IMIP.Tochu.WPF.ViewModels
                         var errorList = errors.Cast<string>().ToList();
                         if (errorList.Any())
                         {
-                            MessageBox.Show(string.Join("\n", errorList), "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(string.Join("\n", errorList), _loc.Get("Reg_ValidationErrors_Title"), MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 };
@@ -250,11 +255,11 @@ namespace IMIP.Tochu.WPF.ViewModels
             if (seinoidataModel != null)
             {
                 SeinouData = seinoidataModel;
-                StatusAddnew = "Edit";
+                StatusAddnew = _loc.Get("Status_Edit");
                 SeinouData = await GetSeinouData(SeinouData.NUM);
             } else
             {
-                StatusAddnew = "New";
+                StatusAddnew = _loc.Get("Status_New");
                 SeinouData.NUM = numDefault;
                 
             }
@@ -361,8 +366,8 @@ namespace IMIP.Tochu.WPF.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"Save failed.\n{ex.Message}",
-                    "Error",
+                    string.Format(_loc.Get("Report_SaveFailed"), ex.Message),
+                    _loc.Get("Report_SaveFailed_Title"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }

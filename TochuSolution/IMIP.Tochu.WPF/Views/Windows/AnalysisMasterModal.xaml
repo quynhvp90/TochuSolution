@@ -7,8 +7,9 @@
         xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf"
         xmlns:igEditors="http://schemas.infragistics.com/xaml/wpf"
         xmlns:ig="http://schemas.infragistics.com/xaml"
+        xmlns:loc="clr-namespace:IMIP.Tochu.WPF.Helpers"
         mc:Ignorable="d"
-        Title="Analysis Master"
+        Title="{loc:Loc Key=Window_AnalysisMaster}"
         Width="900" Height="500"
         WindowStartupLocation="CenterOwner"
         Background="#F5F5F5"
@@ -45,7 +46,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                           Text="Product Name"
+                           Text="{loc:Loc Key=Modal_ProductName}"
                            VerticalAlignment="Center"
                            Margin="0,0,6,0" FontSize="10"/>
 
@@ -136,14 +137,14 @@
                 <!-- 選択 / Select button -->
                 <Button Grid.Column="1"
                         Style="{StaticResource BlueButtonStyle}"
-                        Content="Select"
+                        Content="{loc:Loc Key=Btn_Select}"
                         Command="{Binding SelectCommand}"
                         Height="26"/>
 
                 <!-- キャンセル / Cancel button -->
                 <Button Grid.Column="3"
                         Style="{StaticResource BlueButtonStyle}"
-                        Content="Cancel"
+                        Content="{loc:Loc Key=Btn_Cancel}"
                         Command="{Binding CancelCommand}"
                         Height="26"/>
             </Grid>

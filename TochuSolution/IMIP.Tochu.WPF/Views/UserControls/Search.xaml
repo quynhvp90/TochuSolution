@@ -11,6 +11,7 @@
              xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:vm="clr-namespace:IMIP.Tochu.WPF.ViewModels"
              xmlns:vmDesign="clr-namespace:IMIP.Tochu.WPF.DataDesign"
+             xmlns:loc="clr-namespace:IMIP.Tochu.WPF.Helpers"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vmDesign:SearchDesignViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="800" d:DesignWidth="1000">
@@ -32,7 +33,7 @@
             <DockPanel LastChildFill="False">
 
                 <!-- Delivery Date -->
-                <TextBlock DockPanel.Dock="Left" Text="Delivery Date"
+                <TextBlock DockPanel.Dock="Left" Text="{loc:Loc Key=Search_DeliveryDate}"
                    VerticalAlignment="Center" Margin="0,0,6,0"
                    FontSize="13" Foreground="#333"/>
                 <igEditors:XamDateTimeEditor
@@ -55,7 +56,7 @@
 
                 <!-- Search Button -->
                 <Button DockPanel.Dock="Left"
-                    Content="Search" Width="80" Height="26"
+                    Content="{loc:Loc Key=Btn_Search}" Width="80" Height="26"
                     Command="{Binding Search}"
                     Style="{StaticResource BlueButtonStyle}"
                     VerticalAlignment="Center" Margin="10,0,16,0"
@@ -69,7 +70,7 @@
                     Text="{Binding BranchCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Width="120" Height="26" IsEnabled="False"
                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock DockPanel.Dock="Right" Text="Branch Code"
+                <TextBlock DockPanel.Dock="Right" Text="{loc:Loc Key=Search_BranchCode}"
                    VerticalAlignment="Center" Margin="0,0,6,0"
                    FontSize="13" Foreground="#333"/>
 
@@ -91,7 +92,7 @@
 
                 <!-- Header -->
                 <Border Grid.Row="0" Background="#E3F2FD" Padding="10,6" BorderBrush="#BBDEFB" BorderThickness="0,0,0,1">
-                    <TextBlock Text="Search Results" FontSize="13" FontWeight="SemiBold" Foreground="#1565C0"/>
+                    <TextBlock Text="{loc:Loc Key=Search_Results}" FontSize="13" FontWeight="SemiBold" Foreground="#1565C0"/>
                 </Border>
 
                 <!-- XamDataGrid 1 -->
@@ -149,17 +150,17 @@
                     <igDP:XamDataGrid.FieldLayouts>
                         <igDP:FieldLayout>
                             <igDP:FieldLayout.Fields>
-                                <igDP:Field Name="JuchuuDenpyouNO" Label="Order No."        Width="90"/>
-                                <igDP:Field Name="JuchuuYMD"       Label="Order Date"        Width="100" Format="yyyy/MM/dd"/>
-                                <igDP:Field Name="Nouki"           Label="Delivery Date"     Width="100" Format="yyyy/MM/dd"/>
-                                <igDP:Field Name="NouSSNM"         Label="Customer Name"     Width="160"/>
-                                <igDP:Field Name="UserHinban"      Label="Customer Part No." Width="130"/>
-                                <igDP:Field Name="UserHinmei"      Label="Product Name"      Width="160"/>
-                                <igDP:Field Name="JuchuuSuu"       Label="Order Qty"         Width="80"/>
-                                <igDP:Field Name="NouSCD"          Label="Customer Code"     Width="110"/>
-                                <igDP:Field Name="TankaUnitCD"     Label="Unit"              Width="60"/>
-                                <igDP:Field Name="NisugataCD"      Label="Package"           Width="90"/>
-                                <igDP:Field Name="Tekiyou1"        Label="Note"              Width="*"/>
+                                <igDP:Field Name="JuchuuDenpyouNO" Width="90"/>
+                                <igDP:Field Name="JuchuuYMD"       Width="100" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="Nouki"           Width="100" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="NouSSNM"         Width="160"/>
+                                <igDP:Field Name="UserHinban"      Width="130"/>
+                                <igDP:Field Name="UserHinmei"      Width="160"/>
+                                <igDP:Field Name="JuchuuSuu"       Width="80"/>
+                                <igDP:Field Name="NouSCD"          Width="110"/>
+                                <igDP:Field Name="TankaUnitCD"     Width="60"/>
+                                <igDP:Field Name="NisugataCD"      Width="90"/>
+                                <igDP:Field Name="Tekiyou1"        Width="*"/>
                             </igDP:FieldLayout.Fields>
                         </igDP:FieldLayout>
                     </igDP:XamDataGrid.FieldLayouts>
@@ -197,7 +198,7 @@
 
                         <!-- Count label -->
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="28">
-                            <TextBlock Text="Performance Sheet Count " FontSize="13" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#E65100"/>
+                            <TextBlock Text="{loc:Loc Key=Search_PerfSheetCount}" FontSize="13" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#E65100"/>
 
                             <igEditors:XamNumericEditor Text="{Binding SeninouDataPaging.TotalCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 Width="60" Height="26" IsEnabled="False" Background="White" NullText="12"
@@ -206,7 +207,7 @@
 
                         <!-- Action Buttons -->
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1">
-                            <Button Content="New"
+                            <Button Content="{loc:Loc Key=Btn_New}"
                                 Command="{Binding NewCommand}"
                                 Style="{StaticResource GreenButtonStyle}"
                                 Width="72"
@@ -221,7 +222,7 @@
 
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <Button Content="Edit"
+                            <Button Content="{loc:Loc Key=Btn_Edit}"
                                 Command="{Binding EditCommand}"
                                 Style="{StaticResource BlueButtonStyle}"
                                 Width="72"
@@ -238,6 +239,7 @@
 
                 <!-- XamDataGrid 2 -->
                 <igDP:XamDataGrid Grid.Row="1"
+                    x:Name="SeninouDataGrid"
                     DataSource="{Binding SeninouDataItems}"
                     SelectedDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
                     ActiveDataItem="{Binding SelectedSeninouDataItem, Mode=TwoWay}"
@@ -261,11 +263,11 @@
                     <igDP:XamDataGrid.FieldLayouts>
                         <igDP:FieldLayout>
                             <igDP:FieldLayout.Fields>
-                                <igDP:Field Name="JUCHUUNO"  Label="Order No."   Width="90"/>
-                                <igDP:Field Name="NOUSCD"    Label="Code"        Width="100"/>
-                                <igDP:Field Name="NUM"       Label="Sequence"    Width="80"/>
-                                <igDP:Field Name="LOTNO"     Label="Lot No."     Width="120"/>
-                                <igDP:Field Name="PRINTDT"   Label="Print Date"  Width="110" Format="yyyy/MM/dd"/>
+                                <igDP:Field Name="JUCHUUNO"  Width="90"/>
+                                <igDP:Field Name="NOUSCD"    Width="100"/>
+                                <igDP:Field Name="NUM"       Width="80"/>
+                                <igDP:Field Name="LOTNO"     Width="120"/>
+                                <igDP:Field Name="PRINTDT"   Width="110" Format="yyyy/MM/dd"/>
                             </igDP:FieldLayout.Fields>
                         </igDP:FieldLayout>
                     </igDP:XamDataGrid.FieldLayouts>

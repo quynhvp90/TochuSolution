@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.5" />
     <PackageReference Include="Infragistics.WPF" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.Calendar" Version="25.2.45" />
     <PackageReference Include="Infragistics.WPF.Charts" Version="25.2.45" />
@@ -28,6 +29,21 @@
     <ProjectReference Include="..\IMIP.Tochu.Infrastructure\IMIP.Tochu.Infrastructure.csproj" />
     <ProjectReference Include="..\IMIP.Tochu.Shared\IMIP.Tochu.Shared.csproj" />
     <ProjectReference Include="..\IMIP.Tochu.UI\IMIP.Tochu.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Resources\Strings.ja-JP.resx">
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -1,18 +1,24 @@
-﻿using IMIP.Tochu.WPF.AppData;
+﻿using IMIP.Tochu.Shared;
+using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels;
 using IMIP.Tochu.WPF.ViewModels.Shared;
 using IMIP.Tochu.WPF.Views.UserControls;
 using IMIP.Tochu.WPF.Views.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using System.Resources;
 using System.Windows;
 
 namespace IMIP.Tochu.WPF
 {
     public static class ViewModelDependencyInjection
     {
-        public static IServiceCollection RegisterViewModels(this IServiceCollection services)
+        public static IServiceCollection RegisterViewModels(this IServiceCollection services, string locale = "en-US")
         {
+            // --- Localisation ---
+            var rm = new ResourceManager("IMIP.Tochu.WPF.Resources.Strings", typeof(ViewModelDependencyInjection).Assembly);
+            services.AddSingleton<ILocalizationService>(new LocalizationService(locale, rm));
+
             // --- Navigation ---
             services.AddSingleton<INavigationService, NavigationService>();
             // -- AppContext ---
