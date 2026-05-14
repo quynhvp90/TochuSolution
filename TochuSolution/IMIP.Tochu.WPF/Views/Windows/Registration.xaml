@@ -9,6 +9,7 @@
         xmlns:ig="http://schemas.infragistics.com/xaml"
         xmlns:igEditors="http://schemas.infragistics.com/xaml/wpf"
         xmlns:vmDesign="clr-namespace:IMIP.Tochu.WPF.DataDesign"
+        xmlns:loc="clr-namespace:IMIP.Tochu.WPF.Helpers"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vmDesign:RegistrationDesignViewModel, IsDesignTimeCreatable=True}"
         Width="900" Height="750"
@@ -16,7 +17,7 @@
         WindowStartupLocation="CenterScreen"
         FontFamily="Meiryo UI, Yu Gothic UI, MS Gothic, sans-serif"
         FontSize="11"
-        Title="Registration">
+        Title="{loc:Loc Key=Window_Registration}">
     <Window.Resources>
         <!-- Common style for Infragistics XamTextEditor (input fields) -->
         <Style x:Key="InputEditorStyle" TargetType="igEditors:XamTextEditor">
@@ -177,19 +178,19 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Order Slip" Style="{StaticResource FieldLabelStyle}"/>
+                    <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_OrderSlip}" Style="{StaticResource FieldLabelStyle}"/>
                     <igEditors:XamTextEditor Grid.Column="1"
                     Style="{StaticResource GreenInputStyle}"
                     Text="{Binding JuchuuRCS.JuchuuDenpyouNO, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="Field2" Theme="Office2013"/>
 
-                    <TextBlock Grid.Column="2" Text="Order Date" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{loc:Loc Key=Reg_OrderDate}" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamDateTimeEditor Grid.Column="3"
                         Style="{StaticResource GreenXamDateTimeEditorStyle}"
                         Value="{Binding JuchuuRCS.JuchuuYMD, Mode=TwoWay}"
                         x:Name="Field3" Theme="Office2013"/>
 
-                    <TextBlock Grid.Column="4" Text="Delivery Date" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="4" Text="{loc:Loc Key=Reg_DeliveryDate}" Style="{StaticResource FieldLabelStyle}" Margin="4,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamDateTimeEditor Grid.Column="5"
                         Style="{StaticResource GreenXamDateTimeEditorStyle}"
                         Value="{Binding JuchuuRCS.Nouki, Mode=TwoWay}"
@@ -218,19 +219,19 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Customer Name" Style="{StaticResource FieldLabelStyle}"/>
+                    <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_CustomerName}" Style="{StaticResource FieldLabelStyle}"/>
                     <igEditors:XamTextEditor Grid.Column="1"
                     Style="{StaticResource GreenInputStyle}"
                     Text="{Binding JuchuuRCS.NouSSNM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="Field5" Theme="Office2013"/>
 
-                    <TextBlock Grid.Column="2" Text="Customer Code" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{loc:Loc Key=Reg_CustomerCode}" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamTextEditor Grid.Column="3"
                     Style="{StaticResource GreenInputStyle}"
                     Text="{Binding JuchuuRCS.NouSSCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="Field6" Theme="Office2013"/>
 
-                    <TextBlock Grid.Column="5" Text="Part Number" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="5" Text="{loc:Loc Key=Reg_PartNumber}" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamTextEditor Grid.Column="6"
                         Style="{StaticResource GreenInputStyle}"
                         Text="{Binding JuchuuRCS.UserHinban, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -251,19 +252,19 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Product Name" Style="{StaticResource FieldLabelStyle}"/>
+                    <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_ProductName}" Style="{StaticResource FieldLabelStyle}"/>
                     <igEditors:XamTextEditor Grid.Column="1"
                         Style="{StaticResource GreenInputStyle}"
                         Text="{Binding JuchuuRCS.UserHinmei, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         x:Name="Field8"/>
 
-                    <TextBlock Grid.Column="2" Text="Packaging Style" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="2" Text="{loc:Loc Key=Reg_PackagingStyle}" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamTextEditor Grid.Column="3"
                         Style="{StaticResource GreenInputStyle}"
                         Text="{Binding JuchuuRCS.NisugataCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         x:Name="Field9"/>
 
-                    <TextBlock Grid.Column="5" Text="Quantity" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="5" Text="{loc:Loc Key=Reg_Quantity}" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamNumericEditor Grid.Column="6"
                         Style="{StaticResource InputNumericEditorStyle}"
                         Background="#E8F5E9"
@@ -271,7 +272,7 @@
                         Value="{Binding JuchuuRCS.JuchuuSuu, Mode=TwoWay}"
                         x:Name="Field10"/>
 
-                    <TextBlock Grid.Column="7" Text="Unit" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="7" Text="{loc:Loc Key=Reg_Unit}" Style="{StaticResource FieldLabelStyle}" Margin="6,0,4,0" HorizontalAlignment="Right"/>
                     <igEditors:XamTextEditor Grid.Column="8"
                         Style="{StaticResource GreenInputStyle}"
                         Text="{Binding JuchuuRCS.TankaUnitCD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -291,7 +292,7 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="Lot Number" Style="{StaticResource FieldLabelStyle}" FontSize="10"/>
+                    <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_LotNumber}" Style="{StaticResource FieldLabelStyle}" FontSize="10"/>
                     <igEditors:XamTextEditor Grid.Column="1"
                         Style="{StaticResource YellowInputStyle}"
                         VerticalContentAlignment="Center"
@@ -348,7 +349,7 @@
                     Style="{StaticResource BlueButtonStyle}"
                     Width="140" 
                     Command="{Binding LoadMasterCommand}"
-                    Content="Call Analysis Master"
+                    Content="{loc:Loc Key=Btn_CallAnalysisMaster}"
                     TextBlock.TextAlignment="Center"/>
 
                 <!-- Field 20 -->
@@ -359,7 +360,7 @@
                 
 
                 <!-- 印刷日 label + Field 17 -->
-                <TextBlock Grid.Column="3" Text="Print Date" Style="{StaticResource FieldLabelStyle}" Margin="8,0,4,0"/>
+                <TextBlock Grid.Column="3" Text="{loc:Loc Key=Reg_PrintDate}" Style="{StaticResource FieldLabelStyle}" Margin="8,0,4,0"/>
                 <igEditors:XamDateTimeEditor Grid.Column="4"
                     Style="{StaticResource GreenXamDateTimeEditorStyle}"
                     Value="{Binding SeinouData.PRINTDT, Mode=TwoWay}"  Theme="Office2013"
@@ -369,13 +370,13 @@
                 <Button Grid.Column="6"
                     Style="{StaticResource GreenButtonStyle}"
                     Command="{Binding AutoCommand}"
-                    Content="Auto"/>
+                    Content="{loc:Loc Key=Btn_Auto}"/>
 
                 <!-- クリア button -->
                 <Button Grid.Column="8"
                     Style="{StaticResource BlueButtonStyle}"
                     Command="{Binding ClearCommand}"
-                    Content="Clear"/>
+                    Content="{loc:Loc Key=Btn_Clear}"/>
             </Grid>
         </Border>
 
@@ -399,7 +400,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Resin Content" Style="{StaticResource FieldLabelStyle}"/>
+                        <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_ResinContent}" Style="{StaticResource FieldLabelStyle}"/>
                         <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T10A, StringFormat=0 ~ {0}}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor Grid.Column="2"
                             Style="{StaticResource YellowXamMaskedEditorStyle}"
@@ -414,7 +415,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Adhesion Point" Style="{StaticResource FieldLabelStyle}"/>
+                        <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_AdhesionPoint}" Style="{StaticResource FieldLabelStyle}"/>
                         <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T20A}" Style="{StaticResource BlueLabelStyle}"/>
                         <igEditors:XamMaskedEditor Grid.Column="2"
                             Style="{StaticResource YellowXamMaskedEditorStyle}"
@@ -609,7 +610,7 @@
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Transverse Rupture Strength X" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_TransverseX}" Style="{StaticResource FieldLabelStyle}"/>
                             <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T30A}" Style="{StaticResource BlueLabelStyle}"/>
                             <igEditors:XamMaskedEditor Grid.Column="2"
                                 Style="{StaticResource YellowXamMaskedEditorStyle}"
@@ -634,7 +635,7 @@
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Transverse Rupture Strength R" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_TransverseR}" Style="{StaticResource FieldLabelStyle}"/>
                             <TextBlock Grid.Column="1" Text="{Binding SeinouMstSE.T40A}" Style="{StaticResource BlueLabelStyle}"/>
                             <igEditors:XamMaskedEditor Grid.Column="2"
                                 Style="{StaticResource YellowXamMaskedEditorStyle}"
@@ -663,7 +664,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0"
-                                Text="Graph Area"
+                                Text="{loc:Loc Key=Reg_GraphArea}"
                                 Foreground="#1565C0"
                                 FontWeight="Bold"
                                 FontSize="11"
@@ -722,7 +723,7 @@
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Remarks" Style="{StaticResource FieldLabelStyle}" FontSize="10"/>
+                <TextBlock Grid.Column="0" Text="{loc:Loc Key=Reg_Remarks}" Style="{StaticResource FieldLabelStyle}" FontSize="10"/>
 
                 <!-- Field 40: 備考 / Ghi chú -->
                 <igEditors:XamTextEditor Grid.Column="1"
@@ -735,7 +736,7 @@
                     Style="{StaticResource BlueButtonStyle}"
                     Width="100"
                     Command="{Binding PrintCommand}"
-                    Content="Print"/>
+                    Content="{loc:Loc Key=Btn_Print}"/>
             </Grid>
         </Border>
     </Grid>

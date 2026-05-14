@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMIP.Tochu.WPF.Views.Windows"
         xmlns:views="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
+        xmlns:loc="clr-namespace:IMIP.Tochu.WPF.Helpers"
         mc:Ignorable="d"
-        Title="Print Preview"
+        Title="{loc:Loc Key=Window_PrintPreview}"
         Width="860" Height="700"
         WindowStartupLocation="CenterScreen"
         Background="#666666">
@@ -19,13 +20,13 @@
         <!-- Toolbar -->
         <Border Grid.Row="0" Background="#444444" Padding="8,4">
             <StackPanel Orientation="Horizontal">
-                <Button Content="🖨 Print"
+                <Button Content="{loc:Loc Key=Btn_PrintPreview}"
                     Width="100" Height="28" Margin="0,0,8,0"
                     Command="{Binding PrintCommand}"/>
-                <Button Content="💾 Export PDF"
+                <Button Content="{loc:Loc Key=Btn_ExportPdf}"
                     Width="120" Height="28" Margin="0,0,8,0"
                     Command="{Binding ExportPdfCommand}"/>
-                <Button Content="✕ Close"
+                <Button Content="{loc:Loc Key=Btn_Close}"
                     Width="80" Height="28"
                     Command="{Binding CloseCommand}"/>
             </StackPanel>

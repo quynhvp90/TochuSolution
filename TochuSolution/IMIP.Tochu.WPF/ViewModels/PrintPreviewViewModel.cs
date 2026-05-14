@@ -4,6 +4,7 @@ using IMIP.Tochu.UI.Base;
 using IMIP.Tochu.WPF.AppData;
 using IMIP.Tochu.WPF.Navigation;
 using IMIP.Tochu.WPF.ViewModels.Shared;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
@@ -20,6 +21,7 @@ namespace IMIP.Tochu.WPF.ViewModels
     {
         private FrameworkElement _visual { set; get; }
         private Action _closeAction { set; get; }
+        private readonly ILocalizationService _loc;
 
         public ICommand PrintCommand { get; }
         public ICommand ExportPdfCommand { get; }
@@ -33,8 +35,9 @@ namespace IMIP.Tochu.WPF.ViewModels
         public string tantou3 { set; get; }
 
 
-        public PrintPreviewViewModel(INavigationService navigationService, IAppDataContext appDataContext) : base(navigationService, appDataContext)
+        public PrintPreviewViewModel(INavigationService navigationService, IAppDataContext appDataContext, ILocalizationService loc) : base(navigationService, appDataContext)
         {
+            _loc = loc;
             PrintCommand = new RelayCommand(ExecutePrint);
             ExportPdfCommand = new RelayCommand(ExecuteExportPdf);
             CloseCommand = new RelayCommand(ExecuteClose);
@@ -63,7 +66,7 @@ namespace IMIP.Tochu.WPF.ViewModels
             _visual.Measure(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight));
             _visual.Arrange(new Rect(new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)));
 
-            dialog.PrintVisual(_visual, "コーテッドサンド性能表");
+            dialog.PrintVisual(_visual, _loc.Get("Report_Title"));
         }
         private void ExecuteClose()
         {
@@ -74,7 +77,7 @@ namespace IMIP.Tochu.WPF.ViewModels
         {
             var dialog = new SaveFileDialog
             {
-                Title = "Export PDF",
+                Title = _loc.Get("Report_ExportPdf"),
                 DefaultExt = ".pdf",
                 Filter = "PDF Files (*.pdf)|*.pdf",
                 FileName = $"Report_{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
@@ -95,8 +98,8 @@ namespace IMIP.Tochu.WPF.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"PDF export failed.\n{ex.Message}",
-                    "Error",
+                    string.Format(_loc.Get("Report_SaveError"), ex.Message),
+                    _loc.Get("Report_SaveError_Title"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }

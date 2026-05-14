@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+
+  <!-- Navigation -->
+  <data name="Nav_Search"><value>検索</value></data>
+  <data name="Nav_Master"><value>マスター編集</value></data>
+  <data name="Nav_MasterAnalysis"><value>分析マスター編集</value></data>
+
+  <!-- Main Window -->
+  <data name="Main_Title"><value>東中ソリューション</value></data>
+  <data name="Main_Branch"><value>営業所</value></data>
+  <data name="Main_BranchPlaceholder"><value>営業所: 310</value></data>
+
+  <!-- Login -->
+  <data name="Login_Title"><value>ログイン</value></data>
+  <data name="Login_Error_InvalidCredentials"><value>ユーザー名またはパスワードが正しくありません</value></data>
+  <data name="Login_Error_Title"><value>ログイン失敗</value></data>
+
+  <!-- Buttons -->
+  <data name="Btn_Save"><value>保存</value></data>
+  <data name="Btn_Cancel"><value>キャンセル</value></data>
+  <data name="Btn_Print"><value>印刷</value></data>
+  <data name="Btn_Clear"><value>クリア</value></data>
+  <data name="Btn_Close"><value>✕ 閉じる</value></data>
+  <data name="Btn_Select"><value>選択</value></data>
+  <data name="Btn_Back"><value>戻る</value></data>
+  <data name="Btn_Auto"><value>自動</value></data>
+  <data name="Btn_PrintPreview"><value>🖨 印刷</value></data>
+  <data name="Btn_ExportPdf"><value>💾 PDF出力</value></data>
+  <data name="Btn_New"><value>新規</value></data>
+  <data name="Btn_Edit"><value>編集</value></data>
+  <data name="Btn_Search"><value>検索</value></data>
+  <data name="Btn_CallAnalysisMaster"><value>分析値マスタ呼出</value></data>
+
+  <!-- Message box defaults -->
+  <data name="Msg_Info"><value>情報</value></data>
+  <data name="Msg_Success"><value>成功</value></data>
+  <data name="Msg_Error"><value>エラー</value></data>
+  <data name="Msg_Confirm"><value>確認</value></data>
+  <data name="Msg_Ok"><value>OK</value></data>
+
+  <!-- Paging -->
+  <data name="Paging_Total"><value>合計: </value></data>
+  <data name="Paging_Records"><value> 件  |  ページ </value></data>
+  <data name="Paging_RowsPerPage"><value>表示件数:</value></data>
+
+  <!-- Window titles -->
+  <data name="Window_Login"><value>ログイン</value></data>
+  <data name="Window_Registration"><value>登録</value></data>
+  <data name="Window_PrintPreview"><value>印刷プレビュー</value></data>
+  <data name="Window_AnalysisMaster"><value>分析マスター</value></data>
+  <data name="Window_Message"><value>メッセージ</value></data>
+
+  <!-- Search view -->
+  <data name="Search_DeliveryDate"><value>納期</value></data>
+  <data name="Search_BranchCode"><value>営業所コード</value></data>
+  <data name="Search_Results"><value>検索結果</value></data>
+  <data name="Search_PerfSheetCount"><value>性能データ件数 </value></data>
+
+  <!-- Search grid columns -->
+  <data name="Col_OrderNo"><value>注文番号</value></data>
+  <data name="Col_OrderDate"><value>受注日</value></data>
+  <data name="Col_DeliveryDate"><value>納期</value></data>
+  <data name="Col_CustomerName"><value>顧客名</value></data>
+  <data name="Col_CustomerPartNo"><value>先方品番</value></data>
+  <data name="Col_ProductName"><value>製品名</value></data>
+  <data name="Col_OrderQty"><value>受注数</value></data>
+  <data name="Col_CustomerCode"><value>顧客コード</value></data>
+  <data name="Col_Unit"><value>単位</value></data>
+  <data name="Col_Package"><value>荷姿</value></data>
+  <data name="Col_Note"><value>備考</value></data>
+  <data name="Col_Code"><value>コード</value></data>
+  <data name="Col_Sequence"><value>連番</value></data>
+  <data name="Col_LotNo"><value>ロット番号</value></data>
+  <data name="Col_PrintDate"><value>印刷日</value></data>
+
+  <!-- Registration fields -->
+  <data name="Reg_OrderSlip"><value>注文伝票</value></data>
+  <data name="Reg_OrderDate"><value>受注日</value></data>
+  <data name="Reg_DeliveryDate"><value>納期</value></data>
+  <data name="Reg_CustomerName"><value>顧客名</value></data>
+  <data name="Reg_CustomerCode"><value>顧客コード</value></data>
+  <data name="Reg_PartNumber"><value>先方品番</value></data>
+  <data name="Reg_ProductName"><value>製品名</value></data>
+  <data name="Reg_PackagingStyle"><value>荷姿</value></data>
+  <data name="Reg_Quantity"><value>数量</value></data>
+  <data name="Reg_Unit"><value>単位</value></data>
+  <data name="Reg_LotNumber"><value>ロット番号</value></data>
+  <data name="Reg_PrintDate"><value>印刷日</value></data>
+  <data name="Reg_ResinContent"><value>樹脂分</value></data>
+  <data name="Reg_AdhesionPoint"><value>粘着点</value></data>
+  <data name="Reg_TransverseX"><value>抗折力（曲げ強度）X</value></data>
+  <data name="Reg_TransverseR"><value>抗折力（曲げ強度）R</value></data>
+  <data name="Reg_GraphArea"><value>グラフエリア</value></data>
+  <data name="Reg_Remarks"><value>備考</value></data>
+
+  <!-- Analysis modal -->
+  <data name="Modal_ProductName"><value>製品名</value></data>
+
+  <!-- Dashboard -->
+  <data name="Dashboard_Welcome"><value>ダッシュボードへようこそ！</value></data>
+  <data name="Dashboard_Description"><value>これはアプリケーションのメインダッシュボードです。</value></data>
+
+  <!-- Master views -->
+  <data name="Master_Title"><value>マスタービュー</value></data>
+  <data name="MasterAnalysis_Title"><value>分析マスタービュー</value></data>
+
+  <!-- Report static labels -->
+  <data name="Report_Title"><value>コーテッドサンド性能表</value></data>
+  <data name="Report_CompanyName"><value>株式会社トウチュウ</value></data>
+  <data name="Report_OfficeName"><value>野　間　事　業　所</value></data>
+  <data name="Report_Address"><value>愛知県知多郡美浜町野間字新町242番地</value></data>
+  <data name="Report_Phone"><value>TEL 0569-87-0511㈹/FAX 0569-88-5509</value></data>
+  <data name="Report_Honorific"><value>　御中</value></data>
+  <data name="Report_ProductNameLabel"><value>品名</value></data>
+  <data name="Report_ResinContentLabel"><value>樹脂分</value></data>
+  <data name="Report_LotNoLabel"><value>製造 No.</value></data>
+  <data name="Report_QuantityLabel"><value>数　量</value></data>
+  <data name="Report_ResistanceLabel"><value>抵抗力　（曲げ強度）</value></data>
+  <data name="Report_AdhesionLabel"><value>粘着点</value></data>
+  <data name="Report_MeshOpeningLabel"><value>目開(μm)</value></data>
+  <data name="Report_DistributionLabel"><value>分布(%)</value></data>
+  <data name="Report_RemarksLabel"><value>［備考］</value></data>
+  <data name="Report_ExportPdf"><value>PDF出力</value></data>
+  <data name="Report_SaveError"><value>PDF出力に失敗しました。\n{0}</value></data>
+  <data name="Report_SaveError_Title"><value>エラー</value></data>
+  <data name="Report_SaveFailed"><value>保存に失敗しました。\n{0}</value></data>
+  <data name="Report_SaveFailed_Title"><value>エラー</value></data>
+  <data name="Search_InvalidInput"><value>検索入力が無効です: {0}</value></data>
+  <data name="Reg_ValidationErrors_Title"><value>入力エラー</value></data>
+  <data name="Status_New"><value>新規</value></data>
+  <data name="Status_Edit"><value>編集</value></data>
+
+</root>

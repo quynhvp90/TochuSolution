@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:IMIP.Tochu.WPF"
              xmlns:ig="http://schemas.infragistics.com/xaml"
-             xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls">
+             xmlns:view="clr-namespace:IMIP.Tochu.WPF.Views.UserControls"
+             xmlns:loc="clr-namespace:IMIP.Tochu.WPF.Helpers">
     <Application.Resources>
         <ResourceDictionary Source="Resources/ApplicationResources.xaml"/>
     </Application.Resources>

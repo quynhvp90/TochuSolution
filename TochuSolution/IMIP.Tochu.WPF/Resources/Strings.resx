@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+
+  <!-- Navigation -->
+  <data name="Nav_Search"><value>Search</value></data>
+  <data name="Nav_Master"><value>Edit Master</value></data>
+  <data name="Nav_MasterAnalysis"><value>Edit Analysis Master</value></data>
+
+  <!-- Main Window -->
+  <data name="Main_Title"><value>Tochu Solution</value></data>
+  <data name="Main_Branch"><value>Branch</value></data>
+  <data name="Main_BranchPlaceholder"><value>Branch: 310</value></data>
+
+  <!-- Login -->
+  <data name="Login_Title"><value>Login</value></data>
+  <data name="Login_Error_InvalidCredentials"><value>Invalid username or password</value></data>
+  <data name="Login_Error_Title"><value>Login failed</value></data>
+
+  <!-- Buttons -->
+  <data name="Btn_Save"><value>Save</value></data>
+  <data name="Btn_Cancel"><value>Cancel</value></data>
+  <data name="Btn_Print"><value>Print</value></data>
+  <data name="Btn_Clear"><value>Clear</value></data>
+  <data name="Btn_Close"><value>✕ Close</value></data>
+  <data name="Btn_Select"><value>Select</value></data>
+  <data name="Btn_Back"><value>Go Back</value></data>
+  <data name="Btn_Auto"><value>Auto</value></data>
+  <data name="Btn_PrintPreview"><value>🖨 Print</value></data>
+  <data name="Btn_ExportPdf"><value>💾 Export PDF</value></data>
+  <data name="Btn_New"><value>New</value></data>
+  <data name="Btn_Edit"><value>Edit</value></data>
+  <data name="Btn_Search"><value>Search</value></data>
+  <data name="Btn_CallAnalysisMaster"><value>Call Analysis Master</value></data>
+
+  <!-- Message box defaults -->
+  <data name="Msg_Info"><value>Info</value></data>
+  <data name="Msg_Success"><value>Success</value></data>
+  <data name="Msg_Error"><value>Error</value></data>
+  <data name="Msg_Confirm"><value>Confirm</value></data>
+  <data name="Msg_Ok"><value>OK</value></data>
+
+  <!-- Paging -->
+  <data name="Paging_Total"><value>Total: </value></data>
+  <data name="Paging_Records"><value> records  |  Page </value></data>
+  <data name="Paging_RowsPerPage"><value>Rows/page:</value></data>
+
+  <!-- Window titles -->
+  <data name="Window_Login"><value>Login</value></data>
+  <data name="Window_Registration"><value>Registration</value></data>
+  <data name="Window_PrintPreview"><value>Print Preview</value></data>
+  <data name="Window_AnalysisMaster"><value>Analysis Master</value></data>
+  <data name="Window_Message"><value>Message</value></data>
+
+  <!-- Search view -->
+  <data name="Search_DeliveryDate"><value>Delivery Date</value></data>
+  <data name="Search_BranchCode"><value>Branch Code</value></data>
+  <data name="Search_Results"><value>Search Results</value></data>
+  <data name="Search_PerfSheetCount"><value>Performance Sheet Count </value></data>
+
+  <!-- Search grid columns -->
+  <data name="Col_OrderNo"><value>Order No.</value></data>
+  <data name="Col_OrderDate"><value>Order Date</value></data>
+  <data name="Col_DeliveryDate"><value>Delivery Date</value></data>
+  <data name="Col_CustomerName"><value>Customer Name</value></data>
+  <data name="Col_CustomerPartNo"><value>Customer Part No.</value></data>
+  <data name="Col_ProductName"><value>Product Name</value></data>
+  <data name="Col_OrderQty"><value>Order Qty</value></data>
+  <data name="Col_CustomerCode"><value>Customer Code</value></data>
+  <data name="Col_Unit"><value>Unit</value></data>
+  <data name="Col_Package"><value>Package</value></data>
+  <data name="Col_Note"><value>Note</value></data>
+  <data name="Col_Code"><value>Code</value></data>
+  <data name="Col_Sequence"><value>Sequence</value></data>
+  <data name="Col_LotNo"><value>Lot No.</value></data>
+  <data name="Col_PrintDate"><value>Print Date</value></data>
+
+  <!-- Registration fields -->
+  <data name="Reg_OrderSlip"><value>Order Slip</value></data>
+  <data name="Reg_OrderDate"><value>Order Date</value></data>
+  <data name="Reg_DeliveryDate"><value>Delivery Date</value></data>
+  <data name="Reg_CustomerName"><value>Customer Name</value></data>
+  <data name="Reg_CustomerCode"><value>Customer Code</value></data>
+  <data name="Reg_PartNumber"><value>Part Number</value></data>
+  <data name="Reg_ProductName"><value>Product Name</value></data>
+  <data name="Reg_PackagingStyle"><value>Packaging Style</value></data>
+  <data name="Reg_Quantity"><value>Quantity</value></data>
+  <data name="Reg_Unit"><value>Unit</value></data>
+  <data name="Reg_LotNumber"><value>Lot Number</value></data>
+  <data name="Reg_PrintDate"><value>Print Date</value></data>
+  <data name="Reg_ResinContent"><value>Resin Content</value></data>
+  <data name="Reg_AdhesionPoint"><value>Adhesion Point</value></data>
+  <data name="Reg_TransverseX"><value>Transverse Rupture Strength X</value></data>
+  <data name="Reg_TransverseR"><value>Transverse Rupture Strength R</value></data>
+  <data name="Reg_GraphArea"><value>Graph Area</value></data>
+  <data name="Reg_Remarks"><value>Remarks</value></data>
+
+  <!-- Analysis modal -->
+  <data name="Modal_ProductName"><value>Product Name</value></data>
+
+  <!-- Dashboard -->
+  <data name="Dashboard_Welcome"><value>Welcome to Dashboard!</value></data>
+  <data name="Dashboard_Description"><value>This is the main dashboard of the application.</value></data>
+
+  <!-- Master views -->
+  <data name="Master_Title"><value>Master View</value></data>
+  <data name="MasterAnalysis_Title"><value>Master Analysis View</value></data>
+
+  <!-- Report (used in PrintPreview document title) -->
+  <!-- Report static labels -->
+  <data name="Report_Title"><value>Coated Sand Performance Table</value></data>
+  <data name="Report_CompanyName"><value>Tochu Co., Ltd.</value></data>
+  <data name="Report_OfficeName"><value>Noma Office</value></data>
+  <data name="Report_Address"><value>242 Nomajishimmachi, Mihama-cho, Chita-gun, Aichi</value></data>
+  <data name="Report_Phone"><value>TEL 0569-87-0511 / FAX 0569-88-5509</value></data>
+  <data name="Report_Honorific"><value> (Attn)</value></data>
+  <data name="Report_ProductNameLabel"><value>Product</value></data>
+  <data name="Report_ResinContentLabel"><value>Resin %</value></data>
+  <data name="Report_LotNoLabel"><value>Lot No.</value></data>
+  <data name="Report_QuantityLabel"><value>Qty</value></data>
+  <data name="Report_ResistanceLabel"><value>Transverse Rupture Strength</value></data>
+  <data name="Report_AdhesionLabel"><value>Adhesion Point</value></data>
+  <data name="Report_MeshOpeningLabel"><value>Opening(μm)</value></data>
+  <data name="Report_DistributionLabel"><value>Dist.(%)</value></data>
+  <data name="Report_RemarksLabel"><value>[Remarks]</value></data>
+  <data name="Report_ExportPdf"><value>Export PDF</value></data>
+  <data name="Report_SaveError"><value>PDF export failed.\n{0}</value></data>
+  <data name="Report_SaveError_Title"><value>Error</value></data>
+  <data name="Report_SaveFailed"><value>Save failed.\n{0}</value></data>
+  <data name="Report_SaveFailed_Title"><value>Error</value></data>
+  <data name="Search_InvalidInput"><value>Invalid search input: {0}</value></data>
+  <data name="Reg_ValidationErrors_Title"><value>Validation Errors</value></data>
+  <data name="Status_New"><value>New</value></data>
+  <data name="Status_Edit"><value>Edit</value></data>
+
+</root>
